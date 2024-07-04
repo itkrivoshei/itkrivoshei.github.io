@@ -1,0 +1,25 @@
+.timeline {
+  background-color: #282a36;
+  color: #f8f8f2;
+  padding: 20px;
+}
+
+.timeline-item {
+  border-left: 2px solid #50fa7b;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.timeline-item-date {
+  color: #50fa7b;
+  font-weight: bold;
+}
+
+.timeline-item-company,
+.timeline-item-location,
+.timeline-item-title {
+  color: #50fa7b;
+  margin: 5px 0;
+  font-weight: bold;
+}

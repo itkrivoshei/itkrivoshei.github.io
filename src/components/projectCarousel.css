@@ -1,0 +1,27 @@
+.project-carousel {
+  background-color: #282a36;
+  color: #f8f8f2;
+  padding: 20px;
+}
+
+.project-item {
+  text-align: center;
+}
+
+.project-item img {
+  max-width: 100%;
+  border: 2px solid #bd93f9;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.project-item h3 {
+  color: #ff79c6;
+  margin-top: 10px;
+}
+
+.project-item a {
+  color: #bd93f9;
+  text-decoration: none;
+  font-weight: bold;
+}

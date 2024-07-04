@@ -1,0 +1,21 @@
+.general-info {
+  background-color: #282a36;
+  color: #f8f8f2;
+  padding: 20px;
+  text-align: center;
+}
+
+.general-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.general-info ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+.general-info ul li a {
+  color: #bd93f9;
+  text-decoration: none;
+}

@@ -1,13 +1,5 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
- */
-
-import * as React from "react"
+import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
-
 import "./layout.css"
 
 const Layout = ({ children }) => {
@@ -28,6 +20,7 @@ const Layout = ({ children }) => {
           margin: `0 auto`,
           maxWidth: `var(--size-content)`,
           padding: `var(--size-gutter)`,
+          minHeight: `100vh`,
         }}
       >
         <main>{children}</main>

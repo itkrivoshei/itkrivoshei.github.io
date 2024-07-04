@@ -1,13 +1,16 @@
 import React from "react"
-import { Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import GeneralInfo from "../components/GeneralInfo"
+import Timeline from "../components/Timeline"
+import ProjectCarousel from "../components/ProjectCarousel"
 
 const IndexPage = () => (
   <Layout>
     <SEO title="Home" />
-    <h1>Nikita Krivoshei</h1>
-    <h2>Front-End Developer</h2>
+    <GeneralInfo />
+    <Timeline />
+    <ProjectCarousel />
   </Layout>
 )
 

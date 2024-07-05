@@ -4,7 +4,6 @@ import "./projectCarousel.css"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
 
-// Importing example GIFs
 import exampleGif1 from "../images/OdinMonoWebApps.gif"
 import exampleGif2 from "../images/SelectionSortAndVisualizer.gif"
 import exampleGif3 from "../images/BasicsOfPredictiveAnalysis.gif"

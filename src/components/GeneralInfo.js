@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "gatsby"
 import "./generalInfo.css"
 
 const GeneralInfo = () => (
@@ -8,15 +7,25 @@ const GeneralInfo = () => (
     <h2>Front-End Developer</h2>
     <ul>
       <li>
-        <Link to="https://github.com/itkrivoshei">GitHub</Link>
+        <a
+          href="https://github.com/itkrivoshei"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
       </li>
       <li>
-        <Link to="https://www.linkedin.com/in/itkivoshei/">LinkedIn</Link>
+        <a
+          href="https://www.linkedin.com/in/itkivoshei/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          LinkedIn
+        </a>
       </li>
       <li>
-        <Link to="mailto:nikitakrivoshei@gmail.com">
-          nikitakrivoshei@gmail.com
-        </Link>
+        <a href="mailto:nikitakrivoshei@gmail.com">nikitakrivoshei@gmail.com</a>
       </li>
     </ul>
   </div>

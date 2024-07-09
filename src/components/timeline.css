@@ -1,25 +1,132 @@
 .timeline {
-  background-color: #282a36;
-  color: #f8f8f2;
-  padding: 20px;
+  position: relative;
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+
+.timeline:before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 4.2rem;
+  bottom: -10px;
+  width: 2px;
+  background: linear-gradient(
+    rgba(80, 250, 123, 0) 0%,
+    rgba(80, 250, 123, 0) 2.5%,
+    rgba(80, 250, 123, 1) 7.5%,
+    rgba(80, 250, 123, 1) 92.5%,
+    rgba(80, 250, 123, 0) 97.5%,
+    rgba(80, 250, 123, 0) 100%
+  );
 }
 
 .timeline-item {
-  border-left: 2px solid #50fa7b;
-  margin-bottom: 20px;
-  padding-left: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   position: relative;
+  margin: 20px 0;
+  cursor: pointer;
 }
 
-.timeline-item-date {
-  color: #50fa7b;
+.timeline-duration {
+  color: #8be9fd;
   font-weight: bold;
+  font-size: 1.2rem;
+  padding-right: 20px;
+  position: relative;
+  flex-shrink: 0;
+  width: 2.5rem;
+  text-align: right;
+  transition: font-size 0.2s, color 0.2s;
 }
 
-.timeline-item-company,
-.timeline-item-location,
-.timeline-item-title {
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 3px #50fa7b, 0 0 6px #50fa7b, 0 0 9px #50fa7b,
+      0 0 12px #50fa7b;
+  }
+  50% {
+    box-shadow: 0 0 4px #50fa7b, 0 0 8px #50fa7b, 0 0 12px #50fa7b,
+      0 0 16px #50fa7b;
+  }
+  100% {
+    box-shadow: 0 0 3px #50fa7b, 0 0 6px #50fa7b, 0 0 9px #50fa7b,
+      0 0 12px #50fa7b;
+  }
+}
+
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  background: #50fa7b;
+  border-radius: 50%;
+  margin-left: 0;
+  flex-shrink: 0;
+}
+
+.timeline-item:hover .timeline-dot {
+  animation: glow 1.5s infinite;
+}
+
+.timeline-item:hover .timeline-content,
+.timeline-item:focus .timeline-content {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
+
+.timeline-item:hover .timeline-title,
+.timeline-item:focus .timeline-title {
+  color: #ff79c6;
+}
+
+.timeline-item:hover .timeline-duration,
+.timeline-item:focus .timeline-duration {
+  font-size: 1.4rem;
+  color: #8be9fd;
+}
+
+.timeline-content {
+  padding: 0 0 0 20px;
+}
+
+.timeline-company {
   color: #50fa7b;
-  margin: 5px 0;
   font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  text-decoration: none;
+}
+
+.timeline-company:hover {
+  text-decoration: none;
+}
+
+.timeline-role {
+  margin-bottom: 5px;
+}
+
+.timeline-title {
+  color: #f8f8f2;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.timeline-date {
+  color: #8be9fd;
+  font-weight: normal;
+  font-size: 0.9rem;
+}
+
+.timeline-location {
+  color: #6272a4;
+  font-weight: normal;
+  font-size: 0.9rem;
+}
+
+.timeline-company-wrapper {
+  display: flex;
+  flex-direction: column;
 }

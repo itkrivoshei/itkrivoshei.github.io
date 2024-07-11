@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "Fira Code";
+  src: url("/FiraCode-Bold.ttf") format("truetype"),
+    url("/FiraCode-Light.ttf") format("truetype"),
+    url("/FiraCode-Medium.ttf") format("truetype"),
+    url("/FiraCode-Regular.ttf") format("truetype"),
+    url("/FiraCode-SemiBold.ttf") format("truetype"),
+    url("/FiraCode-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --background-color: #282a36;
   --text-color: #f8f8f2;
@@ -16,6 +28,7 @@ html {
 body {
   margin: 0;
   padding: 0;
+  font-family: "Fira Code", monospace;
 }
 
 ::-webkit-scrollbar {

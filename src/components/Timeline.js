@@ -66,73 +66,76 @@ const timelineData = [
 ]
 
 const Timeline = () => (
-  <div className="timeline-container">
-    <ul className="timeline">
-      {timelineData.map((item, index) => (
-        <li
-          key={index}
-          className="timeline-item"
-          onClick={() => window.open(item.link || item.roles[0].link, "_blank")}
-        >
-          <span>
-            <div className="timeline-duration">
-              {item.roles
-                ? item.roles
-                    .map(role => calculateDuration(role.start, role.end))
-                    .reduce((acc, val) => acc + parseFloat(val), 0)
-                    .toFixed(1)
-                : calculateDuration(item.start, item.end)}{" "}
-              <br />
-              yrs
-            </div>
-          </span>
-          <span className="timeline-dot"></span>
-          {item.roles ? (
-            <div className="timeline-content">
-              <div className="timeline-company-wrapper">
-                <a
-                  href={item.link}
-                  className="timeline-company"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {item.company}
-                </a>
+  <div className="timeline-outer-container">
+    <div className="timeline-container">
+      <div className="timeline-line"></div>
+      <ul className="timeline">
+        {timelineData.map((item, index) => (
+          <li
+            key={index}
+            className="timeline-item"
+            onClick={() => window.open(item.link || item.roles[0].link, "_blank")}
+          >
+            <span>
+              <div className="timeline-duration">
+                {item.roles
+                  ? item.roles
+                      .map(role => calculateDuration(role.start, role.end))
+                      .reduce((acc, val) => acc + parseFloat(val), 0)
+                      .toFixed(1)
+                  : calculateDuration(item.start, item.end)}{" "}
+                <br />
+                yrs
               </div>
-              {item.roles.map((role, idx) => (
-                <div key={idx} className="timeline-role">
-                  <div className="timeline-title">{role.title}</div>
-                  <div className="timeline-date">
-                    {formatDate(role.start)} -{" "}
-                    {role.end === "Present" ? "Present" : formatDate(role.end)}
-                  </div>
-                  <div className="timeline-location">{role.location}</div>
+            </span>
+            <span className="timeline-dot"></span>
+            {item.roles ? (
+              <div className="timeline-content">
+                <div className="timeline-company-wrapper">
+                  <a
+                    href={item.link}
+                    className="timeline-company"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.company}
+                  </a>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="timeline-content">
-              <div className="timeline-company-wrapper">
-                <a
-                  href={item.link}
-                  className="timeline-company"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {item.company}
-                </a>
+                {item.roles.map((role, idx) => (
+                  <div key={idx} className="timeline-role">
+                    <div className="timeline-title">{role.title}</div>
+                    <div className="timeline-date">
+                      {formatDate(role.start)} -{" "}
+                      {role.end === "Present" ? "Present" : formatDate(role.end)}
+                    </div>
+                    <div className="timeline-location">{role.location}</div>
+                  </div>
+                ))}
               </div>
-              <div className="timeline-title">{item.title}</div>
-              <div className="timeline-date">
-                {formatDate(item.start)} -{" "}
-                {item.end === "Present" ? "Present" : formatDate(item.end)}
+            ) : (
+              <div className="timeline-content">
+                <div className="timeline-company-wrapper">
+                  <a
+                    href={item.link}
+                    className="timeline-company"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.company}
+                  </a>
+                </div>
+                <div className="timeline-title">{item.title}</div>
+                <div className="timeline-date">
+                  {formatDate(item.start)} -{" "}
+                  {item.end === "Present" ? "Present" : formatDate(item.end)}
+                </div>
+                <div className="timeline-location">{item.location}</div>
               </div>
-              <div className="timeline-location">{item.location}</div>
-            </div>
-          )}
-        </li>
-      ))}
-    </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
   </div>
 )
 

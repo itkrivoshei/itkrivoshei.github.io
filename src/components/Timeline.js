@@ -68,13 +68,14 @@ const timelineData = [
 const Timeline = () => (
   <div className="timeline-outer-container">
     <div className="timeline-container">
-      <div className="timeline-line"></div>
       <ul className="timeline">
         {timelineData.map((item, index) => (
           <li
             key={index}
             className="timeline-item"
-            onClick={() => window.open(item.link || item.roles[0].link, "_blank")}
+            onClick={() =>
+              window.open(item.link || item.roles[0].link, "_blank")
+            }
           >
             <span>
               <div className="timeline-duration">
@@ -106,7 +107,9 @@ const Timeline = () => (
                     <div className="timeline-title">{role.title}</div>
                     <div className="timeline-date">
                       {formatDate(role.start)} -{" "}
-                      {role.end === "Present" ? "Present" : formatDate(role.end)}
+                      {role.end === "Present"
+                        ? "Present"
+                        : formatDate(role.end)}
                     </div>
                     <div className="timeline-location">{role.location}</div>
                   </div>

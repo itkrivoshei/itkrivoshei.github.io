@@ -3,8 +3,8 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `My Portfolio`,
-    description: `A portfolio to showcase my work.`,
+    title: `Nikita Krivoshei | Frontend Developer`,
+    description: `Portfolio of Nikita Krivoshei, a frontend developer based in Berlin, Germany.`,
     author: `@itkrivoshei`,
     siteUrl: `https://kriv.dev`,
   },

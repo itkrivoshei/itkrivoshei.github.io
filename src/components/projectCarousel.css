@@ -1,8 +1,9 @@
 .project-carousel-wrapper {
-  padding: 20px 0;
+  padding: 0;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
+  height: 100vh;
 }
 
 .project-item {
@@ -15,8 +16,15 @@
   width: 300px;
 }
 
+.react-horizontal-scrolling-menu--scroll-container,
+.react-horizontal-scrolling-menu--wrapper,
+.react-horizontal-scrolling-menu--inner-wrapper {
+  height: 100%;
+}
+
 .react-horizontal-scrolling-menu--item {
   margin: 0 60px;
+  align-self: center;
 }
 
 .project-item img {

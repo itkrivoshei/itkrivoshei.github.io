@@ -8,7 +8,6 @@ import "./index.css"
 
 const IndexPage = () => (
   <Layout>
-    <SEO title="Home" />
     <div className="full-width-section" id="general-info">
       <GeneralInfo />
     </div>

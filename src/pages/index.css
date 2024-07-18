@@ -1,6 +1,7 @@
 @font-face {
   font-family: "Fira Code";
-  src: url("/FiraCode-Bold.ttf") format("truetype"),
+  src:
+    url("/FiraCode-Bold.ttf") format("truetype"),
     url("/FiraCode-Light.ttf") format("truetype"),
     url("/FiraCode-Medium.ttf") format("truetype"),
     url("/FiraCode-Regular.ttf") format("truetype"),
@@ -11,7 +12,7 @@
 }
 
 :root {
-  --background-color: #282a36;
+  --background-color: #0e0d11;
   --text-color: #f8f8f2;
   --link-color: #bd93f9;
 }

@@ -5,6 +5,7 @@
   width: 100%;
   padding: 20px 0;
   box-sizing: border-box;
+  height: 100vh;
 }
 
 .timeline-container {

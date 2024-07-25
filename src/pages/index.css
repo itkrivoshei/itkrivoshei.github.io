@@ -94,7 +94,8 @@ a:hover {
 }
 
 .general-info::after,
-.timeline-outer-container::after {
+.timeline-outer-container::after,
+.project-carousel-wrapper::after {
   content: "↓";
   position: absolute;
   bottom: 2%;
@@ -103,4 +104,8 @@ a:hover {
   font-size: 16px;
   opacity: 0.5;
   color: #8be9fd;
+}
+
+.project-carousel-wrapper::after {
+  content: "→";
 }

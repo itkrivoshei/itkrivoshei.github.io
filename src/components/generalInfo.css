@@ -1,22 +1,70 @@
 .general-info {
+  position: relative;
   height: 100vh;
+  width: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #f8f8f2;
-  text-align: center;
   padding: 20px;
+}
+
+.terminal-window {
+  background: linear-gradient(to top, #000000, #000000, #333333, #333333);
+  background-size: 100% 1px;
+  border: 2px solid #3f3f3f;
+  border-radius: 20px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  filter: blur(0.5x);
+  text-shadow: 0 0 0.2px #50fa7b;
+  animation: scanlines 55s infinite linear;
+}
+
+@keyframes scanlines {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 -10px;
+  }
+}
+
+.terminal-body {
+  padding: 20px;
+  text-align: left;
+  flex: 1;
+  overflow-y: auto;
+  color: #50fa7b;
+  font-size: 16px;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 8%;
+  margin-right: 20px;
+}
+
+.typed-text {
+  white-space: pre-wrap;
 }
 
 .general-info ul {
   list-style: none;
   padding: 0;
+  margin-top: 20px;
 }
 
 .general-info ul li {
-  display: inline;
-  margin: 0 10px;
+  margin: 10px 0;
 }
 
 .general-info ul li a {
@@ -26,4 +74,25 @@
 
 .general-info ul li a:hover {
   text-decoration: underline;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.typed-text::after {
+  content: "|";
+  animation: blink 1s infinite;
+}
+
+.command {
+  color: #6272a4;
 }

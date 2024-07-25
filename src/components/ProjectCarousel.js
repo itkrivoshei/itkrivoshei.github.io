@@ -82,7 +82,7 @@ const ProjectCarousel = () => {
   }, [])
 
   return (
-    <div className="project-carousel-wrapper">
+    <section className="project-carousel-wrapper">
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} ref={apiRef}>
         {projectData.map((project, index) => (
           <a
@@ -98,7 +98,7 @@ const ProjectCarousel = () => {
           </a>
         ))}
       </ScrollMenu>
-    </div>
+    </section>
   )
 }
 

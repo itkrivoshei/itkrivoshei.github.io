@@ -92,3 +92,15 @@ a:hover {
 .general-info ul li a {
   color: var(--link-color);
 }
+
+.general-info::after,
+.timeline-outer-container::after {
+  content: "↓";
+  position: absolute;
+  bottom: 2%;
+  right: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  opacity: 0.5;
+  color: #8be9fd;
+}

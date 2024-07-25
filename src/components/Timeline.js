@@ -65,81 +65,118 @@ const timelineData = [
   },
 ]
 
-const Timeline = () => (
-  <div className="timeline-outer-container">
-    <div className="timeline-container">
-      <ul className="timeline">
-        {timelineData.map((item, index) => (
-          <li
-            key={index}
-            className="timeline-item"
-            onClick={() =>
-              window.open(item.link || item.roles[0].link, "_blank")
-            }
-          >
-            <span>
-              <div className="timeline-duration">
-                {item.roles
-                  ? item.roles
-                      .map(role => calculateDuration(role.start, role.end))
-                      .reduce((acc, val) => acc + parseFloat(val), 0)
-                      .toFixed(1)
-                  : calculateDuration(item.start, item.end)}{" "}
-                <br />
-                yrs
-              </div>
-            </span>
-            <span className="timeline-dot"></span>
-            {item.roles ? (
-              <div className="timeline-content">
-                <div className="timeline-company-wrapper">
-                  <a
-                    href={item.link}
-                    className="timeline-company"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {item.company}
-                  </a>
+const Timeline = () => {
+  const totalExperience = timelineData
+    .reduce((acc, item) => {
+      if (item.roles) {
+        return (
+          acc +
+          item.roles.reduce(
+            (roleAcc, role) =>
+              roleAcc + parseFloat(calculateDuration(role.start, role.end)),
+            0,
+          )
+        )
+      }
+      return acc + parseFloat(calculateDuration(item.start, item.end))
+    }, 0)
+    .toFixed(1)
+
+  return (
+    <section className="timeline-outer-container">
+      <div className="about-me">
+        <h1>About Me</h1>
+        <p>
+          I am a skilled <span className="highlight">Front-End Developer</span>{" "}
+          with over <span className="highlight">{totalExperience} years</span>{" "}
+          of experience in building high-load web applications using{" "}
+          <span className="highlight">React</span>,{" "}
+          <span className="highlight">Angular</span>, and{" "}
+          <span className="highlight">Vue</span>. My expertise spans{" "}
+          <span className="highlight">JavaScript/TypeScript</span>,{" "}
+          <span className="highlight">HTML/CSS</span>,{" "}
+          <span className="highlight">Node.js</span>, and tools like{" "}
+          <span className="highlight">Jenkins</span>,{" "}
+          <span className="highlight">Jira</span>, and{" "}
+          <span className="highlight">Figma</span>. I thrive in agile
+          environments, mentoring junior developers, and conducting code reviews
+          to maintain top-notch code quality.
+        </p>
+      </div>
+      <div className="timeline-container">
+        <ul className="timeline">
+          {timelineData.map((item, index) => (
+            <li
+              key={index}
+              className="timeline-item"
+              onClick={() =>
+                window.open(item.link || item.roles[0].link, "_blank")
+              }
+            >
+              <span>
+                <div className="timeline-duration">
+                  {item.roles
+                    ? item.roles
+                        .map(role => calculateDuration(role.start, role.end))
+                        .reduce((acc, val) => acc + parseFloat(val), 0)
+                        .toFixed(1)
+                    : calculateDuration(item.start, item.end)}{" "}
+                  <br />
+                  yrs
                 </div>
-                {item.roles.map((role, idx) => (
-                  <div key={idx} className="timeline-role">
-                    <div className="timeline-title">{role.title}</div>
-                    <div className="timeline-date">
-                      {formatDate(role.start)} -{" "}
-                      {role.end === "Present"
-                        ? "Present"
-                        : formatDate(role.end)}
-                    </div>
-                    <div className="timeline-location">{role.location}</div>
+              </span>
+              <span className="timeline-dot"></span>
+              {item.roles ? (
+                <div className="timeline-content">
+                  <div className="timeline-company-wrapper">
+                    <a
+                      href={item.link}
+                      className="timeline-company"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.company}
+                    </a>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="timeline-content">
-                <div className="timeline-company-wrapper">
-                  <a
-                    href={item.link}
-                    className="timeline-company"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {item.company}
-                  </a>
+                  {item.roles.map((role, idx) => (
+                    <div key={idx} className="timeline-role">
+                      <div className="timeline-title">{role.title}</div>
+                      <div className="timeline-date">
+                        {formatDate(role.start)} -{" "}
+                        {role.end === "Present"
+                          ? "Present"
+                          : formatDate(role.end)}
+                      </div>
+                      <div className="timeline-location">{role.location}</div>
+                    </div>
+                  ))}
                 </div>
-                <div className="timeline-title">{item.title}</div>
-                <div className="timeline-date">
-                  {formatDate(item.start)} -{" "}
-                  {item.end === "Present" ? "Present" : formatDate(item.end)}
+              ) : (
+                <div className="timeline-content">
+                  <div className="timeline-company-wrapper">
+                    <a
+                      href={item.link}
+                      className="timeline-company"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.company}
+                    </a>
+                  </div>
+                  <div className="timeline-title">{item.title}</div>
+                  <div className="timeline-date">
+                    {formatDate(item.start)} -{" "}
+                    {item.end === "Present" ? "Present" : formatDate(item.end)}
+                  </div>
+                  <div className="timeline-location">{item.location}</div>
                 </div>
-                <div className="timeline-location">{item.location}</div>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-)
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
 
 export default Timeline

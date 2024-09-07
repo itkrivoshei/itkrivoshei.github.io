@@ -15,13 +15,13 @@ const GeneralInfo = () => {
       {/* Main Info */}
       <div className="info-container">
         <h1 className="name">Nikita Krivoshei</h1>
-        <h3 className="title">Front-End Engineer</h3>
+        <h3 className="title">Frontend Engineer</h3>
       </div>
 
       {/* Links and Resume */}
       <div className="links">
         <p>
-          Find me on:
+          Find me on&nbsp;
           <a
             href="https://www.linkedin.com/in/itkivoshei/"
             target="_blank"
@@ -29,7 +29,7 @@ const GeneralInfo = () => {
           >
             LinkedIn
           </a>
-          and
+          &nbsp;and&nbsp;
           <a
             href="https://github.com/itkrivoshei"
             target="_blank"
@@ -37,7 +37,6 @@ const GeneralInfo = () => {
           >
             GitHub
           </a>
-          .
         </p>
         <p>
           <a

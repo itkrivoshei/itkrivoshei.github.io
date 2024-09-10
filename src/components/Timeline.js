@@ -20,15 +20,15 @@ const timelineData = [
     end: "Present",
     company: "SPRYLAB (Purple)",
     location: "Berlin, Germany",
-    title: "Front-End Developer",
+    title: "Frontend Developer",
     link: "https://www.linkedin.com/company/2979477/",
   },
   {
     start: "2022-12-01",
-    end: "Present",
+    end: "2023-09-01",
     company: "The Odin Project",
     location: "Berlin, Germany",
-    title: "Full-Stack Front-End Developer",
+    title: "Fullstack Frontend Developer Course",
     link: "https://www.linkedin.com/company/the-odin-project/posts/?feedView=all",
   },
   {
@@ -38,19 +38,19 @@ const timelineData = [
       {
         start: "2021-09-01",
         end: "2022-04-01",
-        title: "Angular Front-End Developer (Main Team)",
+        title: "Angular Frontend Developer (Main Team)",
         location: "Moscow, Russia",
       },
       {
         start: "2021-04-01",
         end: "2021-09-01",
-        title: "Angular Front-End Developer (Content Team)",
+        title: "Angular Frontend Developer (Content Team)",
         location: "Moscow, Russia",
       },
       {
         start: "2020-10-01",
         end: "2021-04-01",
-        title: "Intern Angular Front-End Developer",
+        title: "Intern Angular Frontend Developer",
         location: "Moscow, Russia",
       },
     ],
@@ -85,11 +85,10 @@ const Timeline = () => {
   return (
     <section className="timeline-outer-container">
       <div className="about-me">
-        <h1>About Me</h1>
+        <h1># about</h1>
         <p>
-          I am a skilled <span className="highlight">Front-End Developer</span>{" "}
-          with over <span className="highlight">{totalExperience} years</span>{" "}
-          of experience in building high-load web applications using{" "}
+          Over <span className="highlight">{totalExperience} years</span> of
+          experience in building high-load web applications using{" "}
           <span className="highlight">React</span>,{" "}
           <span className="highlight">Angular</span>, and{" "}
           <span className="highlight">Vue</span>. My expertise spans{" "}

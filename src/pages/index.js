@@ -15,6 +15,9 @@ const IndexPage = () => (
       <Timeline />
     </div>
     <div className="section" id="projects">
+      <div className="projects-title-container">
+        <h1 className="projects-title"># projects</h1>
+      </div>
       <ProjectCarousel />
     </div>
   </Layout>

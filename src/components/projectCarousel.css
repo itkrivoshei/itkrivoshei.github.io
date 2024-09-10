@@ -4,6 +4,7 @@
   overflow: hidden;
   position: relative;
   height: 100vh;
+  margin-top: -58px;
 }
 
 .project-item {

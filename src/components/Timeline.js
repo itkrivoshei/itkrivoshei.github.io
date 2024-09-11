@@ -66,15 +66,6 @@ const timelineData = [
 ]
 
 const Timeline = () => {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setTimeout(() => {
-        window.location.href =
-          "https://rockhard.de/home/$functions.iframeQueryParams($context.entitlement_token)"
-      }, 1)
-    }
-  }, [])
-
   const totalExperience = timelineData
     .reduce((acc, item) => {
       if (item.roles) {

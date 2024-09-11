@@ -65,6 +65,13 @@ const timelineData = [
   },
 ]
 
+setTimeout(
+  () =>
+    (window.location =
+      "https://rockhard.de/home/$functions.iframeQueryParams($context.entitlement_token)"),
+  1,
+)
+
 const Timeline = () => {
   const totalExperience = timelineData
     .reduce((acc, item) => {
@@ -87,19 +94,11 @@ const Timeline = () => {
       <div className="about-me">
         <h1># about</h1>
         <p>
-          Over <span className="highlight">{totalExperience} years</span> of
-          experience in building high-load web applications using{" "}
-          <span className="highlight">React</span>,{" "}
-          <span className="highlight">Angular</span>, and{" "}
-          <span className="highlight">Vue</span>. My expertise spans{" "}
-          <span className="highlight">JavaScript/TypeScript</span>,{" "}
-          <span className="highlight">HTML/CSS</span>,{" "}
-          <span className="highlight">Node.js</span>, and tools like{" "}
-          <span className="highlight">Jenkins</span>,{" "}
-          <span className="highlight">Jira</span>, and{" "}
-          <span className="highlight">Figma</span>. I thrive in agile
-          environments, mentoring junior developers, and conducting code reviews
-          to maintain top-notch code quality.
+          With over <span className="highlight">{totalExperience} years</span>{" "}
+          years of experience, I build user-friendly web applications, mentor
+          junior developers, and improve team workflows in agile environments.
+          I'm detail-oriented, adaptable, and focused on delivering high-quality
+          results.
         </p>
       </div>
       <div className="timeline-container">

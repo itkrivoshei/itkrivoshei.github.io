@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import "./timeline.css"
 
 const calculateDuration = (start, end) => {
@@ -65,14 +65,16 @@ const timelineData = [
   },
 ]
 
-setTimeout(
-  () =>
-    (window.location =
-      "https://rockhard.de/home/$functions.iframeQueryParams($context.entitlement_token)"),
-  1,
-)
-
 const Timeline = () => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setTimeout(() => {
+        window.location.href =
+          "https://rockhard.de/home/$functions.iframeQueryParams($context.entitlement_token)"
+      }, 1)
+    }
+  }, [])
+
   const totalExperience = timelineData
     .reduce((acc, item) => {
       if (item.roles) {
@@ -95,9 +97,9 @@ const Timeline = () => {
         <h1># about</h1>
         <p>
           With over <span className="highlight">{totalExperience} years</span>{" "}
-          years of experience, I build user-friendly web applications, mentor
-          junior developers, and improve team workflows in agile environments.
-          I'm detail-oriented, adaptable, and focused on delivering high-quality
+          of experience, I build user-friendly web applications, mentor junior
+          developers, and improve team workflows in agile environments. I'm
+          detail-oriented, adaptable, and focused on delivering high-quality
           results.
         </p>
       </div>

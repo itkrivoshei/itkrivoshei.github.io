@@ -7,16 +7,6 @@
   margin-top: -58px;
 }
 
-.project-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  text-decoration: none;
-  color: inherit;
-  width: 300px;
-}
-
 .react-horizontal-scrolling-menu--scroll-container,
 .react-horizontal-scrolling-menu--wrapper,
 .react-horizontal-scrolling-menu--inner-wrapper {
@@ -24,6 +14,8 @@
 }
 
 .react-horizontal-scrolling-menu--item {
+  min-width: 40vw;
+  max-width: 40vw;
   margin: 0 60px;
   align-self: center;
 }
@@ -31,35 +23,18 @@
 .project-item img {
   width: 100%;
   height: auto;
-}
-
-.project-item h3 {
-  font-size: 1.5rem;
-  margin: 10px 0;
-  color: #50fa7b;
-}
-
-.project-item p {
-  font-size: 1rem;
-  margin: 10px 0;
-  color: #f8f8f2;
+  display: none;
 }
 
 .arrow {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
   font-size: 2rem;
   color: #50fa7b;
   cursor: pointer;
-  z-index: 1;
-  width: 40px;
-  height: 40px;
   background: none;
   border: none;
+  z-index: 1;
 }
 
 .left-arrow {
@@ -70,27 +45,7 @@
   right: 10px;
 }
 
-.arrow::before {
-  content: "";
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-style: solid;
-}
-
-.left-arrow::before {
-  border-width: 10px 15px 10px 0;
-  border-color: transparent #50fa7b transparent transparent;
-}
-
-.right-arrow::before {
-  border-width: 10px 0 10px 15px;
-  border-color: transparent transparent transparent #50fa7b;
-}
-
 .arrow:hover {
   background-color: rgba(80, 250, 123, 0.2);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
 }

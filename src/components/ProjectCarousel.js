@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useState } from "react"
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu"
 import "react-horizontal-scrolling-menu/dist/styles.css"
 import "./projectCarousel.css"
@@ -39,67 +39,180 @@ const projectData = [
   },
 ]
 
-const Arrow = ({ text, className, onClick }) => {
+class DragDealer {
+  clicked = false
+  dragging = false
+  position = 0
+
+  dragStart = ev => {
+    this.position = ev.clientX
+    this.clicked = true
+  }
+
+  dragStop = () => {
+    window.requestAnimationFrame(() => {
+      this.dragging = false
+      this.clicked = false
+    })
+  }
+
+  dragMove = (ev, cb) => {
+    const newDiff = this.position - ev.clientX
+    const movedEnough = Math.abs(newDiff) > 5
+
+    if (this.clicked && movedEnough) {
+      this.dragging = true
+    }
+
+    if (this.dragging && movedEnough) {
+      this.position = ev.clientX
+      cb(newDiff)
+    }
+  }
+}
+
+const ProjectCarousel = () => {
+  const [selected, setSelected] = useState([])
+  const dragState = useRef(new DragDealer())
+
+  const isItemSelected = id => !!selected.find(el => el === id)
+
+  const handleClick =
+    id =>
+    ({ getItemById, scrollToItem }) => {
+      if (dragState.current.dragging) return
+
+      const itemSelected = isItemSelected(id)
+      setSelected(currentSelected =>
+        itemSelected
+          ? currentSelected.filter(el => el !== id)
+          : currentSelected.concat(id),
+      )
+    }
+
+  const handleDrag =
+    ({ scrollContainer }) =>
+    ev =>
+      dragState.current.dragMove(ev, posDiff => {
+        if (scrollContainer.current) {
+          scrollContainer.current.scrollLeft += posDiff
+        }
+      })
+
+  const onMouseDown = React.useCallback(
+    () => dragState.current.dragStart,
+    [dragState],
+  )
+  const onMouseUp = React.useCallback(
+    () => dragState.current.dragStop,
+    [dragState],
+  )
+
   return (
-    <div className={`arrow ${className}`} onClick={onClick}>
-      {text}
+    <div
+      className="no-scrollbar project-carousel-wrapper"
+      onMouseLeave={dragState.current.dragStop}
+    >
+      <ScrollMenu
+        LeftArrow={LeftArrow}
+        RightArrow={RightArrow}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseMove={handleDrag}
+      >
+        {projectData.map((project, index) => (
+          <Card
+            key={index}
+            itemId={index.toString()}
+            title={project.title}
+            description={project.description}
+            image={project.image}
+            link={project.link}
+            onClick={handleClick(index.toString())}
+            selected={isItemSelected(index.toString())}
+          />
+        ))}
+      </ScrollMenu>
     </div>
   )
 }
 
 const LeftArrow = () => {
-  const { scrollPrev } = React.useContext(VisibilityContext)
+  const visibility = React.useContext(VisibilityContext)
+  const isFirstItemVisible = visibility.useIsVisible("first", true)
 
-  return <Arrow className="left-arrow" onClick={() => scrollPrev()} />
+  return (
+    <Arrow
+      disabled={isFirstItemVisible}
+      onClick={() => visibility.scrollPrev("smooth")}
+      className="left-arrow"
+    >
+      {"<"}
+    </Arrow>
+  )
 }
 
 const RightArrow = () => {
-  const { scrollNext } = React.useContext(VisibilityContext)
-
-  return <Arrow className="right-arrow" onClick={() => scrollNext()} />
-}
-
-const ProjectCarousel = () => {
-  const apiRef = useRef(null)
-
-  useEffect(() => {
-    const scrollContainer = apiRef.current?.scrollContainer
-
-    const handleScroll = () => {
-      if (!scrollContainer) return
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainer
-      const maxScrollLeft = scrollWidth - clientWidth
-
-      if (scrollLeft <= 0) {
-        scrollContainer.scrollLeft = maxScrollLeft - clientWidth
-      } else if (scrollLeft >= maxScrollLeft) {
-        scrollContainer.scrollLeft = clientWidth
-      }
-    }
-
-    scrollContainer?.addEventListener("scroll", handleScroll)
-    return () => scrollContainer?.removeEventListener("scroll", handleScroll)
-  }, [])
+  const visibility = React.useContext(VisibilityContext)
+  const isLastItemVisible = visibility.useIsVisible("last", false)
 
   return (
-    <section className="project-carousel-wrapper">
-      <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} ref={apiRef}>
-        {projectData.map((project, index) => (
-          <a
-            key={index}
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="project-item"
-          >
-            <img src={project.image} alt={project.title} />
-            <h3>{project.title}</h3>
-            <p>{project.description}</p>
-          </a>
-        ))}
-      </ScrollMenu>
-    </section>
+    <Arrow
+      disabled={isLastItemVisible}
+      onClick={() => visibility.scrollNext("smooth")}
+      className="right-arrow"
+    >
+      {">"}
+    </Arrow>
   )
 }
+
+function Card({ onClick, title, description, image, link }) {
+  const visibility = React.useContext(VisibilityContext)
+
+  return (
+    <div
+      onClick={() => onClick(visibility)}
+      style={{
+        width: "100%",
+        cursor: "pointer",
+        margin: "0 10px",
+        userSelect: "none",
+        border: "3px solid #50fa7b",
+      }}
+      tabIndex={0}
+    >
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        <h3 style={{ position: "absolute", width: "40vh" }}>{title}</h3>
+        <img
+          src={image}
+          alt={title}
+          style={{
+            width: "100%",
+            height: "auto",
+            aspectRatio: "16 / 9",
+            objectFit: "cover",
+          }}
+        />
+        <p style={{ position: "absolute", width: "40vh" }}>{description}</p>
+      </a>
+    </div>
+  )
+}
+
+const Arrow = ({ children, disabled, onClick, className }) => (
+  <button
+    className={className + " arrow"}
+    onClick={onClick}
+    disabled={disabled}
+    style={{
+      cursor: disabled ? "default" : "pointer",
+      opacity: disabled ? 0 : 1,
+      display: "absolute",
+    }}
+  >
+    {children}
+  </button>
+)
 
 export default ProjectCarousel

@@ -14,16 +14,73 @@
 }
 
 .react-horizontal-scrolling-menu--item {
-  min-width: 40vw;
-  max-width: 40vw;
   margin: 0 60px;
   align-self: center;
 }
 
-.project-item img {
+.card-container {
+  position: relative;
+  margin: 0 10px;
+  cursor: pointer;
+  color: #fff;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  min-width: 40vw;
+  max-width: 40vw;
+}
+
+.card-container:hover {
+  transform: scale(1.02);
+}
+
+.project-title {
+  text-align: left;
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.image-container {
+  position: relative;
+}
+
+img {
   width: 100%;
   height: auto;
-  display: none;
+  object-fit: cover;
+}
+
+.description-container {
+  margin-top: 10px;
+  background-color: #222;
+  border: 2px solid #50fa7b;
+  position: relative;
+}
+
+.tags {
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: bottom 0.3s ease;
+}
+
+.card-container:hover .tags {
+  bottom: 0;
+}
+
+.tag {
+  background-color: #50fa7b;
+  color: black;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 .arrow {
@@ -35,6 +92,8 @@
   background: none;
   border: none;
   z-index: 1;
+  transform: translateY(-50%);
+  padding: 10px;
 }
 
 .left-arrow {

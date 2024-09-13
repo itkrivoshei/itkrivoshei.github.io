@@ -15,6 +15,7 @@ const projectData = [
       "A collection of web-based projects created with React, TypeScript, and Redux.",
     link: "https://github.com/itkrivoshei/OdinMonoWebApps",
     image: monoWebAppsPng,
+    tags: ["React", "Redux", "TypeScript"],
   },
   {
     title: "Selection Sort Visualizer",
@@ -22,6 +23,7 @@ const projectData = [
       "An interactive way to learn Selection Sort with visual tests.",
     link: "https://github.com/itkrivoshei/SelectionSortAndVisualizer",
     image: selectionSortPng,
+    tags: ["JavaScript", "Sorting", "Algorithms"],
   },
   {
     title: "Machine Learning And Visualisation",
@@ -29,6 +31,7 @@ const projectData = [
       "Predict salaries based on years of experience using linear regression.",
     link: "https://github.com/itkrivoshei/BasicsOfMachineLearningAndVisualisation",
     image: machineLearningPng,
+    tags: ["Python", "Machine Learning", "Linear Regression"],
   },
   {
     title: "Predictive Analysis",
@@ -36,6 +39,7 @@ const projectData = [
       "Predict rental prices and classify luxury apartments in Berlin.",
     link: "https://github.com/itkrivoshei/BasicsOfPredictiveAnalysis",
     image: predictiveAnalysisPng,
+    tags: ["Python", "Pandas", "Data Analysis"],
   },
 ]
 
@@ -124,6 +128,7 @@ const ProjectCarousel = () => {
             title={project.title}
             description={project.description}
             image={project.image}
+            tags={project.tags}
             link={project.link}
             onClick={() => handleCardClick(project.link)}
             selected={isItemSelected(index.toString())}
@@ -164,32 +169,21 @@ const RightArrow = () => {
   )
 }
 
-function Card({ title, description, image, onClick }) {
+function Card({ title, description, image, tags, onClick }) {
   return (
-    <div
-      onClick={onClick}
-      style={{
-        width: "100%",
-        cursor: "pointer",
-        margin: "0 10px",
-        userSelect: "none",
-      }}
-      tabIndex={0}
-    >
-      <h3>// {title}</h3>
-      <img
-        src={image}
-        alt={title}
-        draggable="false"
-        style={{
-          width: "100%",
-          height: "auto",
-          aspectRatio: "16 / 9",
-          objectFit: "cover",
-          border: "3px solid #50fa7b",
-        }}
-      />
-      <p>{description}</p>
+    <div className="card-container" onClick={onClick} tabIndex={0}>
+      <h3 className="project-title">{title}</h3>
+      <div className="description-container">
+        <img src={image} alt={title} draggable="false" />
+        <p className="description">{description}</p>
+        <div className="tags">
+          {tags.map((tag, index) => (
+            <span key={index} className="tag">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
@@ -202,7 +196,6 @@ const Arrow = ({ children, disabled, onClick, className }) => (
     style={{
       cursor: disabled ? "default" : "pointer",
       opacity: disabled ? 0 : 1,
-      display: "absolute",
     }}
   >
     {children}

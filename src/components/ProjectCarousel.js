@@ -122,7 +122,7 @@ const ProjectCarousel = () => {
         onMouseMove={handleDrag}
       >
         {projectData.map((project, index) => (
-          <Card
+          <ProjectCard
             key={index}
             itemId={index.toString()}
             title={project.title}
@@ -169,19 +169,25 @@ const RightArrow = () => {
   )
 }
 
-function Card({ title, description, image, tags, onClick }) {
+function ProjectCard({ title, description, image, tags, link, onClick }) {
   return (
-    <div className="card-container" onClick={onClick} tabIndex={0}>
-      <h3 className="project-title">{title}</h3>
-      <div className="description-container">
-        <img src={image} alt={title} draggable="false" />
-        <p className="description">{description}</p>
-        <div className="tags">
-          {tags.map((tag, index) => (
-            <span key={index} className="tag">
-              {tag}
-            </span>
-          ))}
+    <div className="project">
+      <div className="header">
+        <div className="title">{title}</div>
+      </div>
+      <div className="info" onClick={onClick}>
+        <img className="image" src={image} alt={title} draggable="false" />
+        <div className="description-container">
+          <div className="description">{description}</div>
+          <div className="description-tag">
+            <div className="tags" aria-hidden="true">
+              {tags.map((tag, index) => (
+                <div key={index} className="tag">
+                  {tag}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

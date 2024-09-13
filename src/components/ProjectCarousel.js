@@ -178,24 +178,23 @@ function Card({ onClick, title, description, image, link }) {
         cursor: "pointer",
         margin: "0 10px",
         userSelect: "none",
-        border: "3px solid #50fa7b",
       }}
       tabIndex={0}
     >
-      <a href={link} target="_blank" rel="noopener noreferrer">
-        <h3 style={{ position: "absolute", width: "40vh" }}>{title}</h3>
-        <img
-          src={image}
-          alt={title}
-          style={{
-            width: "100%",
-            height: "auto",
-            aspectRatio: "16 / 9",
-            objectFit: "cover",
-          }}
-        />
-        <p style={{ position: "absolute", width: "40vh" }}>{description}</p>
-      </a>
+      <h3>// {title}</h3>
+      <img
+        src={image}
+        alt={title}
+        draggable="false"
+        style={{
+          width: "100%",
+          height: "auto",
+          aspectRatio: "16 / 9",
+          objectFit: "cover",
+          border: "3px solid #50fa7b",
+        }}
+      />
+      <p>{description}</p>
     </div>
   )
 }

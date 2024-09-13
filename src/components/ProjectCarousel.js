@@ -74,21 +74,9 @@ class DragDealer {
 const ProjectCarousel = () => {
   const [selected, setSelected] = useState([])
   const dragState = useRef(new DragDealer())
+  const clickTimeout = useRef(null)
 
   const isItemSelected = id => !!selected.find(el => el === id)
-
-  const handleClick =
-    id =>
-    ({ getItemById, scrollToItem }) => {
-      if (dragState.current.dragging) return
-
-      const itemSelected = isItemSelected(id)
-      setSelected(currentSelected =>
-        itemSelected
-          ? currentSelected.filter(el => el !== id)
-          : currentSelected.concat(id),
-      )
-    }
 
   const handleDrag =
     ({ scrollContainer }) =>
@@ -107,6 +95,15 @@ const ProjectCarousel = () => {
     () => dragState.current.dragStop,
     [dragState],
   )
+
+  const handleCardClick = link => {
+    if (!dragState.current.dragging) {
+      clearTimeout(clickTimeout.current)
+      clickTimeout.current = setTimeout(() => {
+        window.open(link, "_blank")
+      }, 200)
+    }
+  }
 
   return (
     <div
@@ -128,7 +125,7 @@ const ProjectCarousel = () => {
             description={project.description}
             image={project.image}
             link={project.link}
-            onClick={handleClick(index.toString())}
+            onClick={() => handleCardClick(project.link)}
             selected={isItemSelected(index.toString())}
           />
         ))}
@@ -167,12 +164,10 @@ const RightArrow = () => {
   )
 }
 
-function Card({ onClick, title, description, image, link }) {
-  const visibility = React.useContext(VisibilityContext)
-
+function Card({ title, description, image, onClick }) {
   return (
     <div
-      onClick={() => onClick(visibility)}
+      onClick={onClick}
       style={{
         width: "100%",
         cursor: "pointer",

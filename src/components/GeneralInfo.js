@@ -21,7 +21,6 @@ const GeneralInfo = () => {
       {/* Links and Resume */}
       <div className="links">
         <p>
-          Find me on&nbsp;
           <a
             href="https://www.linkedin.com/in/itkivoshei/"
             target="_blank"
@@ -29,7 +28,7 @@ const GeneralInfo = () => {
           >
             LinkedIn
           </a>
-          &nbsp;and&nbsp;
+          &nbsp;
           <a
             href="https://github.com/itkrivoshei"
             target="_blank"
@@ -37,14 +36,13 @@ const GeneralInfo = () => {
           >
             GitHub
           </a>
-        </p>
-        <p>
+          &nbsp;
           <a
             href="https://drive.google.com/file/d/1qTOYft9_fMY25XVUD5Ce2_P6yWD8a48_/view?usp=drive_link"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Download My Resume
+            Resume
           </a>
         </p>
       </div>

@@ -5,20 +5,15 @@ import profilePhoto from "../images/profilePhoto.jpg"
 const GeneralInfo = () => {
   return (
     <section className="general-info">
-      {/* Profile Photo */}
       {/* <img
         src={profilePhoto}
         alt="Nikita Krivoshei"
         className="profile-photo"
       /> */}
-
-      {/* Main Info */}
       <div className="info-container">
         <h1 className="name">Nikita Krivoshei</h1>
         <h3 className="title">Frontend Engineer</h3>
       </div>
-
-      {/* Links and Resume */}
       <div className="links">
         <p>
           <a

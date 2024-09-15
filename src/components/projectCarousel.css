@@ -26,7 +26,6 @@
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  background: rgba(0, 0, 0, 0.8);
 }
 
 .react-horizontal-scrolling-menu--scroll-container,

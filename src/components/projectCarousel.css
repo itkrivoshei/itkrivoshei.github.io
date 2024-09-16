@@ -18,10 +18,6 @@
   max-width: 40vw;
 }
 
-.project:hover {
-  transform: scale(1.02);
-}
-
 .header {
   display: flex;
   justify-content: space-between;

@@ -1,3 +1,19 @@
+@media screen and (min-width: 1200px) {
+  .project {
+    min-width: 40vw;
+    max-width: 40vw;
+    padding: 0 2.5vw;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .project {
+    min-width: 60vw;
+    max-width: 60vw;
+    padding: 0 20vw;
+  }
+}
+
 .project-carousel-wrapper {
   padding: 0;
   box-sizing: border-box;
@@ -14,8 +30,6 @@
   color: #fff;
   overflow: hidden;
   transition: transform 0.3s ease;
-  min-width: 40vw;
-  max-width: 40vw;
 }
 
 .header {

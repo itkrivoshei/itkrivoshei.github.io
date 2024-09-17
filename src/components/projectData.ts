@@ -6,12 +6,8 @@ import Weather1 from "../images/Weather1.jpg"
 import Weather2 from "../images/Weather2.jpg"
 import Todo1 from "../images/Todo1.jpg"
 import Todo2 from "../images/Todo2.jpg"
-import Calc1 from "../images/Calc1.jpg"
-import Calc2 from "../images/Calc2.jpg"
 import Form1 from "../images/Form1.jpg"
 import Form2 from "../images/Form2.jpg"
-import Scatch1 from "../images/Scatch1.jpg"
-import Scatch2 from "../images/Scatch2.jpg"
 
 export const projectData = [
   {
@@ -47,27 +43,11 @@ export const projectData = [
     tags: ["React", "TypeScript", "Redux Toolkit", "Material UI"],
   },
   {
-    title: "Calculator App",
-    description:
-      "A web-based calculator designed to mimic the IBM keyboard numpad, developed using React, TypeScript, and SCSS with sound effects.",
-    link: "https://itkrivoshei.github.io/OdinMonoWebApps/#/Calculator",
-    image: window.innerWidth >= 700 ? Calc1 : Calc2,
-    tags: ["React", "TypeScript", "SCSS", "Howler.js"],
-  },
-  {
     title: "Sign-up Form App",
     description:
       "An interactive sign-up form with dynamic validation, matrix-style background animation, and custom phone number formatting.",
     link: "https://itkrivoshei.github.io/OdinMonoWebApps/#/SignUpForm",
     image: window.innerWidth >= 700 ? Form1 : Form2,
     tags: ["React", "TypeScript", "Form Validation"],
-  },
-  {
-    title: "Etch-A-Sketch App",
-    description:
-      "A modern take on the classic Etch-A-Sketch, featuring customizable grid sizes and color modes developed using React and TypeScript.",
-    link: "https://itkrivoshei.github.io/OdinMonoWebApps/#/EtchASketch",
-    image: window.innerWidth >= 700 ? Scatch1 : Scatch2,
-    tags: ["React", "TypeScript", "SCSS", "Canvas"],
   },
 ]

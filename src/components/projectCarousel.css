@@ -2,7 +2,6 @@
   .project {
     min-width: 40vw;
     max-width: 40vw;
-    padding: 0 2.5vw;
   }
 }
 
@@ -10,7 +9,6 @@
   .project {
     min-width: 60vw;
     max-width: 60vw;
-    padding: 0 20vw;
   }
 }
 

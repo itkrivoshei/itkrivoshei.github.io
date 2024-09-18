@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu"
 import "react-horizontal-scrolling-menu/dist/styles.css"
 import "./projectCarousel.css"
@@ -39,6 +39,7 @@ class DragDealer {
 
 const ProjectCarousel = () => {
   const [selected] = useState([])
+  const [isMobile, setIsMobile] = useState(false) // Mobile state
   const dragState = useRef(new DragDealer())
   const clickTimeout = useRef(null)
   const apiRef = useRef(null) // Using apiRef for scroll functions
@@ -84,6 +85,15 @@ const ProjectCarousel = () => {
     setIsLastVisible(visibility.isLastItemVisible)
   }
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 700)
+    }
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
   return (
     <div
       className="no-scrollbar project-carousel-wrapper"
@@ -105,7 +115,7 @@ const ProjectCarousel = () => {
             itemId={index.toString()}
             title={project.title}
             description={project.description}
-            image={project.image}
+            image={isMobile ? project.mobileImage : project.desktopImage}
             tags={project.tags}
             link={project.link}
             onClick={() => handleCardClick(project.link)}

@@ -1,6 +1,6 @@
 import React from "react"
 import "./generalInfo.css"
-import profilePhoto from "../images/profilePhoto.jpg"
+// import profilePhoto from "../images/profilePhoto.jpg"
 
 const GeneralInfo = () => {
   return (

@@ -10,7 +10,7 @@ class DragDealer {
   position = 0
 
   dragStart = ev => {
-    this.position = ev.clientX
+    this.position = ev.clientX || ev.touches[0].clientX
     this.clicked = true
   }
 
@@ -22,7 +22,8 @@ class DragDealer {
   }
 
   dragMove = (ev, cb) => {
-    const newDiff = this.position - ev.clientX
+    const clientX = ev.clientX || ev.touches[0].clientX
+    const newDiff = this.position - clientX
     const movedEnough = Math.abs(newDiff) > 5
 
     if (this.clicked && movedEnough) {
@@ -30,16 +31,19 @@ class DragDealer {
     }
 
     if (this.dragging && movedEnough) {
-      this.position = ev.clientX
+      this.position = clientX
       cb(newDiff)
     }
   }
 }
 
 const ProjectCarousel = () => {
-  const [selected, setSelected] = useState([])
+  const [selected] = useState([])
   const dragState = useRef(new DragDealer())
   const clickTimeout = useRef(null)
+  const apiRef = useRef(null) // Using apiRef for scroll functions
+  const [isFirstVisible, setIsFirstVisible] = useState(true)
+  const [isLastVisible, setIsLastVisible] = useState(false)
 
   const isItemSelected = id => !!selected.find(el => el === id)
 
@@ -70,17 +74,30 @@ const ProjectCarousel = () => {
     }
   }
 
+  const onInit = visibility => {
+    setIsFirstVisible(visibility.isFirstItemVisible)
+    setIsLastVisible(visibility.isLastItemVisible)
+  }
+
+  const onUpdate = visibility => {
+    setIsFirstVisible(visibility.isFirstItemVisible)
+    setIsLastVisible(visibility.isLastItemVisible)
+  }
+
   return (
     <div
       className="no-scrollbar project-carousel-wrapper"
       onMouseLeave={dragState.current.dragStop}
     >
       <ScrollMenu
-        LeftArrow={LeftArrow}
-        RightArrow={RightArrow}
+        LeftArrow={<LeftArrow disabled={isFirstVisible} />}
+        RightArrow={<RightArrow disabled={isLastVisible} />}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
         onMouseMove={handleDrag}
+        onInit={onInit}
+        onUpdate={onUpdate}
+        apiRef={apiRef} // Pass apiRef here
       >
         {projectData.map((project, index) => (
           <ProjectCard
@@ -100,14 +117,12 @@ const ProjectCarousel = () => {
   )
 }
 
-const LeftArrow = () => {
-  const visibility = React.useContext(VisibilityContext)
-  const isFirstItemVisible = visibility.useIsVisible("first", true)
-
+const LeftArrow = ({ disabled }) => {
+  const { scrollPrev } = React.useContext(VisibilityContext)
   return (
     <Arrow
-      disabled={isFirstItemVisible}
-      onClick={() => visibility.scrollPrev("smooth")}
+      disabled={disabled}
+      onClick={() => !disabled && scrollPrev()}
       className="left-arrow"
     >
       {"<"}
@@ -115,14 +130,12 @@ const LeftArrow = () => {
   )
 }
 
-const RightArrow = () => {
-  const visibility = React.useContext(VisibilityContext)
-  const isLastItemVisible = visibility.useIsVisible("last", false)
-
+const RightArrow = ({ disabled }) => {
+  const { scrollNext } = React.useContext(VisibilityContext)
   return (
     <Arrow
-      disabled={isLastItemVisible}
-      onClick={() => visibility.scrollNext("smooth")}
+      disabled={disabled}
+      onClick={() => !disabled && scrollNext()}
       className="right-arrow"
     >
       {">"}
@@ -130,13 +143,19 @@ const RightArrow = () => {
   )
 }
 
-function ProjectCard({ title, description, image, tags, link, onClick }) {
+function ProjectCard({ title, description, image, tags, onClick }) {
   return (
     <div className="project">
       <div className="header">
         <div className="title">{title}</div>
       </div>
-      <div className="info" onClick={onClick}>
+      <div
+        className="info"
+        onClick={onClick}
+        role="button"
+        tabIndex={0}
+        onKeyDown={e => e.key === "Enter" && onClick(e)}
+      >
         <img className="image" src={image} alt={title} draggable="false" />
         <div className="description-container">
           <div className="description">{description}</div>

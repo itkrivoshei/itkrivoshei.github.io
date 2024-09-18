@@ -2,6 +2,7 @@
   .project {
     min-width: 40vw;
     max-width: 40vw;
+    padding: 0 2.5vw;
   }
 }
 
@@ -9,7 +10,16 @@
   .project {
     min-width: 60vw;
     max-width: 60vw;
+    padding: 0 20vw;
   }
+}
+
+.project {
+  /* display: flex; */
+  /* flex-direction: column; */
+  padding: 0 15vw;
+  min-width: 70vw;
+  max-width: 70vw;
 }
 
 .project-carousel-wrapper {
@@ -43,7 +53,6 @@
 }
 
 .react-horizontal-scrolling-menu--item {
-  margin: 0 60px;
   align-self: center;
 }
 

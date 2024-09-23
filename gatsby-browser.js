@@ -1,1 +1,2 @@
-import "./src/styles/global.css"
+import '@fontsource/fira-code';
+import './src/styles/global.css';

@@ -8,7 +8,7 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: [
     'gatsby-plugin-postcss',
-    'gatsby-plugin-google-gtag',
+    // 'gatsby-plugin-google-gtag',
     'gatsby-plugin-image',
     'gatsby-plugin-sitemap',
     {

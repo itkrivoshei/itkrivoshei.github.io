@@ -20,4 +20,12 @@ const IndexPage: React.FC<PageProps> = () => {
 
 export default IndexPage;
 
-export const Head: HeadFC = () => <title>Home - Nikita Krivoshei</title>;
+export const Head: HeadFC = () => (
+  <>
+    <title>Home - Nikita Krivoshei</title>
+    <meta
+      name='description'
+      content='Fullstack Frontend Engineer and UI/UX Designer based in Berlin, Germany.'
+    />
+  </>
+);

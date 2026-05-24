@@ -1,49 +1,46 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby Minimal TypeScript Starter
-</h1>
+# itkrivoshei.github.io
 
-## 🚀 Quick start
+Personal static site for Nikita Krivoshei.
 
-1.  **Create a Gatsby site.**
+This repository has been reset to a clean baseline before rebuilding the site with Astro, TypeScript, Tailwind CSS, GitHub Actions, and GitHub Pages.
 
-    Use the Gatsby CLI to create a new site, specifying the minimal TypeScript starter.
+## Planned stack
 
-    ```shell
-    # create a new Gatsby site using the minimal TypeScript starter
-    npm init gatsby -- -ts
-    ```
+- Astro
+- TypeScript
+- Tailwind CSS
+- GitHub Actions
+- GitHub Pages
+- Dependabot
+- Optional Dockerfile for local build and build verification
 
-2.  **Start developing.**
+## Current status
 
-    Navigate into your new site’s directory and start it up.
+Phase 0 is complete: the old project files were removed and the repository now contains only the baseline project metadata and planning files.
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+## Next phase
 
-3.  **Open the code and start customizing!**
+Create the Astro project in this repository:
 
-    Your site is now running at http://localhost:8000!
+```bash
+npm create astro@latest .
+```
 
-    Edit `src/pages/index.tsx` to see your site update in real-time!
+Recommended Astro wizard choices:
 
-4.  **Learn more**
+```text
+Template: Empty
+TypeScript: Yes
+Install dependencies: Yes
+Initialize git repository: No
+```
 
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Tutorials](https://www.gatsbyjs.com/docs/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Guides](https://www.gatsbyjs.com/docs/how-to/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter-ts)
+Then add Tailwind CSS, site content, CI checks, GitHub Pages deployment, and Dependabot.
 
-## 🚀 Quick start (Netlify)
+## Project plan
 
-Deploy this starter with one click on [Netlify](https://app.netlify.com/signup):
+See [docs/mvp-plan.md](docs/mvp-plan.md).
 
-[<img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" />](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-minimal-ts)
+## License
+
+MIT — see [LICENSE](LICENSE).

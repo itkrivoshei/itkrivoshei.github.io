@@ -42,12 +42,11 @@ const description = splitDescription();
 
 <article class="content-card project-card">
   <div class="project-copy">
-    <p class="eyebrow">{project.repo}</p>
-    <h3>
+    <p class="eyebrow">
       {
         primaryLink ? (
-          <a class="project-title-link" href={primaryLink.href} target="_blank" rel="noreferrer">
-            <span>{project.name}</span>
+          <a class="project-repo-link" href={primaryLink.href} target="_blank" rel="noreferrer">
+            <span>{project.repo}</span>
             <span class="link-icon" aria-hidden="true">
               <svg class="external-link-icon" viewBox="0 0 24 24" role="img">
                 <path d="M14 5h5v5" />
@@ -57,10 +56,11 @@ const description = splitDescription();
             </span>
           </a>
         ) : (
-          project.name
+          project.repo
         )
       }
-    </h3>
+    </p>
+    <h3>{project.name}</h3>
     <p>
       {description.before}
       {description.highlight && <strong>{description.highlight}</strong>}

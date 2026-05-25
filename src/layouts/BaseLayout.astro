@@ -43,17 +43,7 @@ const {
         let targetY = window.innerHeight * 0.12;
         let currentX = targetX;
         let currentY = targetY;
-        let hasPointerPosition = false;
         let animationFrame = 0;
-
-        const getGlowStrength = (rect: DOMRect, x: number, y: number) => {
-          const dx = Math.max(rect.left - x, 0, x - rect.right);
-          const dy = Math.max(rect.top - y, 0, y - rect.bottom);
-          const distance = Math.hypot(dx, dy);
-          const radius = 260;
-
-          return Math.max(0, 1 - distance / radius);
-        };
 
         const renderGlow = () => {
           currentX += (targetX - currentX) * 0.12;
@@ -66,17 +56,9 @@ const {
 
           glowTargets.forEach((target) => {
             const rect = target.getBoundingClientRect();
-            const glowStrength = hasPointerPosition
-              ? getGlowStrength(rect, currentX, currentY)
-              : 0;
 
             target.style.setProperty('--mx', `${currentX - rect.left}px`);
             target.style.setProperty('--my', `${currentY - rect.top}px`);
-            target.style.setProperty('--glow-opacity', `${glowStrength * 0.52}`);
-            target.style.setProperty(
-              '--border-glow-opacity',
-              `${glowStrength * 0.72}`,
-            );
           });
 
           animationFrame = window.requestAnimationFrame(renderGlow);
@@ -85,17 +67,8 @@ const {
         window.addEventListener(
           'pointermove',
           (event) => {
-            hasPointerPosition = true;
             targetX = event.clientX;
             targetY = event.clientY;
-          },
-          { passive: true },
-        );
-
-        window.addEventListener(
-          'pointerleave',
-          () => {
-            hasPointerPosition = false;
           },
           { passive: true },
         );

@@ -1,9 +1,17 @@
 ---
+interface ExperienceLink {
+  label: string;
+  href: string;
+}
+
 interface ExperienceItem {
   company: string;
+  href?: string;
+  note?: string;
   role: string;
   period: string;
   points: string[];
+  links?: ExperienceLink[];
 }
 
 interface Props {
@@ -16,7 +24,18 @@ const { item } = Astro.props;
 <article class="timeline-card">
   <div class="timeline-head">
     <div>
-      <h3>{item.company}</h3>
+      {
+        item.href ? (
+          <h3>
+            <a class="text-link" href={item.href} target="_blank" rel="noreferrer">
+              {item.company}
+            </a>
+          </h3>
+        ) : (
+          <h3>{item.company}</h3>
+        )
+      }
+      {item.note && <p class="company-note">{item.note}</p>}
       <p>{item.role}</p>
     </div>
     <span>{item.period}</span>
@@ -24,4 +43,15 @@ const { item } = Astro.props;
   <ul>
     {item.points.map((point) => <li>{point}</li>)}
   </ul>
+  {
+    item.links && (
+      <div class="mini-link-row" aria-label={`${item.company} links`}>
+        {item.links.map((link) => (
+          <a href={link.href} target="_blank" rel="noreferrer">
+            {link.label}
+          </a>
+        ))}
+      </div>
+    )
+  }
 </article>

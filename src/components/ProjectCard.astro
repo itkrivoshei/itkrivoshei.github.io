@@ -1,4 +1,6 @@
 ---
+import SocialLink from './SocialLink.astro';
+
 interface ProjectItem {
   name: string;
   repo: string;
@@ -23,8 +25,7 @@ const { project } = Astro.props;
   <ul class="tag-list">
     {project.tags.map((tag) => <li>{tag}</li>)}
   </ul>
-  <a class="inline-link project-link" href={project.href} target="_blank" rel="noreferrer">
-    <span class="link-icon link-icon-github" aria-hidden="true"></span>
-    Repository
-  </a>
+  <div class="project-link">
+    <SocialLink label="GitHub" href={project.href} />
+  </div>
 </article>

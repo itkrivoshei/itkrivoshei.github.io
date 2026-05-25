@@ -1,5 +1,14 @@
 ---
-const group = Astro.props.group;
+interface SkillGroupItem {
+  title: string;
+  items: string[];
+}
+
+interface Props {
+  group: SkillGroupItem;
+}
+
+const { group } = Astro.props;
 ---
 
 <article class="content-card">

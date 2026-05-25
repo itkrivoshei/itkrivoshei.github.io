@@ -34,6 +34,8 @@
   --link: var(--terminal-blue);
   --link-rgb: 137, 180, 250;
   --surface-glow-rgb: var(--accent-rgb);
+  --cursor-x: 50vw;
+  --cursor-y: 12vh;
 
   --sans:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -56,25 +58,12 @@ body {
   min-height: 100vh;
   font-family: var(--sans);
   background:
-    radial-gradient(
-      circle at 15% 0%,
-      rgba(34, 211, 238, 0.12),
-      transparent 32rem
-    ),
-    radial-gradient(
-      circle at 85% 12%,
-      rgba(137, 180, 250, 0.08),
-      transparent 28rem
-    ),
-    linear-gradient(rgba(148, 163, 184, 0.024) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.024) 1px, transparent 1px),
+    radial-gradient(circle at 15% 0%, rgba(34, 211, 238, 0.1), transparent 32rem),
+    radial-gradient(circle at 85% 12%, rgba(137, 180, 250, 0.065), transparent 28rem),
+    linear-gradient(rgba(148, 163, 184, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.022) 1px, transparent 1px),
     linear-gradient(135deg, #020617 0%, #08111f 48%, #0f172a 100%);
-  background-size:
-    auto,
-    auto,
-    44px 44px,
-    44px 44px,
-    auto;
+  background-size: auto, auto, 44px 44px, 44px 44px, auto;
 }
 
 body::before {
@@ -83,9 +72,9 @@ body::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(rgba(255, 255, 255, 0.022), transparent 2px);
+  background: linear-gradient(rgba(255, 255, 255, 0.02), transparent 2px);
   background-size: 100% 6px;
-  opacity: 0.14;
+  opacity: 0.12;
   mix-blend-mode: screen;
 }
 
@@ -97,23 +86,10 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(
-      560px circle at var(--x) var(--y),
-      rgba(166, 227, 161, 0.05),
-      rgba(166, 227, 161, 0.018) 26%,
-      transparent 62%
-    ),
-    radial-gradient(
-      340px circle at var(--x) var(--y),
-      rgba(137, 180, 250, 0.05),
-      transparent 58%
-    ),
-    radial-gradient(
-      180px circle at var(--x) var(--y),
-      rgba(255, 255, 255, 0.035),
-      transparent 56%
-    );
-  opacity: 0.78;
+    radial-gradient(520px circle at var(--x) var(--y), rgba(166, 227, 161, 0.034), rgba(166, 227, 161, 0.014) 28%, transparent 64%),
+    radial-gradient(320px circle at var(--x) var(--y), rgba(137, 180, 250, 0.038), transparent 60%),
+    radial-gradient(160px circle at var(--x) var(--y), rgba(255, 255, 255, 0.022), transparent 58%);
+  opacity: 0.72;
 }
 
 a {
@@ -139,20 +115,12 @@ a {
 .terminal-card,
 .content-card,
 .timeline-card {
-  --mx: 50%;
-  --my: 0%;
+  --mx: var(--cursor-x);
+  --my: var(--cursor-y);
   position: relative;
   overflow: hidden;
-  border: 1px solid transparent;
-  background:
-    linear-gradient(var(--panel), var(--panel)) padding-box,
-    radial-gradient(
-        280px circle at var(--mx) var(--my),
-        rgba(var(--surface-glow-rgb), 0.42),
-        var(--line) 42%,
-        transparent 70%
-      )
-      border-box;
+  border: 1px solid var(--line);
+  background: var(--panel);
   box-shadow: 0 24px 90px rgba(2, 6, 23, 0.42);
   backdrop-filter: blur(18px);
 }
@@ -162,19 +130,46 @@ a {
 .footer-block::before,
 .terminal-card::before,
 .content-card::before,
-.timeline-card::before {
+.timeline-card::before,
+.hero-card::after,
+.section-block::after,
+.footer-block::after,
+.terminal-card::after,
+.content-card::after,
+.timeline-card::after {
   content: "";
   position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.hero-card::before,
+.section-block::before,
+.footer-block::before,
+.terminal-card::before,
+.content-card::before,
+.timeline-card::before {
   inset: 0;
   z-index: 0;
-  pointer-events: none;
-  background: radial-gradient(
-    420px circle at var(--mx) var(--my),
-    rgba(var(--surface-glow-rgb), 0.08),
-    transparent 52%
-  );
-  opacity: 0;
-  transition: opacity 180ms ease;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(var(--surface-glow-rgb), 0.055), transparent 54%);
+}
+
+.hero-card::after,
+.section-block::after,
+.footer-block::after,
+.terminal-card::after,
+.content-card::after,
+.timeline-card::after {
+  inset: -1px;
+  z-index: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(260px circle at var(--mx) var(--my), rgba(var(--surface-glow-rgb), 0.4), transparent 62%);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
 }
 
 .hero-card:hover::before,
@@ -184,6 +179,15 @@ a {
 .content-card:hover::before,
 .timeline-card:hover::before {
   opacity: 1;
+}
+
+.hero-card:hover::after,
+.section-block:hover::after,
+.footer-block:hover::after,
+.terminal-card:hover::after,
+.content-card:hover::after,
+.timeline-card:hover::after {
+  opacity: 0.86;
 }
 
 .hero-card > *,
@@ -202,18 +206,6 @@ a {
   align-items: end;
   border-radius: 2rem;
   padding: clamp(1.5rem, 5vw, 3.25rem);
-}
-
-.hero-card::after {
-  content: "";
-  position: absolute;
-  right: -10rem;
-  top: -10rem;
-  width: 24rem;
-  height: 24rem;
-  border-radius: 999px;
-  background: rgba(34, 211, 238, 0.07);
-  filter: blur(20px);
 }
 
 .eyebrow {
@@ -314,16 +306,8 @@ h1 {
 }
 
 .terminal-card {
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0.34)) padding-box,
-    radial-gradient(
-        280px circle at var(--mx) var(--my),
-        rgba(var(--accent-rgb), 0.42),
-        rgba(51, 65, 85, 0.8) 42%,
-        transparent 70%
-      )
-      border-box;
   border-radius: 1.25rem;
+  background: rgba(0, 0, 0, 0.34);
   padding: 1.25rem;
   font-family: var(--mono);
   color: var(--muted);
@@ -428,16 +412,8 @@ h3 {
 
 .content-card,
 .timeline-card {
-  background:
-    linear-gradient(var(--panel-strong), var(--panel-strong)) padding-box,
-    radial-gradient(
-        280px circle at var(--mx) var(--my),
-        rgba(var(--surface-glow-rgb), 0.38),
-        rgba(51, 65, 85, 0.72) 42%,
-        transparent 70%
-      )
-      border-box;
   border-radius: 1.25rem;
+  background: var(--panel-strong);
   padding: 1.25rem;
   transition:
     transform 180ms ease,
@@ -447,15 +423,7 @@ h3 {
 
 .content-card:hover,
 .timeline-card:hover {
-  background:
-    linear-gradient(rgba(15, 23, 42, 0.86), rgba(15, 23, 42, 0.86)) padding-box,
-    radial-gradient(
-        280px circle at var(--mx) var(--my),
-        rgba(var(--surface-glow-rgb), 0.42),
-        rgba(51, 65, 85, 0.74) 42%,
-        transparent 70%
-      )
-      border-box;
+  background: rgba(15, 23, 42, 0.86);
   box-shadow: 0 16px 50px rgba(2, 6, 23, 0.3);
   transform: translateY(-3px);
 }
@@ -468,13 +436,12 @@ h3 {
   gap: 1rem;
 }
 
-.skill-card::after,
-.project-card::after {
+.skill-card .card-heading::after,
+.project-card .card-heading::after {
   content: "";
   position: absolute;
-  top: 1.4rem;
-  right: 1.4rem;
-  z-index: 1;
+  top: 0.15rem;
+  right: 0;
   width: 0.55rem;
   height: 0.55rem;
   border-radius: 999px;
@@ -486,19 +453,20 @@ h3 {
     transform 160ms ease;
 }
 
-.skill-card:hover::after {
+.skill-card:hover .card-heading::after {
   background: var(--terminal-green);
   box-shadow: 0 0 18px rgba(166, 227, 161, 0.68);
   transform: scale(1.12);
 }
 
-.project-card:hover::after {
+.project-card:hover .card-heading::after {
   background: var(--terminal-blue);
   box-shadow: 0 0 18px rgba(137, 180, 250, 0.62);
   transform: scale(1.12);
 }
 
 .card-heading {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -596,6 +564,43 @@ h3 {
   margin-top: 1.25rem;
   border-radius: 1.5rem;
   padding: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-spotlight {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(166, 227, 161, 0.045), transparent 26rem),
+      radial-gradient(circle at 85% 12%, rgba(137, 180, 250, 0.04), transparent 24rem);
+    opacity: 1;
+  }
+
+  .hero-card,
+  .section-block,
+  .footer-block,
+  .terminal-card,
+  .content-card,
+  .timeline-card {
+    border-color: rgba(148, 163, 184, 0.18);
+  }
+
+  .hero-card::before,
+  .section-block::before,
+  .footer-block::before,
+  .terminal-card::before,
+  .content-card::before,
+  .timeline-card::before {
+    opacity: 0.5;
+    background: linear-gradient(135deg, rgba(var(--surface-glow-rgb), 0.045), transparent 48%);
+  }
+
+  .hero-card::after,
+  .section-block::after,
+  .footer-block::after,
+  .terminal-card::after,
+  .content-card::after,
+  .timeline-card::after {
+    opacity: 0;
+  }
 }
 
 @media (min-width: 720px) {

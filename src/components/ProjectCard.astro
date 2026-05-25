@@ -1,5 +1,17 @@
 ---
-const project = Astro.props.project;
+interface ProjectItem {
+  name: string;
+  repo: string;
+  description: string;
+  tags: string[];
+  href: string;
+}
+
+interface Props {
+  project: ProjectItem;
+}
+
+const { project } = Astro.props;
 ---
 
 <article class="content-card project-card">

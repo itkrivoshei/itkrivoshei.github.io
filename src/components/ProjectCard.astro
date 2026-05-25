@@ -15,11 +15,16 @@ const { project } = Astro.props;
 ---
 
 <article class="content-card project-card">
-  <p class="eyebrow">{project.repo}</p>
-  <h3>{project.name}</h3>
-  <p>{project.description}</p>
+  <div>
+    <p class="eyebrow">{project.repo}</p>
+    <h3>{project.name}</h3>
+    <p>{project.description}</p>
+  </div>
   <ul class="tag-list">
     {project.tags.map((tag) => <li>{tag}</li>)}
   </ul>
-  <a class="inline-link" href={project.href}>Repository</a>
+  <a class="inline-link project-link" href={project.href} target="_blank" rel="noreferrer">
+    <span class="link-icon link-icon-github" aria-hidden="true"></span>
+    Repository
+  </a>
 </article>

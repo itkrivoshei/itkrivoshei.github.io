@@ -1,0 +1,10 @@
+---
+const group = Astro.props.group;
+---
+
+<article class="content-card">
+  <h3>{group.title}</h3>
+  <ul class="tag-list">
+    {group.items.map((item) => <li>{item}</li>)}
+  </ul>
+</article>

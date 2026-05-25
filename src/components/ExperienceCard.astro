@@ -1,19 +1,69 @@
 ---
-const { item } = Astro.props;
+interface ExperienceLink {
+  label: string;
+  href: string;
+}
+
+interface ExperienceItem {
+  company: string;
+  href?: string;
+  note?: string;
+  role: string;
+  period: string;
+  points: string[];
+  links?: ExperienceLink[];
+}
+
+interface Props {
+  item: ExperienceItem;
+}
+
+const { item } = Astro.props as Props;
 const links = item.links ?? [];
 ---
 
 <article class="timeline-card">
   <div class="timeline-head">
     <div>
-      <h3>{item.company}</h3>
+      {
+        item.href ? (
+          <h3>
+            <a class="text-link company-link" href={item.href}>
+              <span>{item.company}</span>
+              <span class="experience-link-icon" aria-hidden="true">↗</span>
+            </a>
+          </h3>
+        ) : (
+          <h3>{item.company}</h3>
+        )
+      }
+
       {item.note && <p class="company-note">{item.note}</p>}
-      {links.length > 0 && <p class="experience-inline-links">references</p>}
+
+      {
+        links.length > 0 && (
+          <p class="experience-inline-links">
+            references:{" "}
+            {links.map((link, index) => (
+              <>
+                <a href={link.href}>
+                  <span>{link.label}</span>
+                  <span class="experience-link-icon" aria-hidden="true">↗</span>
+                </a>
+                {index < links.length - 1 && <span class="link-separator"> / </span>}
+              </>
+            ))}
+          </p>
+        )
+      }
+
       <p>{item.role}</p>
     </div>
+
     <span>{item.period}</span>
   </div>
+
   <ul>
-    {item.points.map((point: string) => <li>{point}</li>)}
+    {item.points.map((point) => <li>{point}</li>)}
   </ul>
 </article>

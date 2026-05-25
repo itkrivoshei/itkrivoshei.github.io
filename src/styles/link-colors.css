@@ -50,6 +50,25 @@
     0 0 24px rgba(var(--link-rgb), 0.13);
 }
 
+.project-card .project-title-link,
+.project-card .project-title-link span,
+.project-card .project-title-link .link-icon {
+  color: var(--terminal-blue) !important;
+}
+
+.project-card .project-title-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-decoration: none;
+}
+
+.project-card .project-title-link:hover,
+.project-card .project-title-link:hover span,
+.project-card .project-title-link:hover .link-icon {
+  color: #dbeafe !important;
+}
+
 .project-card .mini-link-row a,
 .project-card .inline-link,
 .project-card .project-links a {
@@ -70,9 +89,22 @@
   color: #eef6ff !important;
 }
 
-.project-card .project-copy strong {
-  color: #dbeafe;
+.project-card .project-copy p,
+.project-card .project-copy strong,
+.footer-highlight {
+  color: var(--terminal-green);
+}
+
+.project-card .project-copy strong,
+.footer-highlight {
   font-weight: 650;
+}
+
+.project-card .project-tag-list li:hover {
+  border-color: rgba(var(--accent-rgb), 0.58);
+  background: rgba(var(--accent-rgb), 0.12);
+  color: #e7ffe4;
+  box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.1);
 }
 
 .experience-link-icon,

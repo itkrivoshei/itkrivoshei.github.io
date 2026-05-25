@@ -32,22 +32,22 @@ export const profile = {
 export const skillGroups = [
   {
     title: "CI/CD",
-    icon: "ci",
+    icon: "pipeline",
     items: ["GitHub Actions", "GitLab CI/CD", "Jenkins", "release workflows"],
   },
   {
     title: "Infrastructure",
-    icon: "$",
+    icon: "server",
     items: ["Linux", "Docker", "Kubernetes", "Terraform", "AWS", "Bash"],
   },
   {
     title: "Reliability",
-    icon: "●",
+    icon: "pulse",
     items: ["troubleshooting", "monitoring", "production support"],
   },
   {
     title: "Engineering",
-    icon: "</>",
+    icon: "code",
     items: ["TypeScript", "Angular", "React", "Node.js", "REST APIs"],
   },
 ];
@@ -64,7 +64,6 @@ export const experience = [
       "Supported Jenkins-based release workflows, staging environments, build validation, deployment checks, debugging, and performance optimization.",
     ],
     links: [
-      { label: "SPRYLAB", href: "https://sprylab.com/en/" },
       { label: "MOPO", href: "https://www.mopo.de/" },
       { label: "BikeRadar", href: "https://www.bikeradar.com/" },
     ],
@@ -72,26 +71,26 @@ export const experience = [
   {
     company: "RTLabs / Gosuslugi.ru",
     href: "https://www.gosuslugi.ru/",
-    note: "national public-service portal for citizens; comparable product category to GOV.UK, Diia, and eGov.kz",
+    note: "national citizen-service portal category, comparable to public-service platforms in Germany, the UK, the US, Canada, Ukraine, and Kazakhstan",
     role: "Software Engineer | Release & Integration Support",
     period: "10/2020 – 04/2022",
     points: [
-      "Contributed to large-scale public-sector web systems, including citizen-facing service flows and COVID-19 certificate functionality.",
+      "Contributed to Gosuslugi.ru public-service systems, including citizen-facing flows and high-traffic certificate functionality.",
       "Worked with Angular, TypeScript, REST APIs, GitLab/Jenkins workflows, Docker/Kubernetes-based environments, release preparation, and production debugging.",
     ],
-    links: [{ label: "Gosuslugi.ru", href: "https://www.gosuslugi.ru/" }],
+    links: [{ label: "Website", href: "https://www.gosuslugi.ru/" }],
   },
   {
     company: "First Bit",
     href: "https://en.1solution.ru/",
-    note: "business automation, 1C-based systems, implementation and support",
+    note: "business automation and enterprise software implementation",
     role: "Database Developer Intern | Business Systems",
     period: "02/2019 – 01/2020",
     points: [
       "Built database-driven internal tools and business systems for company and client workflows.",
       "Worked with PHP, SQL, data models, debugging, documentation, Jira, Agile workflows, and business process automation.",
     ],
-    links: [{ label: "First Bit", href: "https://en.1solution.ru/" }],
+    links: [],
   },
 ];
 
@@ -102,9 +101,7 @@ export const projects = [
     description:
       "Personal dotfiles and setup scripts for an Ubuntu-based development environment.",
     tags: ["Linux", "Shell", "zsh", "Docker", "Neovim"],
-    links: [
-      { label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" },
-    ],
+    links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
   },
   {
     name: "Personal GitHub Pages site",
@@ -113,10 +110,7 @@ export const projects = [
       "Static personal site built with Astro, TypeScript, Tailwind CSS, GitHub Actions, and GitHub Pages.",
     tags: ["Astro", "TypeScript", "GitHub Actions"],
     links: [
-      {
-        label: "Repository",
-        href: "https://github.com/itkrivoshei/itkrivoshei.github.io",
-      },
+      { label: "Repository", href: "https://github.com/itkrivoshei/itkrivoshei.github.io" },
       { label: "Live site", href: "https://itkrivoshei.github.io/" },
     ],
   },
@@ -135,9 +129,9 @@ export const projects = [
     name: "Public services portal work",
     repo: "gosuslugi.ru",
     description:
-      "Large-scale e-government platform work focused on citizen-facing flows, integration support, validation, and production debugging.",
+      "Large-scale public-service platform work focused on citizen-facing flows, integration support, validation, and production debugging.",
     tags: ["Angular", "GitLab", "Jenkins", "Docker", "Kubernetes"],
-    links: [{ label: "Gosuslugi.ru", href: "https://www.gosuslugi.ru/" }],
+    links: [{ label: "Website", href: "https://www.gosuslugi.ru/" }],
   },
 ];
 

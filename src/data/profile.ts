@@ -71,7 +71,7 @@ export const experience = [
   {
     company: "RTLabs / Gosuslugi.ru",
     href: "https://www.gosuslugi.ru/",
-    note: "national citizen-service portal category, comparable to public-service platforms in Germany, the UK, the US, Canada, Ukraine, and Kazakhstan",
+    note: "national citizen-service portal category",
     role: "Software Engineer | Release & Integration Support",
     period: "10/2020 – 04/2022",
     points: [

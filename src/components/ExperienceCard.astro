@@ -1,0 +1,16 @@
+---
+const item = Astro.props.item;
+---
+
+<article class="timeline-card">
+  <div class="timeline-head">
+    <div>
+      <h3>{item.company}</h3>
+      <p>{item.role}</p>
+    </div>
+    <span>{item.period}</span>
+  </div>
+  <ul>
+    {item.points.map((point) => <li>{point}</li>)}
+  </ul>
+</article>

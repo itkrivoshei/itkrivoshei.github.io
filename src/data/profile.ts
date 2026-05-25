@@ -5,8 +5,21 @@ export const profile = {
   summary:
     "Software engineer with 4+ years of production experience in web platforms, CI/CD workflows, release support, debugging, and cross-team delivery.",
   about: [
-    "Production experience with TypeScript, Angular, React, REST APIs, CI/CD collaboration, staging environments, release validation, and production troubleshooting.",
-    "Current focus: Linux, Docker, Kubernetes, Terraform, AWS, monitoring, deployment automation, and reliable delivery pipelines.",
+    {
+      prompt: "prod",
+      text: "Production experience across TypeScript web platforms, CI/CD collaboration, staging environments, release validation, and production troubleshooting.",
+      highlight: "release validation",
+    },
+    {
+      prompt: "focus",
+      text: "Current focus: Linux, Docker, Kubernetes, Terraform, AWS, monitoring, deployment automation, and reliable delivery pipelines.",
+      highlight: "reliable delivery pipelines",
+    },
+    {
+      prompt: "ship",
+      text: "Practical delivery style: build small, verify in CI, deploy through controlled environments, document what matters, and keep production stable.",
+      highlight: "keep production stable",
+    },
   ],
   links: [
     { label: "GitHub", href: "https://github.com/itkrivoshei" },
@@ -19,18 +32,22 @@ export const profile = {
 export const skillGroups = [
   {
     title: "CI/CD",
+    icon: "ci",
     items: ["GitHub Actions", "GitLab CI/CD", "Jenkins", "release workflows"],
   },
   {
     title: "Infrastructure",
+    icon: "$",
     items: ["Linux", "Docker", "Kubernetes", "Terraform", "AWS", "Bash"],
   },
   {
     title: "Reliability",
+    icon: "●",
     items: ["troubleshooting", "monitoring", "production support"],
   },
   {
     title: "Engineering",
+    icon: "</>",
     items: ["TypeScript", "Angular", "React", "Node.js", "REST APIs"],
   },
 ];
@@ -38,27 +55,43 @@ export const skillGroups = [
 export const experience = [
   {
     company: "SPRYLAB",
+    href: "https://sprylab.com/en/",
+    note: "digital publishing software / Purple platform ecosystem",
     role: "Software Engineer | CI/CD & Production Delivery",
     period: "09/2023 – 12/2024",
     points: [
-      "Built production web platforms and supported Jenkins-based release workflows, staging environments, build validation, deployment checks, debugging, and performance optimization.",
+      "Built production web platforms for German media and publishing clients, including MOPO and BikeRadar-related delivery work.",
+      "Supported Jenkins-based release workflows, staging environments, build validation, deployment checks, debugging, and performance optimization.",
+    ],
+    links: [
+      { label: "SPRYLAB", href: "https://sprylab.com/en/" },
+      { label: "MOPO", href: "https://www.mopo.de/" },
+      { label: "BikeRadar", href: "https://www.bikeradar.com/" },
     ],
   },
   {
-    company: "RTLabs",
+    company: "RTLabs / Gosuslugi.ru",
+    href: "https://www.gosuslugi.ru/",
+    note: "national public-service portal for citizens; comparable product category to GOV.UK, Diia, and eGov.kz",
     role: "Software Engineer | Release & Integration Support",
     period: "10/2020 – 04/2022",
     points: [
-      "Contributed to large-scale web systems using Angular, TypeScript, REST APIs, GitLab/Jenkins workflows, Docker/Kubernetes-based environments, release preparation, and production debugging.",
+      "Contributed to large-scale public-sector web systems, including citizen-facing service flows and COVID-19 certificate functionality.",
+      "Worked with Angular, TypeScript, REST APIs, GitLab/Jenkins workflows, Docker/Kubernetes-based environments, release preparation, and production debugging.",
     ],
+    links: [{ label: "Gosuslugi.ru", href: "https://www.gosuslugi.ru/" }],
   },
   {
     company: "First Bit",
+    href: "https://en.1solution.ru/",
+    note: "business automation, 1C-based systems, implementation and support",
     role: "Database Developer Intern | Business Systems",
     period: "02/2019 – 01/2020",
     points: [
-      "Built database-driven internal tools and worked with PHP, SQL, debugging, documentation, Jira, Agile workflows, and business process automation.",
+      "Built database-driven internal tools and business systems for company and client workflows.",
+      "Worked with PHP, SQL, data models, debugging, documentation, Jira, Agile workflows, and business process automation.",
     ],
+    links: [{ label: "First Bit", href: "https://en.1solution.ru/" }],
   },
 ];
 
@@ -69,7 +102,7 @@ export const projects = [
     description:
       "Personal dotfiles and setup scripts for an Ubuntu-based development environment.",
     tags: ["Linux", "Shell", "zsh", "Docker", "Neovim"],
-    href: "https://github.com/itkrivoshei/dotfiles",
+    links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
   },
   {
     name: "Personal GitHub Pages site",
@@ -77,7 +110,29 @@ export const projects = [
     description:
       "Static personal site built with Astro, TypeScript, Tailwind CSS, GitHub Actions, and GitHub Pages.",
     tags: ["Astro", "TypeScript", "GitHub Actions"],
-    href: "https://github.com/itkrivoshei/itkrivoshei.github.io",
+    links: [
+      { label: "Repository", href: "https://github.com/itkrivoshei/itkrivoshei.github.io" },
+      { label: "Live site", href: "https://itkrivoshei.github.io/" },
+    ],
+  },
+  {
+    name: "Media publishing platforms",
+    repo: "client work",
+    description:
+      "Production web delivery work for publisher platforms, including MOPO and BikeRadar-related implementation and release support.",
+    tags: ["TypeScript", "Jenkins", "staging", "release checks"],
+    links: [
+      { label: "MOPO", href: "https://www.mopo.de/" },
+      { label: "BikeRadar", href: "https://www.bikeradar.com/" },
+    ],
+  },
+  {
+    name: "Public services portal work",
+    repo: "gosuslugi.ru",
+    description:
+      "Large-scale e-government platform work focused on citizen-facing flows, integration support, validation, and production debugging.",
+    tags: ["Angular", "GitLab", "Jenkins", "Docker", "Kubernetes"],
+    links: [{ label: "Gosuslugi.ru", href: "https://www.gosuslugi.ru/" }],
   },
 ];
 

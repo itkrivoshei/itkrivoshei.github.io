@@ -332,7 +332,7 @@ h1 {
   border-color: rgba(var(--link-rgb), 0.5);
   background: rgba(var(--link-rgb), 0.08);
   box-shadow: 0 0 18px rgba(var(--link-rgb), 0.08);
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.015);
 }
 
 .link-row {
@@ -367,7 +367,7 @@ h1 {
   background: rgba(var(--link-rgb), 0.08);
   box-shadow: 0 0 20px rgba(var(--link-rgb), 0.1);
   color: #dbeafe;
-  transform: translateY(-2px);
+  transform: translateY(-1px) scale(1.012);
 }
 
 .link-icon {
@@ -377,6 +377,13 @@ h1 {
   width: 1.05rem;
   height: 1.05rem;
   color: var(--link);
+  transition: transform 160ms ease;
+}
+
+.link-row a:hover .link-icon,
+.inline-link:hover .link-icon,
+.mini-link-row a:hover .link-icon {
+  transform: scale(1.055);
 }
 
 .link-icon svg {
@@ -384,6 +391,14 @@ h1 {
   width: 1.05rem;
   height: 1.05rem;
   fill: currentColor;
+}
+
+.link-icon .external-link-icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.85;
 }
 
 .terminal-card {
@@ -396,7 +411,7 @@ h1 {
 }
 
 .terminal-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px) scale(1.004);
 }
 
 .terminal-card p {
@@ -506,7 +521,7 @@ h3 {
 .timeline-card:hover {
   background: rgba(15, 23, 42, 0.86);
   box-shadow: 0 16px 50px rgba(2, 6, 23, 0.3);
-  transform: translateY(-3px);
+  transform: translateY(-2px) scale(1.002);
 }
 
 .project-card {
@@ -617,7 +632,7 @@ h3 {
   background: rgba(var(--accent-rgb), 0.07);
   box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.09);
   color: #e7ffe4;
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .project-card .tag-list {
@@ -636,17 +651,14 @@ h3 {
 }
 
 .project-links .link-icon {
-  width: auto;
-  min-width: 0.95rem;
-  height: 0.95rem;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  font-weight: 700;
+  width: 1rem;
+  min-width: 1rem;
+  height: 1rem;
 }
 
 .project-links .link-icon svg {
-  width: 0.85rem;
-  height: 0.85rem;
+  width: 0.95rem;
+  height: 0.95rem;
 }
 
 .timeline-list {

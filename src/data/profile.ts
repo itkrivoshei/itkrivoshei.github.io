@@ -60,8 +60,14 @@ export const experience = [
     role: "Software Engineer | CI/CD & Production Delivery",
     period: "09/2023 – 12/2024",
     points: [
-      "Built production web platforms for German media and publishing clients, including MOPO and BikeRadar-related delivery work.",
-      "Supported Jenkins-based release workflows, staging environments, build validation, deployment checks, debugging, and performance optimization.",
+      {
+        text: "Built production web platforms for German media and publishing clients, including MOPO and BikeRadar-related delivery work.",
+        highlight: "production web platforms",
+      },
+      {
+        text: "Supported Jenkins-based release workflows, staging environments, build validation, deployment checks, debugging, and performance optimization.",
+        highlight: "Jenkins-based release workflows",
+      },
     ],
     links: [
       { label: "MOPO", href: "https://www.mopo.de/" },
@@ -75,8 +81,14 @@ export const experience = [
     role: "Software Engineer | Release & Integration Support",
     period: "10/2020 – 04/2022",
     points: [
-      "Contributed to Gosuslugi.ru public-service systems, including citizen-facing flows and high-traffic certificate functionality.",
-      "Worked with Angular, TypeScript, REST APIs, GitLab/Jenkins workflows, Docker/Kubernetes-based environments, release preparation, and production debugging.",
+      {
+        text: "Contributed to Gosuslugi.ru public-service systems, including citizen-facing flows and high-traffic certificate functionality.",
+        highlight: "high-traffic certificate functionality",
+      },
+      {
+        text: "Worked with Angular, TypeScript, REST APIs, GitLab/Jenkins workflows, Docker/Kubernetes-based environments, release preparation, and production debugging.",
+        highlight: "Docker/Kubernetes-based environments",
+      },
     ],
     links: [{ label: "Website", href: "https://www.gosuslugi.ru/" }],
   },
@@ -87,8 +99,14 @@ export const experience = [
     role: "Database Developer Intern | Business Systems",
     period: "02/2019 – 01/2020",
     points: [
-      "Built database-driven internal tools and business systems for company and client workflows.",
-      "Worked with PHP, SQL, data models, debugging, documentation, Jira, Agile workflows, and business process automation.",
+      {
+        text: "Built database-driven internal tools and business systems for company and client workflows.",
+        highlight: "database-driven internal tools",
+      },
+      {
+        text: "Worked with PHP, SQL, data models, debugging, documentation, Jira, Agile workflows, and business process automation.",
+        highlight: "business process automation",
+      },
     ],
     links: [],
   },

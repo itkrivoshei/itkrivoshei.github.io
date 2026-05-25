@@ -67,6 +67,7 @@
 .project-card .project-repo-link:hover span,
 .project-card .project-repo-link:hover .link-icon {
   color: #dbeafe !important;
+  text-decoration: none !important;
 }
 
 .project-card h3 {
@@ -95,16 +96,21 @@ strong,
     linear-gradient(180deg, rgba(var(--link-rgb), 0.14), rgba(var(--link-rgb), 0.065)),
     rgba(2, 6, 23, 0.36);
   color: var(--terminal-blue) !important;
+  text-decoration: none !important;
 }
 
 .project-card .mini-link-row a:hover,
 .project-card .inline-link:hover,
-.project-card .project-links a:hover {
+.project-card .project-links a:hover,
+.project-card .mini-link-row a:hover span,
+.project-card .inline-link:hover span,
+.project-card .project-links a:hover span {
   border-color: rgba(var(--link-rgb), 0.66);
   background:
     linear-gradient(180deg, rgba(var(--link-rgb), 0.19), rgba(var(--link-rgb), 0.09)),
     rgba(2, 6, 23, 0.44);
   color: #eef6ff !important;
+  text-decoration: none !important;
 }
 
 .project-card .project-tag-list li:hover {

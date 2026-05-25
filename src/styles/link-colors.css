@@ -1,16 +1,26 @@
 .text-link,
 .company-link,
 .experience-inline-links a,
+.timeline-card .company-link,
+.timeline-card .experience-inline-links a,
+.timeline-card h3 .company-link,
+.timeline-card h3 .company-link span,
+.timeline-card .experience-inline-links a span,
+.timeline-card .experience-link-icon,
 .mini-link-row a,
 .link-row a,
 .inline-link {
-  color: var(--terminal-blue);
+  color: var(--terminal-blue) !important;
 }
 
 .text-link:hover,
 .company-link:hover,
-.experience-inline-links a:hover {
-  color: #dbeafe;
+.experience-inline-links a:hover,
+.timeline-card .company-link:hover,
+.timeline-card .experience-inline-links a:hover,
+.timeline-card h3 .company-link:hover span,
+.timeline-card .experience-inline-links a:hover span {
+  color: #dbeafe !important;
 }
 
 .link-row a,
@@ -33,7 +43,7 @@
   background:
     linear-gradient(180deg, rgba(var(--link-rgb), 0.17), rgba(var(--link-rgb), 0.08)),
     rgba(2, 6, 23, 0.42);
-  color: #eef6ff;
+  color: #eef6ff !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     0 0 0 1px rgba(var(--link-rgb), 0.1),
@@ -47,7 +57,7 @@
   background:
     linear-gradient(180deg, rgba(var(--link-rgb), 0.14), rgba(var(--link-rgb), 0.065)),
     rgba(2, 6, 23, 0.36);
-  color: var(--terminal-blue);
+  color: var(--terminal-blue) !important;
 }
 
 .project-card .mini-link-row a:hover,
@@ -57,10 +67,15 @@
   background:
     linear-gradient(180deg, rgba(var(--link-rgb), 0.19), rgba(var(--link-rgb), 0.09)),
     rgba(2, 6, 23, 0.44);
-  color: #eef6ff;
+  color: #eef6ff !important;
+}
+
+.project-card .project-copy strong {
+  color: #dbeafe;
+  font-weight: 650;
 }
 
 .experience-link-icon,
 .link-icon {
-  color: currentColor;
+  color: currentColor !important;
 }

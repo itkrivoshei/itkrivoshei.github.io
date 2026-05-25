@@ -9,10 +9,20 @@ interface Props {
 }
 
 const { group } = Astro.props;
+const iconMap: Record<string, string> = {
+  'CI/CD': 'ci',
+  Infrastructure: 'infra',
+  Reliability: 'reliability',
+  Engineering: 'engineering',
+};
+const icon = iconMap[group.title] ?? 'terminal';
 ---
 
-<article class="content-card">
-  <h3>{group.title}</h3>
+<article class="content-card skill-card">
+  <div class="card-heading">
+    <span class={`skill-icon skill-icon-${icon}`} aria-hidden="true"></span>
+    <h3>{group.title}</h3>
+  </div>
   <ul class="tag-list">
     {group.items.map((item) => <li>{item}</li>)}
   </ul>

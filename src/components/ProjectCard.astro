@@ -8,6 +8,7 @@ interface ProjectItem {
   name: string;
   repo: string;
   description: string;
+  highlight?: string;
   tags: string[];
   links?: ProjectLink[];
   href?: string;
@@ -24,13 +25,29 @@ const getLinkType = (label: string) =>
   label.toLowerCase().includes("repository") ? "repo" : "site";
 
 const getLinkLabel = (label: string) => (getLinkType(label) === "repo" ? "GitHub" : label);
+
+const splitDescription = () => {
+  if (!project.highlight || !project.description.includes(project.highlight)) {
+    return { before: project.description, highlight: "", after: "" };
+  }
+
+  const [before, after] = project.description.split(project.highlight);
+
+  return { before, highlight: project.highlight, after };
+};
+
+const description = splitDescription();
 ---
 
 <article class="content-card project-card">
   <div class="project-copy">
     <p class="eyebrow">{project.repo}</p>
     <h3>{project.name}</h3>
-    <p>{project.description}</p>
+    <p>
+      {description.before}
+      {description.highlight && <strong>{description.highlight}</strong>}
+      {description.after}
+    </p>
   </div>
 
   <ul class="tag-list">

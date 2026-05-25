@@ -98,8 +98,7 @@ export const projects = [
   {
     name: "Linux development environment",
     repo: "dotfiles",
-    description:
-      "Personal dotfiles and setup scripts for an Ubuntu-based development environment.",
+    description: "Personal dotfiles and setup scripts for an Ubuntu-based development environment.",
     tags: ["Linux", "Shell", "zsh", "Docker", "Neovim"],
     links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
   },

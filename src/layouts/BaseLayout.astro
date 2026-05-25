@@ -29,7 +29,7 @@ const {
     <div class="cursor-spotlight" aria-hidden="true"></div>
     <slot />
     <script>
-      const spotlight = document.querySelector('.cursor-spotlight');
+      const spotlight = document.querySelector<HTMLElement>('.cursor-spotlight');
 
       if (spotlight && window.matchMedia('(pointer: fine)').matches) {
         window.addEventListener(

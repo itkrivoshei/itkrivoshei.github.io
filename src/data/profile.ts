@@ -117,6 +117,7 @@ export const projects = [
     name: "Linux development environment",
     repo: "dotfiles",
     description: "Personal dotfiles and setup scripts for an Ubuntu-based development environment.",
+    highlight: "Ubuntu-based development environment",
     tags: ["Linux", "Shell", "zsh", "Docker", "Neovim"],
     links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
   },
@@ -125,6 +126,7 @@ export const projects = [
     repo: "itkrivoshei.github.io",
     description:
       "Static personal site built with Astro, TypeScript, Tailwind CSS, GitHub Actions, and GitHub Pages.",
+    highlight: "Astro, TypeScript, Tailwind CSS",
     tags: ["Astro", "TypeScript", "GitHub Actions"],
     links: [
       { label: "Repository", href: "https://github.com/itkrivoshei/itkrivoshei.github.io" },
@@ -136,6 +138,7 @@ export const projects = [
     repo: "client work",
     description:
       "Production web delivery work for publisher platforms, including MOPO and BikeRadar-related implementation and release support.",
+    highlight: "publisher platforms",
     tags: ["TypeScript", "Jenkins", "staging", "release checks"],
     links: [
       { label: "MOPO", href: "https://www.mopo.de/" },
@@ -147,6 +150,7 @@ export const projects = [
     repo: "gosuslugi.ru",
     description:
       "Large-scale public-service platform work focused on citizen-facing flows, integration support, validation, and production debugging.",
+    highlight: "citizen-facing flows",
     tags: ["Angular", "GitLab", "Jenkins", "Docker", "Kubernetes"],
     links: [{ label: "Website", href: "https://www.gosuslugi.ru/" }],
   },

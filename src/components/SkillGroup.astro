@@ -1,6 +1,7 @@
 ---
 interface SkillGroupItem {
   title: string;
+  icon: string;
   items: string[];
 }
 
@@ -13,6 +14,7 @@ const { group } = Astro.props;
 
 <article class="content-card skill-card">
   <div class="card-heading">
+    <span class="skill-icon" aria-hidden="true">{group.icon}</span>
     <h3>{group.title}</h3>
   </div>
   <ul class="tag-list">

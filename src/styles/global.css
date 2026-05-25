@@ -74,18 +74,17 @@ body::before {
   pointer-events: none;
   background:
     radial-gradient(
-      520px circle at var(--x) var(--y),
-      rgba(34, 211, 238, 0.18),
-      rgba(34, 211, 238, 0.07) 24%,
-      transparent 58%
+      560px circle at var(--x) var(--y),
+      rgba(34, 211, 238, 0.12),
+      rgba(34, 211, 238, 0.045) 26%,
+      transparent 62%
     ),
     radial-gradient(
       220px circle at var(--x) var(--y),
-      rgba(255, 255, 255, 0.12),
-      transparent 52%
+      rgba(255, 255, 255, 0.07),
+      transparent 54%
     );
-  opacity: 0.9;
-  transition: opacity 180ms ease;
+  opacity: 0.82;
 }
 a {
   color: inherit;
@@ -347,7 +346,8 @@ h2 {
   background: rgba(2, 6, 23, 0.45);
   color: var(--accent-soft);
 }
-.skill-icon::before {
+.skill-icon::before,
+.tag-icon::before {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   line-height: 1;
 }
@@ -376,6 +376,9 @@ h2 {
   margin: 1rem 0 0;
 }
 .tag-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   border: 1px solid rgba(148, 163, 184, 0.22);
   border-radius: 999px;
   padding: 0.42rem 0.68rem;
@@ -385,6 +388,86 @@ h2 {
     border-color 160ms ease,
     color 160ms ease,
     background 160ms ease;
+}
+.skill-tag-list li {
+  padding-left: 0.54rem;
+}
+.tag-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 0.92rem;
+  height: 0.92rem;
+  color: var(--accent-soft);
+  opacity: 0.9;
+  flex: 0 0 auto;
+}
+.tag-icon::before {
+  font-size: 0.58rem;
+}
+.tag-icon-github-actions::before {
+  content: "GH";
+}
+.tag-icon-gitlab::before {
+  content: "GL";
+}
+.tag-icon-jenkins::before {
+  content: "J";
+}
+.tag-icon-release::before {
+  content: "↗";
+  font-size: 0.72rem;
+}
+.tag-icon-linux::before {
+  content: "ux";
+}
+.tag-icon-docker::before {
+  content: "▣";
+  font-size: 0.7rem;
+}
+.tag-icon-kubernetes::before {
+  content: "K8s";
+  font-size: 0.5rem;
+}
+.tag-icon-terraform::before {
+  content: "tf";
+}
+.tag-icon-aws::before {
+  content: "aws";
+  font-size: 0.48rem;
+}
+.tag-icon-bash::before {
+  content: "$";
+  font-size: 0.72rem;
+}
+.tag-icon-troubleshooting::before {
+  content: "fix";
+  font-size: 0.48rem;
+}
+.tag-icon-monitoring::before {
+  content: "mon";
+  font-size: 0.48rem;
+}
+.tag-icon-production::before {
+  content: "prod";
+  font-size: 0.42rem;
+}
+.tag-icon-typescript::before {
+  content: "TS";
+}
+.tag-icon-angular::before {
+  content: "ng";
+}
+.tag-icon-react::before {
+  content: "⚛";
+  font-size: 0.66rem;
+}
+.tag-icon-node::before {
+  content: "node";
+  font-size: 0.42rem;
+}
+.tag-icon-api::before {
+  content: "api";
+  font-size: 0.48rem;
 }
 .content-card:hover .tag-list li,
 .timeline-card:hover .tag-list li {

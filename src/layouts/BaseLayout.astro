@@ -26,6 +26,21 @@ const {
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <div class="cursor-spotlight" aria-hidden="true"></div>
     <slot />
+    <script>
+      const spotlight = document.querySelector('.cursor-spotlight');
+
+      if (spotlight && window.matchMedia('(pointer: fine)').matches) {
+        window.addEventListener(
+          'pointermove',
+          (event) => {
+            spotlight.style.setProperty('--x', `${event.clientX}px`);
+            spotlight.style.setProperty('--y', `${event.clientY}px`);
+          },
+          { passive: true },
+        );
+      }
+    </script>
   </body>
 </html>

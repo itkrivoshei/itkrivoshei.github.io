@@ -102,7 +102,9 @@ export const projects = [
     description:
       "Personal dotfiles and setup scripts for an Ubuntu-based development environment.",
     tags: ["Linux", "Shell", "zsh", "Docker", "Neovim"],
-    links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
+    links: [
+      { label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" },
+    ],
   },
   {
     name: "Personal GitHub Pages site",
@@ -111,7 +113,10 @@ export const projects = [
       "Static personal site built with Astro, TypeScript, Tailwind CSS, GitHub Actions, and GitHub Pages.",
     tags: ["Astro", "TypeScript", "GitHub Actions"],
     links: [
-      { label: "Repository", href: "https://github.com/itkrivoshei/itkrivoshei.github.io" },
+      {
+        label: "Repository",
+        href: "https://github.com/itkrivoshei/itkrivoshei.github.io",
+      },
       { label: "Live site", href: "https://itkrivoshei.github.io/" },
     ],
   },

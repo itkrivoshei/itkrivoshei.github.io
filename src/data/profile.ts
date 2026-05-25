@@ -173,3 +173,8 @@ export const certifications = [
   "Data Protection Training",
   "Certificate of Completion — 42 Curriculum of Architect in Digital Technologies",
 ];
+
+export const availability = {
+  text: "Open to DevOps, Cloud, Platform, Build and Release, and Software Engineering roles with DevOps focus.",
+  highlights: ["DevOps", "Cloud", "Platform", "Build and Release", "DevOps focus"],
+};

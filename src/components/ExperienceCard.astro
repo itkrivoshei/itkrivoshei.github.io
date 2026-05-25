@@ -19,6 +19,7 @@ interface Props {
 }
 
 const { item } = Astro.props;
+const links = item.links ?? [];
 ---
 
 <article class="timeline-card">
@@ -27,7 +28,7 @@ const { item } = Astro.props;
       {
         item.href ? (
           <h3>
-            <a class="text-link" href={item.href} target="_blank" rel="noreferrer">
+            <a class="text-link company-link" href={item.href} target="_blank" rel="noreferrer">
               {item.company}
             </a>
           </h3>
@@ -35,23 +36,32 @@ const { item } = Astro.props;
           <h3>{item.company}</h3>
         )
       }
+
       {item.note && <p class="company-note">{item.note}</p>}
+
+      {
+        links.length > 0 && (
+          <p class="experience-inline-links">
+            references:{" "}
+            {links.map((link, index) => (
+              <>
+                <a href={link.href} target="_blank" rel="noreferrer">
+                  {link.label}
+                </a>
+                {index < links.length - 1 && <span class="link-separator"> / </span>}
+              </>
+            ))}
+          </p>
+        )
+      }
+
       <p>{item.role}</p>
     </div>
+
     <span>{item.period}</span>
   </div>
+
   <ul>
     {item.points.map((point) => <li>{point}</li>)}
   </ul>
-  {
-    item.links && (
-      <div class="mini-link-row" aria-label={`${item.company} links`}>
-        {item.links.map((link) => (
-          <a href={link.href} target="_blank" rel="noreferrer">
-            {link.label}
-          </a>
-        ))}
-      </div>
-    )
-  }
 </article>

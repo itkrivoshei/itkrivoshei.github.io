@@ -58,16 +58,8 @@ body {
   min-height: 100vh;
   font-family: var(--sans);
   background:
-    radial-gradient(
-      circle at 15% 0%,
-      rgba(34, 211, 238, 0.1),
-      transparent 32rem
-    ),
-    radial-gradient(
-      circle at 85% 12%,
-      rgba(137, 180, 250, 0.065),
-      transparent 28rem
-    ),
+    radial-gradient(circle at 15% 0%, rgba(34, 211, 238, 0.1), transparent 32rem),
+    radial-gradient(circle at 85% 12%, rgba(137, 180, 250, 0.065), transparent 28rem),
     linear-gradient(rgba(148, 163, 184, 0.022) 1px, transparent 1px),
     linear-gradient(90deg, rgba(148, 163, 184, 0.022) 1px, transparent 1px),
     linear-gradient(135deg, #020617 0%, #08111f 48%, #0f172a 100%);
@@ -105,16 +97,8 @@ body::before {
       rgba(166, 227, 161, 0.014) 28%,
       transparent 64%
     ),
-    radial-gradient(
-      320px circle at var(--x) var(--y),
-      rgba(137, 180, 250, 0.038),
-      transparent 60%
-    ),
-    radial-gradient(
-      160px circle at var(--x) var(--y),
-      rgba(255, 255, 255, 0.022),
-      transparent 58%
-    );
+    radial-gradient(320px circle at var(--x) var(--y), rgba(137, 180, 250, 0.038), transparent 60%),
+    radial-gradient(160px circle at var(--x) var(--y), rgba(255, 255, 255, 0.022), transparent 58%);
   opacity: 0.72;
 }
 
@@ -271,7 +255,8 @@ h1 {
   line-height: 1.78;
 }
 
-.copy-grid {
+.copy-grid,
+.project-copy {
   display: grid;
   gap: 0.75rem;
 }
@@ -287,23 +272,38 @@ h1 {
 }
 
 .text-link,
-.mini-link-row a {
+.mini-link-row a,
+.experience-inline-links a {
   color: var(--terminal-blue);
   text-decoration: none;
   text-underline-offset: 0.25em;
 }
 
 .text-link:hover,
-.mini-link-row a:hover {
+.mini-link-row a:hover,
+.experience-inline-links a:hover {
   color: #dbeafe;
   text-decoration: underline;
 }
 
 .company-note {
+  max-width: 72ch;
   color: var(--soft) !important;
   font-family: var(--mono);
   font-size: 0.82rem;
   line-height: 1.55 !important;
+}
+
+.experience-inline-links {
+  margin: 0.35rem 0 0 !important;
+  color: var(--soft) !important;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.6 !important;
+}
+
+.link-separator {
+  color: rgba(148, 163, 184, 0.45);
 }
 
 .mini-link-row {
@@ -519,7 +519,7 @@ h3 {
 }
 
 .skill-card .card-heading::after,
-.project-card .card-heading::after {
+.project-card .project-copy::after {
   content: "";
   position: absolute;
   top: 0.15rem;
@@ -541,18 +541,22 @@ h3 {
   transform: scale(1.12);
 }
 
-.project-card:hover .card-heading::after {
+.project-card:hover .project-copy::after {
   background: var(--terminal-blue);
   box-shadow: 0 0 18px rgba(137, 180, 250, 0.62);
   transform: scale(1.12);
 }
 
-.card-heading {
+.card-heading,
+.project-copy {
   position: relative;
+  padding-right: 1.4rem;
+}
+
+.card-heading {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding-right: 1.4rem;
 }
 
 .skill-icon {
@@ -567,6 +571,16 @@ h3 {
   font-family: var(--mono);
   font-size: 0.75rem;
   line-height: 1;
+}
+
+.skill-icon svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 .skill-card:hover .skill-icon {
@@ -623,8 +637,12 @@ h3 {
 }
 
 .project-links .link-icon {
-  width: 0.85rem;
-  height: 0.85rem;
+  width: auto;
+  min-width: 0.95rem;
+  height: 0.95rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
 }
 
 .project-links .link-icon svg {
@@ -675,16 +693,8 @@ h3 {
 @media (hover: none), (pointer: coarse) {
   .cursor-spotlight {
     background:
-      radial-gradient(
-        circle at 50% 0%,
-        rgba(166, 227, 161, 0.045),
-        transparent 26rem
-      ),
-      radial-gradient(
-        circle at 85% 12%,
-        rgba(137, 180, 250, 0.04),
-        transparent 24rem
-      );
+      radial-gradient(circle at 50% 0%, rgba(166, 227, 161, 0.045), transparent 26rem),
+      radial-gradient(circle at 85% 12%, rgba(137, 180, 250, 0.04), transparent 24rem);
     opacity: 1;
   }
 
@@ -704,11 +714,7 @@ h3 {
   .content-card::before,
   .timeline-card::before {
     opacity: 0.5;
-    background: linear-gradient(
-      135deg,
-      rgba(var(--surface-glow-rgb), 0.045),
-      transparent 48%
-    );
+    background: linear-gradient(135deg, rgba(var(--surface-glow-rgb), 0.045), transparent 48%);
   }
 
   .hero-card::after,

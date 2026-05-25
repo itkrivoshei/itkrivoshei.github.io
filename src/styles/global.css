@@ -56,13 +56,31 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 12% 0%, rgba(203, 166, 247, 0.14), transparent 30rem),
-    radial-gradient(circle at 88% 10%, rgba(250, 179, 135, 0.1), transparent 28rem),
-    radial-gradient(circle at 50% 35%, rgba(137, 220, 235, 0.075), transparent 36rem),
+    radial-gradient(
+      circle at 12% 0%,
+      rgba(203, 166, 247, 0.14),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 88% 10%,
+      rgba(250, 179, 135, 0.1),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(137, 220, 235, 0.075),
+      transparent 36rem
+    ),
     linear-gradient(rgba(205, 214, 244, 0.026) 1px, transparent 1px),
     linear-gradient(90deg, rgba(205, 214, 244, 0.026) 1px, transparent 1px),
     linear-gradient(135deg, var(--crust) 0%, var(--base) 48%, #101727 100%);
-  background-size: auto, auto, auto, 44px 44px, 44px 44px, auto;
+  background-size:
+    auto,
+    auto,
+    auto,
+    44px 44px,
+    44px 44px,
+    auto;
 }
 body::before {
   content: "";
@@ -83,9 +101,22 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(560px circle at var(--x) var(--y), rgba(203, 166, 247, 0.09), rgba(203, 166, 247, 0.035) 25%, transparent 62%),
-    radial-gradient(340px circle at var(--x) var(--y), rgba(148, 226, 213, 0.075), transparent 58%),
-    radial-gradient(180px circle at var(--x) var(--y), rgba(249, 226, 175, 0.055), transparent 56%);
+    radial-gradient(
+      560px circle at var(--x) var(--y),
+      rgba(203, 166, 247, 0.09),
+      rgba(203, 166, 247, 0.035) 25%,
+      transparent 62%
+    ),
+    radial-gradient(
+      340px circle at var(--x) var(--y),
+      rgba(148, 226, 213, 0.075),
+      transparent 58%
+    ),
+    radial-gradient(
+      180px circle at var(--x) var(--y),
+      rgba(249, 226, 175, 0.055),
+      transparent 56%
+    );
   opacity: 0.82;
 }
 a {
@@ -125,7 +156,13 @@ a {
   position: absolute;
   inset: 0 0 auto;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(148, 226, 213, 0.74), rgba(203, 166, 247, 0.68), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(148, 226, 213, 0.74),
+    rgba(203, 166, 247, 0.68),
+    transparent
+  );
 }
 .hero-card::after {
   content: "";
@@ -135,7 +172,11 @@ a {
   width: 24rem;
   height: 24rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(203, 166, 247, 0.1), rgba(116, 199, 236, 0.08));
+  background: linear-gradient(
+    135deg,
+    rgba(203, 166, 247, 0.1),
+    rgba(116, 199, 236, 0.08)
+  );
   filter: blur(20px);
 }
 .hero-card > * {
@@ -198,7 +239,11 @@ h1 {
   border-radius: 999px;
   padding: 0.68rem 1rem;
   color: var(--subtext);
-  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
 }
 .link-row a:hover,
 .inline-link:hover {
@@ -228,7 +273,9 @@ h1 {
   padding: 1.25rem;
   font-family: var(--mono);
   color: var(--muted);
-  transition: border-color 160ms ease, transform 160ms ease;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
 }
 .terminal-card:hover {
   border-color: rgba(148, 226, 213, 0.55);
@@ -264,7 +311,9 @@ h1 {
   margin-top: 1.25rem;
   border-radius: 1.5rem;
   padding: clamp(1.25rem, 3vw, 2rem);
-  transition: border-color 180ms ease, background 180ms ease;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
 }
 .section-block:hover {
   border-color: rgba(203, 166, 247, 0.34);
@@ -282,7 +331,10 @@ h1 {
   border-radius: 999px;
   background: rgba(69, 71, 90, 0.95);
   box-shadow: inset 0 0 0 1px rgba(205, 214, 244, 0.26);
-  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 .section-block:hover .section-title span {
   background: var(--accent);
@@ -334,7 +386,11 @@ h3 {
   border-radius: 1.25rem;
   background: var(--panel-strong);
   padding: 1.25rem;
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
 }
 .content-card > *,
 .timeline-card > * {
@@ -348,7 +404,11 @@ h3 {
   inset: -1px;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(380px circle at 50% 0%, rgba(203, 166, 247, 0.11), transparent 58%);
+  background: radial-gradient(
+    380px circle at 50% 0%,
+    rgba(203, 166, 247, 0.11),
+    transparent 58%
+  );
   opacity: 0;
   transition: opacity 180ms ease;
 }
@@ -364,16 +424,32 @@ h3 {
   opacity: 1;
 }
 .skill-card:nth-child(1)::before {
-  background: radial-gradient(380px circle at 50% 0%, rgba(137, 180, 250, 0.12), transparent 58%);
+  background: radial-gradient(
+    380px circle at 50% 0%,
+    rgba(137, 180, 250, 0.12),
+    transparent 58%
+  );
 }
 .skill-card:nth-child(2)::before {
-  background: radial-gradient(380px circle at 50% 0%, rgba(250, 179, 135, 0.12), transparent 58%);
+  background: radial-gradient(
+    380px circle at 50% 0%,
+    rgba(250, 179, 135, 0.12),
+    transparent 58%
+  );
 }
 .skill-card:nth-child(3)::before {
-  background: radial-gradient(380px circle at 50% 0%, rgba(166, 227, 161, 0.12), transparent 58%);
+  background: radial-gradient(
+    380px circle at 50% 0%,
+    rgba(166, 227, 161, 0.12),
+    transparent 58%
+  );
 }
 .skill-card:nth-child(4)::before {
-  background: radial-gradient(380px circle at 50% 0%, rgba(137, 220, 235, 0.12), transparent 58%);
+  background: radial-gradient(
+    380px circle at 50% 0%,
+    rgba(137, 220, 235, 0.12),
+    transparent 58%
+  );
 }
 .skill-card::after,
 .project-card::after {
@@ -387,7 +463,10 @@ h3 {
   border-radius: 999px;
   background: rgba(69, 71, 90, 0.95);
   box-shadow: inset 0 0 0 1px rgba(205, 214, 244, 0.24);
-  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 .skill-card:nth-child(1):hover::after {
   background: var(--blue);
@@ -435,7 +514,12 @@ h3 {
   padding: 0.42rem 0.68rem;
   color: var(--muted);
   font-size: 0.85rem;
-  transition: transform 160ms ease, border-color 160ms ease, color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
 }
 .tag-list li:hover {
   border-color: rgba(245, 194, 231, 0.54);

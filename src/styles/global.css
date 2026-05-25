@@ -50,8 +50,7 @@
 
 html {
   scroll-behavior: smooth;
-}
-
+}\n
 body {
   margin: 0;
   min-height: 100vh;
@@ -285,6 +284,42 @@ h1 {
   text-decoration: underline;
 }
 
+.company-link,
+.experience-inline-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+
+.experience-link-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 0.82em;
+  height: 0.82em;
+  color: currentColor;
+  opacity: 0.78;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.company-link:hover .experience-link-icon,
+.experience-inline-links a:hover .experience-link-icon {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+.experience-link-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
 .company-note {
   max-width: 72ch;
   color: var(--soft) !important;
@@ -332,7 +367,7 @@ h1 {
   border-color: rgba(var(--link-rgb), 0.5);
   background: rgba(var(--link-rgb), 0.08);
   box-shadow: 0 0 18px rgba(var(--link-rgb), 0.08);
-  transform: translateY(-1px) scale(1.015);
+  transform: scale(1.012);
 }
 
 .link-row {
@@ -367,7 +402,7 @@ h1 {
   background: rgba(var(--link-rgb), 0.08);
   box-shadow: 0 0 20px rgba(var(--link-rgb), 0.1);
   color: #dbeafe;
-  transform: translateY(-1px) scale(1.012);
+  transform: scale(1.01);
 }
 
 .link-icon {
@@ -383,7 +418,7 @@ h1 {
 .link-row a:hover .link-icon,
 .inline-link:hover .link-icon,
 .mini-link-row a:hover .link-icon {
-  transform: scale(1.055);
+  transform: scale(1.045);
 }
 
 .link-icon svg {
@@ -407,11 +442,6 @@ h1 {
   padding: 1.25rem;
   font-family: var(--mono);
   color: var(--muted);
-  transition: transform 160ms ease;
-}
-
-.terminal-card:hover {
-  transform: translateY(-1px) scale(1.004);
 }
 
 .terminal-card p {
@@ -521,7 +551,7 @@ h3 {
 .timeline-card:hover {
   background: rgba(15, 23, 42, 0.86);
   box-shadow: 0 16px 50px rgba(2, 6, 23, 0.3);
-  transform: translateY(-2px) scale(1.002);
+  transform: scale(1.002);
 }
 
 .project-card {
@@ -632,7 +662,7 @@ h3 {
   background: rgba(var(--accent-rgb), 0.07);
   box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.09);
   color: #e7ffe4;
-  transform: translateY(-1px) scale(1.01);
+  transform: scale(1.006);
 }
 
 .project-card .tag-list {

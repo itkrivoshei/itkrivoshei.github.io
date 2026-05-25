@@ -13,7 +13,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <main class="site-shell">
     <Hero />
     <Section title="About">
-      <div class="copy-grid">{profile.about.map((paragraph) => <p>{paragraph}</p>)}</div>
+      <div class="copy-grid">
+        {
+          profile.about.map((paragraph) => (
+            <p>
+              <span class="prompt-label">{paragraph.prompt}&gt;</span>{' '}
+              {paragraph.text.includes(paragraph.highlight) ? (
+                <>
+                  {paragraph.text.split(paragraph.highlight)[0]}
+                  <strong>{paragraph.highlight}</strong>
+                  {paragraph.text.split(paragraph.highlight)[1]}
+                </>
+              ) : (
+                paragraph.text
+              )}
+            </p>
+          ))
+        }
+      </div>
     </Section>
     <Section title="Skills">
       <div class="card-grid skills-grid">{skillGroups.map((group) => <SkillGroup group={group} />)}</div>

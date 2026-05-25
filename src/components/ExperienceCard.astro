@@ -43,7 +43,12 @@ const splitPoint = (point: ExperiencePoint) => {
       {
         item.href ? (
           <h3>
-            <a class="text-link company-link" href={item.href} target="_blank" rel="noreferrer">
+            <a
+              class="text-link company-link experience-blue-link"
+              href={item.href}
+              target="_blank"
+              rel="noreferrer"
+            >
               <span>{item.company}</span>
               <span class="experience-link-icon" aria-hidden="true">
                 <svg class="external-link-icon" viewBox="0 0 24 24" role="img">
@@ -67,7 +72,12 @@ const splitPoint = (point: ExperiencePoint) => {
             references:{" "}
             {links.map((link, index) => (
               <>
-                <a href={link.href} target="_blank" rel="noreferrer">
+                <a
+                  class="experience-blue-link"
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <span>{link.label}</span>
                   <span class="experience-link-icon" aria-hidden="true">
                     <svg class="external-link-icon" viewBox="0 0 24 24" role="img">
@@ -111,14 +121,24 @@ const splitPoint = (point: ExperiencePoint) => {
 </article>
 
 <style is:global>
+  .timeline-card .experience-blue-link,
+  .timeline-card .experience-blue-link span,
+  .timeline-card .experience-blue-link .experience-link-icon,
   .timeline-card .company-link,
-  .timeline-card .experience-inline-links a {
-    color: var(--terminal-blue);
+  .timeline-card .company-link span,
+  .timeline-card .experience-inline-links a,
+  .timeline-card .experience-inline-links a span {
+    color: var(--terminal-blue) !important;
   }
 
+  .timeline-card .experience-blue-link:hover,
+  .timeline-card .experience-blue-link:hover span,
+  .timeline-card .experience-blue-link:hover .experience-link-icon,
   .timeline-card .company-link:hover,
-  .timeline-card .experience-inline-links a:hover {
-    color: #dbeafe;
+  .timeline-card .company-link:hover span,
+  .timeline-card .experience-inline-links a:hover,
+  .timeline-card .experience-inline-links a:hover span {
+    color: #dbeafe !important;
   }
 
   .timeline-card .experience-role,

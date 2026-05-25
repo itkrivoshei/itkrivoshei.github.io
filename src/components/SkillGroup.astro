@@ -14,7 +14,43 @@ const { group } = Astro.props;
 
 <article class="content-card skill-card">
   <div class="card-heading">
-    <span class="skill-icon" aria-hidden="true">{group.icon}</span>
+    <span class="skill-icon" aria-hidden="true">
+      {
+        group.icon === "pipeline" && (
+          <svg viewBox="0 0 24 24">
+            <path d="M7 7h10M7 17h10M7 7v10M17 7v10" />
+            <circle cx="7" cy="7" r="2.5" />
+            <circle cx="17" cy="7" r="2.5" />
+            <circle cx="7" cy="17" r="2.5" />
+            <circle cx="17" cy="17" r="2.5" />
+          </svg>
+        )
+      }
+      {
+        group.icon === "server" && (
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="6" rx="2" />
+            <rect x="4" y="14" width="16" height="6" rx="2" />
+            <path d="M8 7h.01M8 17h.01M12 7h4M12 17h4" />
+          </svg>
+        )
+      }
+      {
+        group.icon === "pulse" && (
+          <svg viewBox="0 0 24 24">
+            <path d="M3 12h4l2-5 4 10 2-5h6" />
+            <circle cx="12" cy="12" r="9" />
+          </svg>
+        )
+      }
+      {
+        group.icon === "code" && (
+          <svg viewBox="0 0 24 24">
+            <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14" />
+          </svg>
+        )
+      }
+    </span>
     <h3>{group.title}</h3>
   </div>
   <ul class="tag-list">

@@ -58,12 +58,25 @@ body {
   min-height: 100vh;
   font-family: var(--sans);
   background:
-    radial-gradient(circle at 15% 0%, rgba(34, 211, 238, 0.1), transparent 32rem),
-    radial-gradient(circle at 85% 12%, rgba(137, 180, 250, 0.065), transparent 28rem),
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(34, 211, 238, 0.1),
+      transparent 32rem
+    ),
+    radial-gradient(
+      circle at 85% 12%,
+      rgba(137, 180, 250, 0.065),
+      transparent 28rem
+    ),
     linear-gradient(rgba(148, 163, 184, 0.022) 1px, transparent 1px),
     linear-gradient(90deg, rgba(148, 163, 184, 0.022) 1px, transparent 1px),
     linear-gradient(135deg, #020617 0%, #08111f 48%, #0f172a 100%);
-  background-size: auto, auto, 44px 44px, 44px 44px, auto;
+  background-size:
+    auto,
+    auto,
+    44px 44px,
+    44px 44px,
+    auto;
 }
 
 body::before {
@@ -86,9 +99,22 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(520px circle at var(--x) var(--y), rgba(166, 227, 161, 0.034), rgba(166, 227, 161, 0.014) 28%, transparent 64%),
-    radial-gradient(320px circle at var(--x) var(--y), rgba(137, 180, 250, 0.038), transparent 60%),
-    radial-gradient(160px circle at var(--x) var(--y), rgba(255, 255, 255, 0.022), transparent 58%);
+    radial-gradient(
+      520px circle at var(--x) var(--y),
+      rgba(166, 227, 161, 0.034),
+      rgba(166, 227, 161, 0.014) 28%,
+      transparent 64%
+    ),
+    radial-gradient(
+      320px circle at var(--x) var(--y),
+      rgba(137, 180, 250, 0.038),
+      transparent 60%
+    ),
+    radial-gradient(
+      160px circle at var(--x) var(--y),
+      rgba(255, 255, 255, 0.022),
+      transparent 58%
+    );
   opacity: 0.72;
 }
 
@@ -152,7 +178,11 @@ a {
 .timeline-card::before {
   inset: 0;
   z-index: 0;
-  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(var(--surface-glow-rgb), 0.055), transparent 54%);
+  background: radial-gradient(
+    420px circle at var(--mx) var(--my),
+    rgba(var(--surface-glow-rgb), 0.055),
+    transparent 54%
+  );
 }
 
 .hero-card::after,
@@ -165,7 +195,11 @@ a {
   z-index: 0;
   border-radius: inherit;
   padding: 1px;
-  background: radial-gradient(260px circle at var(--mx) var(--my), rgba(var(--surface-glow-rgb), 0.4), transparent 62%);
+  background: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    rgba(var(--surface-glow-rgb), 0.4),
+    transparent 62%
+  );
   mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
@@ -569,8 +603,16 @@ h3 {
 @media (hover: none), (pointer: coarse) {
   .cursor-spotlight {
     background:
-      radial-gradient(circle at 50% 0%, rgba(166, 227, 161, 0.045), transparent 26rem),
-      radial-gradient(circle at 85% 12%, rgba(137, 180, 250, 0.04), transparent 24rem);
+      radial-gradient(
+        circle at 50% 0%,
+        rgba(166, 227, 161, 0.045),
+        transparent 26rem
+      ),
+      radial-gradient(
+        circle at 85% 12%,
+        rgba(137, 180, 250, 0.04),
+        transparent 24rem
+      );
     opacity: 1;
   }
 
@@ -590,7 +632,11 @@ h3 {
   .content-card::before,
   .timeline-card::before {
     opacity: 0.5;
-    background: linear-gradient(135deg, rgba(var(--surface-glow-rgb), 0.045), transparent 48%);
+    background: linear-gradient(
+      135deg,
+      rgba(var(--surface-glow-rgb), 0.045),
+      transparent 48%
+    );
   }
 
   .hero-card::after,

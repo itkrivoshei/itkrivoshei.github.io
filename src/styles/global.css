@@ -45,9 +45,8 @@
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
   --mono:
-    "JetBrainsMono Nerd Font", "JetBrains Mono", "Fira Code",
-    "Cascadia Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    monospace;
+    "JetBrainsMono Nerd Font", "JetBrains Mono", "Fira Code", "Cascadia Code",
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 * {
@@ -61,13 +60,31 @@ body {
   min-height: 100vh;
   font-family: var(--sans);
   background:
-    radial-gradient(circle at 12% 0%, rgba(166, 227, 161, 0.1), transparent 30rem),
-    radial-gradient(circle at 88% 10%, rgba(137, 180, 250, 0.1), transparent 28rem),
-    radial-gradient(circle at 50% 35%, rgba(203, 166, 247, 0.045), transparent 36rem),
+    radial-gradient(
+      circle at 12% 0%,
+      rgba(166, 227, 161, 0.1),
+      transparent 30rem
+    ),
+    radial-gradient(
+      circle at 88% 10%,
+      rgba(137, 180, 250, 0.1),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(203, 166, 247, 0.045),
+      transparent 36rem
+    ),
     linear-gradient(rgba(205, 214, 244, 0.026) 1px, transparent 1px),
     linear-gradient(90deg, rgba(205, 214, 244, 0.026) 1px, transparent 1px),
     linear-gradient(135deg, var(--crust) 0%, var(--base) 48%, #101727 100%);
-  background-size: auto, auto, auto, 44px 44px, 44px 44px, auto;
+  background-size:
+    auto,
+    auto,
+    auto,
+    44px 44px,
+    44px 44px,
+    auto;
 }
 body::before {
   content: "";
@@ -88,9 +105,22 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(560px circle at var(--x) var(--y), rgba(166, 227, 161, 0.08), rgba(166, 227, 161, 0.03) 25%, transparent 62%),
-    radial-gradient(340px circle at var(--x) var(--y), rgba(137, 180, 250, 0.075), transparent 58%),
-    radial-gradient(180px circle at var(--x) var(--y), rgba(255, 255, 255, 0.04), transparent 56%);
+    radial-gradient(
+      560px circle at var(--x) var(--y),
+      rgba(166, 227, 161, 0.08),
+      rgba(166, 227, 161, 0.03) 25%,
+      transparent 62%
+    ),
+    radial-gradient(
+      340px circle at var(--x) var(--y),
+      rgba(137, 180, 250, 0.075),
+      transparent 58%
+    ),
+    radial-gradient(
+      180px circle at var(--x) var(--y),
+      rgba(255, 255, 255, 0.04),
+      transparent 56%
+    );
   opacity: 0.8;
 }
 a {
@@ -130,7 +160,13 @@ a {
   position: absolute;
   inset: 0 0 auto;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(166, 227, 161, 0.68), rgba(137, 180, 250, 0.6), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(166, 227, 161, 0.68),
+    rgba(137, 180, 250, 0.6),
+    transparent
+  );
 }
 .hero-card::after {
   content: "";
@@ -140,7 +176,11 @@ a {
   width: 24rem;
   height: 24rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, rgba(166, 227, 161, 0.08), rgba(137, 180, 250, 0.08));
+  background: linear-gradient(
+    135deg,
+    rgba(166, 227, 161, 0.08),
+    rgba(137, 180, 250, 0.08)
+  );
   filter: blur(20px);
 }
 .hero-card > * {
@@ -354,7 +394,11 @@ h3 {
   inset: -1px;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(380px circle at 50% 0%, rgba(166, 227, 161, 0.1), transparent 58%);
+  background: radial-gradient(
+    380px circle at 50% 0%,
+    rgba(166, 227, 161, 0.1),
+    transparent 58%
+  );
   opacity: 0;
   transition: opacity 180ms ease;
 }
@@ -370,7 +414,11 @@ h3 {
   opacity: 1;
 }
 .project-card::before {
-  background: radial-gradient(380px circle at 50% 0%, rgba(137, 180, 250, 0.1), transparent 58%);
+  background: radial-gradient(
+    380px circle at 50% 0%,
+    rgba(137, 180, 250, 0.1),
+    transparent 58%
+  );
 }
 .skill-card::after,
 .project-card::after {

@@ -1,0 +1,20 @@
+---
+import { profile } from '../data/profile';
+---
+
+<section class="hero-card">
+  <div>
+    <p class="eyebrow">~/profile on main</p>
+    <h1>{profile.name}</h1>
+    <p class="role">{profile.role}</p>
+    <p class="summary">{profile.summary}</p>
+    <div class="link-row">
+      {profile.links.map((link) => <a href={link.href}>{link.label}</a>)}
+    </div>
+  </div>
+  <aside class="terminal-card" aria-label="Profile metadata">
+    <p><span>role</span>=devops-focused-engineer</p>
+    <p><span>location</span>=berlin</p>
+    <p><span>focus</span>=ci-cd linux docker cloud</p>
+  </aside>
+</section>

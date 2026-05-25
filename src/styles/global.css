@@ -34,12 +34,25 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 15% 0%, rgba(34, 211, 238, 0.16), transparent 32rem),
-    radial-gradient(circle at 85% 12%, rgba(56, 189, 248, 0.1), transparent 28rem),
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(34, 211, 238, 0.16),
+      transparent 32rem
+    ),
+    radial-gradient(
+      circle at 85% 12%,
+      rgba(56, 189, 248, 0.1),
+      transparent 28rem
+    ),
     linear-gradient(rgba(148, 163, 184, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(148, 163, 184, 0.025) 1px, transparent 1px),
     linear-gradient(135deg, #020617 0%, #08111f 48%, #0f172a 100%);
-  background-size: auto, auto, 44px 44px, 44px 44px, auto;
+  background-size:
+    auto,
+    auto,
+    44px 44px,
+    44px 44px,
+    auto;
 }
 body::before {
   content: "";
@@ -60,8 +73,17 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(520px circle at var(--x) var(--y), rgba(34, 211, 238, 0.18), rgba(34, 211, 238, 0.07) 24%, transparent 58%),
-    radial-gradient(220px circle at var(--x) var(--y), rgba(255, 255, 255, 0.12), transparent 52%);
+    radial-gradient(
+      520px circle at var(--x) var(--y),
+      rgba(34, 211, 238, 0.18),
+      rgba(34, 211, 238, 0.07) 24%,
+      transparent 58%
+    ),
+    radial-gradient(
+      220px circle at var(--x) var(--y),
+      rgba(255, 255, 255, 0.12),
+      transparent 52%
+    );
   opacity: 0.9;
   transition: opacity 180ms ease;
 }
@@ -102,7 +124,12 @@ a {
   position: absolute;
   inset: 0 0 auto;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.9), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(34, 211, 238, 0.9),
+    transparent
+  );
 }
 .hero-card::after {
   content: "";
@@ -165,7 +192,11 @@ h1 {
   border-radius: 999px;
   padding: 0.68rem 1rem;
   color: #e2e8f0;
-  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, color 160ms ease;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
 }
 .link-row a:hover,
 .inline-link:hover {
@@ -198,7 +229,9 @@ h1 {
   padding: 1.25rem;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   color: var(--muted);
-  transition: border-color 160ms ease, transform 160ms ease;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
 }
 .terminal-card:hover {
   border-color: var(--line-strong);
@@ -234,7 +267,9 @@ h1 {
   margin-top: 1.25rem;
   border-radius: 1.5rem;
   padding: clamp(1.25rem, 3vw, 2rem);
-  transition: border-color 180ms ease, background 180ms ease;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
 }
 .section-block:hover {
   border-color: rgba(34, 211, 238, 0.35);
@@ -252,7 +287,10 @@ h1 {
   border-radius: 999px;
   background: rgba(51, 65, 85, 0.95);
   box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.35);
-  transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 .section-block:hover .section-title span {
   background: var(--accent);
@@ -283,7 +321,11 @@ h2 {
   border-radius: 1.25rem;
   background: var(--panel-strong);
   padding: 1.25rem;
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
 }
 .content-card:hover,
 .timeline-card:hover {
@@ -339,7 +381,10 @@ h2 {
   padding: 0.42rem 0.68rem;
   color: var(--muted);
   font-size: 0.85rem;
-  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    background 160ms ease;
 }
 .content-card:hover .tag-list li,
 .timeline-card:hover .tag-list li {

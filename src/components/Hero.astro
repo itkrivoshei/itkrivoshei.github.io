@@ -1,5 +1,7 @@
 ---
 import { profile } from '../data/profile';
+
+const iconClass = (label: string) => `link-icon link-icon-${label.toLowerCase()}`;
 ---
 
 <section class="hero-card">
@@ -9,10 +11,22 @@ import { profile } from '../data/profile';
     <p class="role">{profile.role}</p>
     <p class="summary">{profile.summary}</p>
     <div class="link-row">
-      {profile.links.map((link) => <a href={link.href}>{link.label}</a>)}
+      {
+        profile.links.map((link) => (
+          <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noreferrer' : undefined}>
+            <span class={iconClass(link.label)} aria-hidden="true"></span>
+            {link.label}
+          </a>
+        ))
+      }
     </div>
   </div>
   <aside class="terminal-card" aria-label="Profile metadata">
+    <div class="terminal-dots" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <p><span>role</span>=devops-focused-engineer</p>
     <p><span>location</span>=berlin</p>
     <p><span>focus</span>=ci-cd linux docker cloud</p>

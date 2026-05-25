@@ -109,3 +109,48 @@ const splitPoint = (point: ExperiencePoint) => {
     }
   </ul>
 </article>
+
+<style is:global>
+  .timeline-card .company-link,
+  .timeline-card .experience-inline-links a {
+    color: var(--terminal-blue);
+  }
+
+  .timeline-card .company-link:hover,
+  .timeline-card .experience-inline-links a:hover {
+    color: #dbeafe;
+  }
+
+  .timeline-card .experience-role,
+  .timeline-card .experience-period {
+    color: var(--terminal-green);
+  }
+
+  .timeline-card .experience-points {
+    display: grid;
+    gap: 0.7rem;
+    list-style: none;
+    margin: 1rem 0 0;
+    padding-left: 0;
+  }
+
+  .timeline-card .experience-points li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.65rem;
+    color: var(--muted);
+    line-height: 1.72;
+  }
+
+  .timeline-card .terminal-marker {
+    color: var(--terminal-green);
+    font-family: var(--mono);
+    line-height: 1.72;
+    opacity: 0.9;
+  }
+
+  .timeline-card .experience-points strong {
+    color: #e7ffe4;
+    font-weight: 650;
+  }
+</style>

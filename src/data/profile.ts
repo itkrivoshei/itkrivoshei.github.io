@@ -8,12 +8,12 @@ export const profile = {
     {
       prompt: "prod",
       text: "Production experience across TypeScript web platforms, CI/CD collaboration, staging environments, release validation, and production troubleshooting.",
-      highlight: "release validation",
+      highlight: "CI/CD collaboration",
     },
     {
       prompt: "focus",
       text: "Current focus: Linux, Docker, Kubernetes, Terraform, AWS, monitoring, deployment automation, and reliable delivery pipelines.",
-      highlight: "reliable delivery pipelines",
+      highlight: "Linux, Docker, Kubernetes, Terraform, AWS",
     },
     {
       prompt: "ship",
@@ -62,7 +62,6 @@ export const experience = [
     points: [
       {
         text: "Built production web platforms for German media and publishing clients, including MOPO and BikeRadar-related delivery work.",
-        highlight: "production web platforms",
       },
       {
         text: "Supported Jenkins-based release workflows, staging environments, build validation, deployment checks, debugging, and performance optimization.",
@@ -101,11 +100,9 @@ export const experience = [
     points: [
       {
         text: "Built database-driven internal tools and business systems for company and client workflows.",
-        highlight: "database-driven internal tools",
       },
       {
         text: "Worked with PHP, SQL, data models, debugging, documentation, Jira, Agile workflows, and business process automation.",
-        highlight: "business process automation",
       },
     ],
     links: [],
@@ -126,7 +123,7 @@ export const projects = [
     repo: "itkrivoshei.github.io",
     description:
       "Static personal site built with Astro, TypeScript, Tailwind CSS, GitHub Actions, and GitHub Pages.",
-    highlight: "Astro, TypeScript, Tailwind CSS",
+    highlight: "GitHub Actions, and GitHub Pages",
     tags: ["Astro", "TypeScript", "GitHub Actions"],
     links: [
       { label: "Repository", href: "https://github.com/itkrivoshei/itkrivoshei.github.io" },
@@ -138,7 +135,7 @@ export const projects = [
     repo: "client work",
     description:
       "Production web delivery work for publisher platforms, including MOPO and BikeRadar-related implementation and release support.",
-    highlight: "publisher platforms",
+    highlight: "release support",
     tags: ["TypeScript", "Jenkins", "staging", "release checks"],
     links: [
       { label: "MOPO", href: "https://www.mopo.de/" },
@@ -150,7 +147,7 @@ export const projects = [
     repo: "gosuslugi.ru",
     description:
       "Large-scale public-service platform work focused on citizen-facing flows, integration support, validation, and production debugging.",
-    highlight: "citizen-facing flows",
+    highlight: "production debugging",
     tags: ["Angular", "GitLab", "Jenkins", "Docker", "Kubernetes"],
     links: [{ label: "Website", href: "https://www.gosuslugi.ru/" }],
   },
@@ -176,5 +173,5 @@ export const certifications = [
 
 export const availability = {
   text: "Open to DevOps, Cloud, Platform, Build and Release, and Software Engineering roles with DevOps focus.",
-  highlights: ["DevOps", "Cloud", "Platform", "Build and Release", "DevOps focus"],
+  highlights: ["DevOps focus"],
 };

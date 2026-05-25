@@ -1,0 +1,10 @@
+---
+import { profile } from '../data/profile';
+---
+
+<footer class="footer-block">
+  <p>Open to DevOps, Cloud, Platform, Build and Release, and Software Engineering roles with DevOps focus.</p>
+  <div class="link-row">
+    {profile.links.map((link) => <a href={link.href}>{link.label}</a>)}
+  </div>
+</footer>

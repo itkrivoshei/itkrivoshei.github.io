@@ -1,23 +1,29 @@
 ---
+import ExperienceCard from '../components/ExperienceCard.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Section from '../components/Section.astro';
+import SkillGroup from '../components/SkillGroup.astro';
+import { experience, profile, projects, skillGroups } from '../data/profile';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout>
-  <main class="mx-auto flex min-h-screen w-full max-w-5xl items-center px-6 py-16">
-    <section class="w-full rounded-3xl border border-slate-800 bg-slate-900/70 p-8 shadow-2xl shadow-slate-950/40 md:p-12">
-      <p class="text-sm font-medium uppercase tracking-[0.35em] text-sky-300">GitHub Pages</p>
-      <h1 class="mt-6 text-4xl font-semibold tracking-tight text-white md:text-6xl">
-        Personal site base
-      </h1>
-      <p class="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
-        Static site baseline built with Astro, TypeScript, Tailwind CSS, and GitHub Pages.
-        Resume content and production workflows will be added in the next commits.
-      </p>
-      <div class="mt-8 flex flex-wrap gap-3 text-sm text-slate-300">
-        <span class="rounded-full border border-slate-700 px-4 py-2">Astro</span>
-        <span class="rounded-full border border-slate-700 px-4 py-2">TypeScript</span>
-        <span class="rounded-full border border-slate-700 px-4 py-2">Tailwind CSS</span>
-      </div>
-    </section>
+<BaseLayout title={profile.name} description={profile.summary}>
+  <main class="site-shell">
+    <Hero />
+    <Section title="About">
+      <div class="copy-grid">{profile.about.map((paragraph) => <p>{paragraph}</p>)}</div>
+    </Section>
+    <Section title="Skills">
+      <div class="card-grid skills-grid">{skillGroups.map((group) => <SkillGroup group={group} />)}</div>
+    </Section>
+    <Section title="Experience">
+      <div class="timeline-list">{experience.map((item) => <ExperienceCard item={item} />)}</div>
+    </Section>
+    <Section title="Selected work">
+      <div class="card-grid projects-grid">{projects.map((project) => <ProjectCard project={project} />)}</div>
+    </Section>
+    <Footer />
   </main>
 </BaseLayout>

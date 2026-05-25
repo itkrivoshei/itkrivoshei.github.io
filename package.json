@@ -11,7 +11,9 @@
     "format": "prettier --write \"**/*.{js,mjs,cjs,ts,json,css,md,yml,yaml}\"",
     "format:check": "prettier --check \"**/*.{js,mjs,cjs,ts,json,css,md,yml,yaml}\"",
     "verify": "npm run format:check && npm run check && npm run build",
-    "ready": "npm run format && npm run check && npm run build"
+    "ready": "npm run format && npm run check && npm run build",
+    "hooks:install": "git config core.hooksPath .githooks && chmod +x .githooks/*",
+    "hooks:remove": "git config --unset core.hooksPath || true"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.0",

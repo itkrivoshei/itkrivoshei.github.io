@@ -204,13 +204,10 @@ h1 {
   color: #a5f3fc;
   transform: translateY(-2px);
 }
-.link-icon,
-.skill-icon {
+.link-icon {
   display: inline-grid;
   place-items: center;
   flex: 0 0 auto;
-}
-.link-icon {
   width: 1.05rem;
   height: 1.05rem;
   color: var(--accent-soft);
@@ -316,6 +313,8 @@ h2 {
 }
 .content-card,
 .timeline-card {
+  position: relative;
+  overflow: hidden;
   border: 1px solid rgba(51, 65, 85, 0.9);
   border-radius: 1.25rem;
   background: var(--panel-strong);
@@ -326,6 +325,26 @@ h2 {
     background 180ms ease,
     box-shadow 180ms ease;
 }
+.content-card > *,
+.timeline-card > * {
+  position: relative;
+  z-index: 1;
+}
+.content-card::before,
+.timeline-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    380px circle at 50% 0%,
+    rgba(34, 211, 238, 0.12),
+    transparent 58%
+  );
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
 .content-card:hover,
 .timeline-card:hover {
   border-color: rgba(34, 211, 238, 0.36);
@@ -333,39 +352,38 @@ h2 {
   box-shadow: 0 16px 50px rgba(2, 6, 23, 0.28);
   transform: translateY(-3px);
 }
+.content-card:hover::before,
+.timeline-card:hover::before {
+  opacity: 1;
+}
+.skill-card::after,
+.project-card::after {
+  content: "";
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  z-index: 1;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: rgba(51, 65, 85, 0.95);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.35);
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+.skill-card:hover::after,
+.project-card:hover::after {
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.75);
+  transform: scale(1.12);
+}
 .card-heading {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-}
-.skill-icon {
-  width: 2rem;
-  height: 2rem;
-  border: 1px solid rgba(148, 163, 184, 0.24);
-  border-radius: 0.8rem;
-  background: rgba(2, 6, 23, 0.45);
-  color: var(--accent-soft);
-}
-.skill-icon::before,
-.tag-icon::before {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  line-height: 1;
-}
-.skill-icon-ci::before {
-  content: "CI";
-  font-size: 0.72rem;
-}
-.skill-icon-infra::before {
-  content: "IaC";
-  font-size: 0.62rem;
-}
-.skill-icon-reliability::before {
-  content: "UP";
-  font-size: 0.66rem;
-}
-.skill-icon-engineering::before {
-  content: "</>";
-  font-size: 0.7rem;
+  padding-right: 1.4rem;
 }
 .tag-list {
   display: flex;
@@ -378,101 +396,24 @@ h2 {
 .tag-list li {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
   border: 1px solid rgba(148, 163, 184, 0.22);
   border-radius: 999px;
   padding: 0.42rem 0.68rem;
   color: var(--muted);
   font-size: 0.85rem;
   transition:
+    transform 160ms ease,
     border-color 160ms ease,
     color 160ms ease,
-    background 160ms ease;
+    background 160ms ease,
+    box-shadow 160ms ease;
 }
-.skill-tag-list li {
-  padding-left: 0.54rem;
-}
-.tag-icon {
-  display: inline-grid;
-  place-items: center;
-  width: 0.92rem;
-  height: 0.92rem;
-  color: var(--accent-soft);
-  opacity: 0.9;
-  flex: 0 0 auto;
-}
-.tag-icon::before {
-  font-size: 0.58rem;
-}
-.tag-icon-github-actions::before {
-  content: "GH";
-}
-.tag-icon-gitlab::before {
-  content: "GL";
-}
-.tag-icon-jenkins::before {
-  content: "J";
-}
-.tag-icon-release::before {
-  content: "↗";
-  font-size: 0.72rem;
-}
-.tag-icon-linux::before {
-  content: "ux";
-}
-.tag-icon-docker::before {
-  content: "▣";
-  font-size: 0.7rem;
-}
-.tag-icon-kubernetes::before {
-  content: "K8s";
-  font-size: 0.5rem;
-}
-.tag-icon-terraform::before {
-  content: "tf";
-}
-.tag-icon-aws::before {
-  content: "aws";
-  font-size: 0.48rem;
-}
-.tag-icon-bash::before {
-  content: "$";
-  font-size: 0.72rem;
-}
-.tag-icon-troubleshooting::before {
-  content: "fix";
-  font-size: 0.48rem;
-}
-.tag-icon-monitoring::before {
-  content: "mon";
-  font-size: 0.48rem;
-}
-.tag-icon-production::before {
-  content: "prod";
-  font-size: 0.42rem;
-}
-.tag-icon-typescript::before {
-  content: "TS";
-}
-.tag-icon-angular::before {
-  content: "ng";
-}
-.tag-icon-react::before {
-  content: "⚛";
-  font-size: 0.66rem;
-}
-.tag-icon-node::before {
-  content: "node";
-  font-size: 0.42rem;
-}
-.tag-icon-api::before {
-  content: "api";
-  font-size: 0.48rem;
-}
-.content-card:hover .tag-list li,
-.timeline-card:hover .tag-list li {
-  border-color: rgba(34, 211, 238, 0.28);
-  background: rgba(34, 211, 238, 0.05);
+.tag-list li:hover {
+  border-color: rgba(34, 211, 238, 0.62);
+  background: rgba(34, 211, 238, 0.09);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.12);
+  color: #e0faff;
+  transform: translateY(-1px);
 }
 .project-card {
   min-height: 100%;

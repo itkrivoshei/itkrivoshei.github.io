@@ -4,13 +4,18 @@ interface ExperienceLink {
   href: string;
 }
 
+interface ExperiencePoint {
+  text: string;
+  highlight?: string;
+}
+
 interface ExperienceItem {
   company: string;
   href?: string;
   note?: string;
   role: string;
   period: string;
-  points: string[];
+  points: ExperiencePoint[];
   links?: ExperienceLink[];
 }
 
@@ -20,6 +25,16 @@ interface Props {
 
 const { item } = Astro.props as Props;
 const links = item.links ?? [];
+
+const splitPoint = (point: ExperiencePoint) => {
+  if (!point.highlight || !point.text.includes(point.highlight)) {
+    return { before: point.text, highlight: "", after: "" };
+  }
+
+  const [before, after] = point.text.split(point.highlight);
+
+  return { before, highlight: point.highlight, after };
+};
 ---
 
 <article class="timeline-card">
@@ -69,13 +84,28 @@ const links = item.links ?? [];
         )
       }
 
-      <p>{item.role}</p>
+      <p class="experience-role">{item.role}</p>
     </div>
 
-    <span>{item.period}</span>
+    <span class="experience-period">{item.period}</span>
   </div>
 
-  <ul>
-    {item.points.map((point) => <li>{point}</li>)}
+  <ul class="experience-points">
+    {
+      item.points.map((point) => {
+        const parts = splitPoint(point);
+
+        return (
+          <li>
+            <span class="terminal-marker" aria-hidden="true">❯</span>
+            <span>
+              {parts.before}
+              {parts.highlight && <strong>{parts.highlight}</strong>}
+              {parts.after}
+            </span>
+          </li>
+        );
+      })
+    }
   </ul>
 </article>

@@ -1,10 +1,19 @@
 ---
 import { profile } from '../data/profile';
+
+const iconClass = (label: string) => `link-icon link-icon-${label.toLowerCase()}`;
 ---
 
 <footer class="footer-block">
   <p>Open to DevOps, Cloud, Platform, Build and Release, and Software Engineering roles with DevOps focus.</p>
   <div class="link-row">
-    {profile.links.map((link) => <a href={link.href}>{link.label}</a>)}
+    {
+      profile.links.map((link) => (
+        <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noreferrer' : undefined}>
+          <span class={iconClass(link.label)} aria-hidden="true"></span>
+          {link.label}
+        </a>
+      ))
+    }
   </div>
 </footer>

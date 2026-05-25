@@ -15,6 +15,26 @@ const iconMap: Record<string, string> = {
   Reliability: 'reliability',
   Engineering: 'engineering',
 };
+const itemIconMap: Record<string, string> = {
+  'GitHub Actions': 'github-actions',
+  'GitLab CI/CD': 'gitlab',
+  Jenkins: 'jenkins',
+  'release workflows': 'release',
+  Linux: 'linux',
+  Docker: 'docker',
+  Kubernetes: 'kubernetes',
+  Terraform: 'terraform',
+  AWS: 'aws',
+  Bash: 'bash',
+  troubleshooting: 'troubleshooting',
+  monitoring: 'monitoring',
+  'production support': 'production',
+  TypeScript: 'typescript',
+  Angular: 'angular',
+  React: 'react',
+  'Node.js': 'node',
+  'REST APIs': 'api',
+};
 const icon = iconMap[group.title] ?? 'terminal';
 ---
 
@@ -23,7 +43,14 @@ const icon = iconMap[group.title] ?? 'terminal';
     <span class={`skill-icon skill-icon-${icon}`} aria-hidden="true"></span>
     <h3>{group.title}</h3>
   </div>
-  <ul class="tag-list">
-    {group.items.map((item) => <li>{item}</li>)}
+  <ul class="tag-list skill-tag-list">
+    {
+      group.items.map((item) => (
+        <li>
+          <span class={`tag-icon tag-icon-${itemIconMap[item] ?? 'terminal'}`} aria-hidden="true"></span>
+          {item}
+        </li>
+      ))
+    }
   </ul>
 </article>

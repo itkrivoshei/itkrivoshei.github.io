@@ -1,5 +1,16 @@
 ---
-const item = Astro.props.item;
+interface ExperienceItem {
+  company: string;
+  role: string;
+  period: string;
+  points: string[];
+}
+
+interface Props {
+  item: ExperienceItem;
+}
+
+const { item } = Astro.props;
 ---
 
 <article class="timeline-card">

@@ -70,7 +70,8 @@
 }
 
 .project-card h3 {
-  color: var(--terminal-green);
+  color: #e7ffe4;
+  font-weight: 650;
 }
 
 .project-card .project-copy p {
@@ -78,6 +79,7 @@
 }
 
 strong,
+.copy-grid strong,
 .project-card .project-copy strong,
 .timeline-card .experience-points strong,
 .footer-highlight {

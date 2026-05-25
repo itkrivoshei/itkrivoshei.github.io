@@ -8,8 +8,10 @@
     "check": "astro check",
     "build": "astro build",
     "preview": "astro preview",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format": "prettier --write \"**/*.{js,mjs,cjs,ts,json,css,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{js,mjs,cjs,ts,json,css,md,yml,yaml}\"",
+    "verify": "npm run format:check && npm run check && npm run build",
+    "ready": "npm run format && npm run check && npm run build"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.0",

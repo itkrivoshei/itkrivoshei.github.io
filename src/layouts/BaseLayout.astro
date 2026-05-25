@@ -66,6 +66,24 @@ const {
           window.cancelAnimationFrame(animationFrame);
         });
       }
+
+      if (window.matchMedia('(pointer: fine)').matches) {
+        const glowTargets = document.querySelectorAll<HTMLElement>(
+          '.hero-card, .section-block, .footer-block, .terminal-card, .content-card, .timeline-card',
+        );
+
+        glowTargets.forEach((target) => {
+          target.addEventListener(
+            'pointermove',
+            (event) => {
+              const rect = target.getBoundingClientRect();
+              target.style.setProperty('--mx', `${event.clientX - rect.left}px`);
+              target.style.setProperty('--my', `${event.clientY - rect.top}px`);
+            },
+            { passive: true },
+          );
+        });
+      }
     </script>
   </body>
 </html>

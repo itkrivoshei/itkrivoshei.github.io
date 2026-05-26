@@ -13,8 +13,6 @@ Personal GitHub Pages site for Nikita Krivoshei, built with Astro, TypeScript, T
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Nikita%20Krivoshei-0a66c2?logo=linkedin&logoColor=white)](https://linkedin.com/in/itkivoshei)
 [![Email](https://img.shields.io/badge/Email-NikitaKrivoshei%40gmail.com-d14836?logo=gmail&logoColor=white)](mailto:NikitaKrivoshei@gmail.com)
 
-### [Open Live Site ->](https://itkrivoshei.github.io)
-
 </div>
 
 ## Site Model
@@ -83,8 +81,6 @@ Open `http://localhost:8080`.
 - `.github/workflows/check.yml` validates formatting, Astro checks, and production builds.
 - `.github/workflows/deploy.yml` publishes `dist` to GitHub Pages on pushes to `main`.
 - `.github/dependabot.yml` tracks npm package and GitHub Actions updates.
-
-Live site: https://itkrivoshei.github.io
 
 ## License
 

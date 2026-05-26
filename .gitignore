@@ -25,3 +25,11 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+build/
+.env.local
+.vscode/
+__pycache__/
+*.pyc
+coverage/
+.pytest_cache/
+*.log

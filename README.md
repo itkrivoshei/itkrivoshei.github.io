@@ -9,7 +9,10 @@ DevOps-focused software engineering portfolio built with Astro, TypeScript, Tail
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-live-2ea44f?logo=github)](https://itkrivoshei.github.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[Live site](https://itkrivoshei.github.io) · [GitHub](https://github.com/itkrivoshei) · [LinkedIn](https://linkedin.com/in/itkivoshei) · [Email](mailto:NikitaKrivoshei@gmail.com)
+[![Live site](https://img.shields.io/badge/Live%20site-itkrivoshei.github.io-2ea44f?logo=githubpages&logoColor=white)](https://itkrivoshei.github.io)
+[![GitHub](https://img.shields.io/badge/GitHub-itkrivoshei-181717?logo=github&logoColor=white)](https://github.com/itkrivoshei)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nikita%20Krivoshei-0a66c2?logo=linkedin&logoColor=white)](https://linkedin.com/in/itkivoshei)
+[![Email](https://img.shields.io/badge/Email-NikitaKrivoshei%40gmail.com-d14836?logo=gmail&logoColor=white)](mailto:NikitaKrivoshei@gmail.com)
 
 </div>
 
@@ -52,7 +55,6 @@ The site is designed to be simple to maintain: profile content lives in [`src/da
 │       └── deploy.yml
 ├── .githooks/
 │   └── pre-commit
-├── public/
 ├── src/
 │   ├── components/
 │   ├── data/

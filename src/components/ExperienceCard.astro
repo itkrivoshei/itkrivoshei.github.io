@@ -78,10 +78,6 @@ const splitPoint = (point: ExperiencePoint) => {
     <span class="experience-period">{item.period}</span>
   </div>
 
-  <ul class="tag-list experience-skill-list" aria-label={`${item.company} skills`}>
-    {skills.map((skill) => <li>{skill}</li>)}
-  </ul>
-
   <ul class="experience-points">
     {
       item.points.map((point) => {
@@ -101,6 +97,10 @@ const splitPoint = (point: ExperiencePoint) => {
         );
       })
     }
+  </ul>
+
+  <ul class="tag-list experience-skill-list" aria-label={`${item.company} skills`}>
+    {skills.map((skill) => <li tabindex="0">{skill}</li>)}
   </ul>
 </article>
 
@@ -125,9 +125,12 @@ const splitPoint = (point: ExperiencePoint) => {
     color: #dbeafe !important;
   }
 
-  .timeline-card .experience-role,
-  .timeline-card .experience-period {
+  .timeline-card .experience-role {
     color: var(--terminal-green);
+  }
+
+  .timeline-card .timeline-head .experience-period {
+    color: var(--muted) !important;
   }
 
   .timeline-card .experience-points {
@@ -156,5 +159,41 @@ const splitPoint = (point: ExperiencePoint) => {
   .timeline-card .experience-points strong {
     color: #e7ffe4;
     font-weight: 650;
+  }
+
+  .timeline-card .experience-skill-list {
+    margin: 0.85rem 0 0 1.95rem !important;
+    padding-left: 0 !important;
+    line-height: 1;
+  }
+
+  .timeline-card .experience-skill-list li {
+    cursor: default;
+    outline: none;
+    border-color: rgba(var(--accent-rgb), 0.22) !important;
+    background: rgba(var(--accent-rgb), 0.04) !important;
+    color: var(--muted) !important;
+  }
+
+  .timeline-card .experience-skill-list li:hover,
+  .timeline-card .experience-skill-list li:active,
+  .timeline-card .experience-skill-list li:focus-visible {
+    border-color: rgba(var(--accent-rgb), 0.52) !important;
+    background: rgba(var(--accent-rgb), 0.07) !important;
+    box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.09) !important;
+    color: #e7ffe4 !important;
+    transform: scale(1.006);
+  }
+
+  .timeline-card .experience-skill-list li:focus-visible {
+    box-shadow:
+      0 0 0 2px rgba(var(--accent-rgb), 0.16),
+      0 0 18px rgba(var(--accent-rgb), 0.09) !important;
+  }
+
+  @media (max-width: 560px) {
+    .timeline-card .experience-skill-list {
+      margin-left: 0 !important;
+    }
   }
 </style>

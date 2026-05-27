@@ -707,6 +707,25 @@ h3 {
   color: var(--terminal-green);
 }
 
+.timeline-card .experience-skill-list {
+  margin: 1rem 0 0;
+  padding-left: 0;
+  line-height: 1;
+}
+
+.timeline-card .experience-skill-list li {
+  border-color: rgba(var(--link-rgb), 0.24);
+  background: rgba(var(--link-rgb), 0.045);
+  color: #dbeafe;
+}
+
+.timeline-card .experience-skill-list li:hover {
+  border-color: rgba(var(--link-rgb), 0.54);
+  background: rgba(var(--link-rgb), 0.1);
+  box-shadow: 0 0 18px rgba(var(--link-rgb), 0.08);
+  color: #eef6ff;
+}
+
 .footer-block {
   margin-top: 1.25rem;
   border-radius: 1.5rem;

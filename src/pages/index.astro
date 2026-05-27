@@ -1,12 +1,12 @@
 ---
-import ExperienceCard from '../components/ExperienceCard.astro';
-import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import Section from '../components/Section.astro';
-import SkillGroup from '../components/SkillGroup.astro';
-import { experience, profile, projects, skillGroups } from '../data/profile';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import ExperienceCard from "../components/ExperienceCard.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import Section from "../components/Section.astro";
+import SkillGroup from "../components/SkillGroup.astro";
+import { experience, profile, projects, skillGroups } from "../data/profile";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title={profile.name} description={profile.summary}>
@@ -17,7 +17,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         {
           profile.about.map((paragraph) => (
             <p>
-              <span class="prompt-label">{paragraph.prompt}&gt;</span>{' '}
+              <span class="prompt-label">{paragraph.prompt}&gt;</span>{" "}
               {paragraph.text.includes(paragraph.highlight) ? (
                 <>
                   {paragraph.text.split(paragraph.highlight)[0]}
@@ -33,13 +33,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </Section>
     <Section title="Skills">
-      <div class="card-grid skills-grid">{skillGroups.map((group) => <SkillGroup group={group} />)}</div>
+      <div class="card-grid skills-grid">
+        {skillGroups.map((group) => <SkillGroup group={group} />)}
+      </div>
     </Section>
     <Section title="Experience">
       <div class="timeline-list">{experience.map((item) => <ExperienceCard item={item} />)}</div>
     </Section>
     <Section title="Selected work">
-      <div class="card-grid projects-grid">{projects.map((project) => <ProjectCard project={project} />)}</div>
+      <div class="card-grid projects-grid">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
     </Section>
     <Footer />
   </main>

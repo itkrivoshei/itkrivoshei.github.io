@@ -4,17 +4,26 @@ node_modules/
 # Build output
 dist/
 .astro/
+build/
+coverage/
 
 # Environment files
 .env
 .env.*
 !.env.example
+.env.local
 
 # Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Python/tool cache
+__pycache__/
+*.pyc
+.pytest_cache/
 
 # System/editor noise
 .DS_Store
@@ -25,11 +34,3 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
-build/
-.env.local
-.vscode/
-__pycache__/
-*.pyc
-coverage/
-.pytest_cache/
-*.log

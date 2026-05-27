@@ -1,23 +1,5 @@
 ---
-interface ExperienceLink {
-  label: string;
-  href: string;
-}
-
-interface ExperiencePoint {
-  text: string;
-  highlight?: string;
-}
-
-interface ExperienceItem {
-  company: string;
-  href?: string;
-  note?: string;
-  role: string;
-  period: string;
-  points: ExperiencePoint[];
-  links?: ExperienceLink[];
-}
+import type { ExperienceItem, ExperiencePoint } from "../data/profile";
 
 interface Props {
   item: ExperienceItem;
@@ -25,6 +7,7 @@ interface Props {
 
 const { item } = Astro.props as Props;
 const links = item.links ?? [];
+const skills = item.skills;
 
 const splitPoint = (point: ExperiencePoint) => {
   if (!point.highlight || !point.text.includes(point.highlight)) {
@@ -72,12 +55,7 @@ const splitPoint = (point: ExperiencePoint) => {
             references:{" "}
             {links.map((link, index) => (
               <>
-                <a
-                  class="experience-blue-link"
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a class="experience-blue-link" href={link.href} target="_blank" rel="noreferrer">
                   <span>{link.label}</span>
                   <span class="experience-link-icon" aria-hidden="true">
                     <svg class="external-link-icon" viewBox="0 0 24 24" role="img">
@@ -100,6 +78,10 @@ const splitPoint = (point: ExperiencePoint) => {
     <span class="experience-period">{item.period}</span>
   </div>
 
+  <ul class="tag-list experience-skill-list" aria-label={`${item.company} skills`}>
+    {skills.map((skill) => <li>{skill}</li>)}
+  </ul>
+
   <ul class="experience-points">
     {
       item.points.map((point) => {
@@ -107,7 +89,9 @@ const splitPoint = (point: ExperiencePoint) => {
 
         return (
           <li>
-            <span class="terminal-marker" aria-hidden="true">❯</span>
+            <span class="terminal-marker" aria-hidden="true">
+              ❯
+            </span>
             <span>
               {parts.before}
               {parts.highlight && <strong>{parts.highlight}</strong>}

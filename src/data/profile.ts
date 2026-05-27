@@ -1,3 +1,40 @@
+export interface ProfileLink {
+  label: string;
+  href: string;
+}
+
+export interface ExperiencePoint {
+  text: string;
+  highlight?: string;
+}
+
+export interface ExperienceItem {
+  company: string;
+  href?: string;
+  note?: string;
+  role: string;
+  period: string;
+  skills: string[];
+  points: ExperiencePoint[];
+  links?: ProfileLink[];
+}
+
+export interface ProjectItem {
+  name: string;
+  repo: string;
+  description: string;
+  highlight?: string;
+  tags: string[];
+  links?: ProfileLink[];
+  href?: string;
+}
+
+export interface SkillGroup {
+  title: string;
+  icon: "pipeline" | "server" | "pulse" | "code";
+  items: string[];
+}
+
 export const profile = {
   name: "Nikita Krivoshei",
   role: "DevOps-focused Software Engineer",
@@ -50,7 +87,7 @@ export const skillGroups = [
     icon: "code",
     items: ["TypeScript", "Angular", "React", "Node.js", "REST APIs"],
   },
-];
+] satisfies SkillGroup[];
 
 export const experience = [
   {
@@ -59,6 +96,7 @@ export const experience = [
     note: "digital publishing software / Purple platform ecosystem",
     role: "Software Engineer | CI/CD & Production Delivery",
     period: "09/2023 – 12/2024",
+    skills: ["TypeScript", "Jenkins", "CI/CD", "Staging", "Production support"],
     points: [
       {
         text: "Built production web platforms for German media and publishing clients, including MOPO and BikeRadar-related delivery work.",
@@ -79,6 +117,7 @@ export const experience = [
     note: "national citizen-service portal category",
     role: "Software Engineer | Release & Integration Support",
     period: "10/2020 – 04/2022",
+    skills: ["Angular", "TypeScript", "REST APIs", "Docker", "Kubernetes", "GitLab CI"],
     points: [
       {
         text: "Contributed to Gosuslugi.ru public-service systems, including citizen-facing flows and high-traffic certificate functionality.",
@@ -97,6 +136,7 @@ export const experience = [
     note: "business automation and enterprise software implementation",
     role: "Database Developer Intern | Business Systems",
     period: "02/2019 – 01/2020",
+    skills: ["PHP", "SQL", "Jira", "Debugging", "Documentation"],
     points: [
       {
         text: "Built database-driven internal tools and business systems for company and client workflows.",
@@ -107,7 +147,7 @@ export const experience = [
     ],
     links: [],
   },
-];
+] satisfies ExperienceItem[];
 
 export const projects = [
   {
@@ -120,14 +160,15 @@ export const projects = [
     links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
   },
   {
-    name: "Linux networking and shell basics",
-    repo: "linux-networking-shell-basics",
+    name: "Personal portfolio site",
+    repo: "itkrivoshei.github.io",
     description:
-      "Linux command and Bash exercise set for networking lookups, system inspection, DNS/routing, and shell syntax validation.",
-    highlight: "networking lookups, system inspection, DNS/routing",
-    tags: ["Linux", "Bash", "networking", "DNS", "GitHub Actions"],
+      "Astro portfolio deployed to GitHub Pages with typed profile content, Prettier/Astro checks, GitHub Actions verification, and Docker build support.",
+    highlight: "GitHub Actions verification",
+    tags: ["Astro", "TypeScript", "Tailwind CSS", "GitHub Actions", "Docker"],
     links: [
-      { label: "Repository", href: "https://github.com/itkrivoshei/linux-networking-shell-basics" },
+      { label: "Repository", href: "https://github.com/itkrivoshei/itkrivoshei.github.io" },
+      { label: "Live site", href: "https://itkrivoshei.github.io" },
     ],
   },
   {
@@ -184,7 +225,7 @@ export const projects = [
     tags: ["Angular", "GitLab", "Jenkins", "Docker", "Kubernetes"],
     links: [{ label: "Website", href: "https://www.gosuslugi.ru/" }],
   },
-];
+] satisfies ProjectItem[];
 
 export const education = [
   {

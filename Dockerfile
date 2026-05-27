@@ -1,12 +1,14 @@
 # syntax=docker/dockerfile:1
 
-FROM node:22-alpine AS deps
+ARG NODE_VERSION=22
+
+FROM node:${NODE_VERSION}-alpine AS deps
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm ci
 
-FROM node:22-alpine AS build
+FROM node:${NODE_VERSION}-alpine AS build
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules

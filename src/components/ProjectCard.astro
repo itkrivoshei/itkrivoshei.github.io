@@ -1,24 +1,11 @@
 ---
-interface ProjectLink {
-  label: string;
-  href: string;
-}
-
-interface ProjectItem {
-  name: string;
-  repo: string;
-  description: string;
-  highlight?: string;
-  tags: string[];
-  links?: ProjectLink[];
-  href?: string;
-}
+import type { ProjectItem } from "../data/profile";
 
 interface Props {
   project: ProjectItem;
 }
 
-const { project } = Astro.props;
+const { project } = Astro.props as Props;
 const links = project.links ?? (project.href ? [{ label: "Repository", href: project.href }] : []);
 const primaryLink = links[0];
 

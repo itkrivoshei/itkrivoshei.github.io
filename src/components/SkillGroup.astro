@@ -1,15 +1,11 @@
 ---
-interface SkillGroupItem {
-  title: string;
-  icon: string;
-  items: string[];
-}
+import type { SkillGroup as SkillGroupData } from "../data/profile";
 
 interface Props {
-  group: SkillGroupItem;
+  group: SkillGroupData;
 }
 
-const { group } = Astro.props;
+const { group } = Astro.props as Props;
 ---
 
 <article class="content-card skill-card">

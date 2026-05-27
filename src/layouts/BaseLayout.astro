@@ -1,6 +1,6 @@
 ---
-import '../styles/global.css';
-import '../styles/link-colors.css';
+import "../styles/global.css";
+import "../styles/link-colors.css";
 
 interface Props {
   title?: string;
@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = 'Personal GitHub Pages site',
-  description = 'A small static site built with Astro, TypeScript, Tailwind CSS, and GitHub Pages.',
+  title = "Personal GitHub Pages site",
+  description = "A small static site built with Astro, TypeScript, Tailwind CSS, and GitHub Pages.",
 } = Astro.props;
 ---
 
@@ -31,12 +31,12 @@ const {
     <slot />
     <script>
       const root = document.documentElement;
-      const spotlight = document.querySelector<HTMLElement>('.cursor-spotlight');
+      const spotlight = document.querySelector<HTMLElement>(".cursor-spotlight");
       const glowTargets = document.querySelectorAll<HTMLElement>(
-        '.hero-card, .section-block, .footer-block, .terminal-card, .content-card, .timeline-card',
+        ".hero-card, .section-block, .footer-block, .terminal-card, .content-card, .timeline-card",
       );
       const canAnimateGlow = window.matchMedia(
-        '(pointer: fine) and (prefers-reduced-motion: no-preference)',
+        "(pointer: fine) and (prefers-reduced-motion: no-preference)",
       ).matches;
 
       if (spotlight && canAnimateGlow) {
@@ -50,23 +50,23 @@ const {
           currentX += (targetX - currentX) * 0.12;
           currentY += (targetY - currentY) * 0.12;
 
-          spotlight.style.setProperty('--x', `${currentX}px`);
-          spotlight.style.setProperty('--y', `${currentY}px`);
-          root.style.setProperty('--cursor-x', `${currentX}px`);
-          root.style.setProperty('--cursor-y', `${currentY}px`);
+          spotlight.style.setProperty("--x", `${currentX}px`);
+          spotlight.style.setProperty("--y", `${currentY}px`);
+          root.style.setProperty("--cursor-x", `${currentX}px`);
+          root.style.setProperty("--cursor-y", `${currentY}px`);
 
           glowTargets.forEach((target) => {
             const rect = target.getBoundingClientRect();
 
-            target.style.setProperty('--mx', `${currentX - rect.left}px`);
-            target.style.setProperty('--my', `${currentY - rect.top}px`);
+            target.style.setProperty("--mx", `${currentX - rect.left}px`);
+            target.style.setProperty("--my", `${currentY - rect.top}px`);
           });
 
           animationFrame = window.requestAnimationFrame(renderGlow);
         };
 
         window.addEventListener(
-          'pointermove',
+          "pointermove",
           (event) => {
             targetX = event.clientX;
             targetY = event.clientY;
@@ -76,7 +76,7 @@ const {
 
         animationFrame = window.requestAnimationFrame(renderGlow);
 
-        window.addEventListener('pagehide', () => {
+        window.addEventListener("pagehide", () => {
           window.cancelAnimationFrame(animationFrame);
         });
       }

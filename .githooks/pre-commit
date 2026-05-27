@@ -1,14 +1,9 @@
 #!/usr/bin/env sh
 set -eu
 
-printf "\033[36m%s\033[0m\n" "pre-commit: formatting changed files"
+printf "\033[36m%s\033[0m\n" "pre-commit: checking formatting"
 
-npm run format
-
-if ! git diff --quiet; then
-  printf "\033[33m%s\033[0m\n" "pre-commit: Prettier changed files. Adding formatted changes to this commit."
-  git add -A
-fi
+npm run format:check
 
 printf "\033[36m%s\033[0m\n" "pre-commit: running type check"
 npm run check

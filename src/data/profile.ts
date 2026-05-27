@@ -111,32 +111,65 @@ export const experience = [
 
 export const projects = [
   {
-    name: "Linux development environment",
+    name: "Linux workstation automation",
     repo: "dotfiles",
-    description: "Personal dotfiles and setup scripts for an Ubuntu-based development environment.",
-    highlight: "Ubuntu-based development environment",
-    tags: ["Linux", "Shell", "zsh", "Docker", "Neovim"],
+    description:
+      "Ubuntu-focused dotfiles and bootstrap scripts with shell health checks, ShellCheck, shfmt, and GitHub Actions.",
+    highlight: "ShellCheck, shfmt, and GitHub Actions",
+    tags: ["Linux", "Bash", "zsh", "ShellCheck", "GitHub Actions"],
     links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
   },
   {
-    name: "Personal GitHub Pages site",
-    repo: "itkrivoshei.github.io",
+    name: "Linux networking and shell basics",
+    repo: "linux-networking-shell-basics",
     description:
-      "Static personal site built with Astro, TypeScript, Tailwind CSS, GitHub Actions, and GitHub Pages.",
-    highlight: "GitHub Actions, and GitHub Pages",
-    tags: ["Astro", "TypeScript", "GitHub Actions"],
+      "Linux command and Bash exercise set for networking lookups, system inspection, DNS/routing, and shell syntax validation.",
+    highlight: "networking lookups, system inspection, DNS/routing",
+    tags: ["Linux", "Bash", "networking", "DNS", "GitHub Actions"],
     links: [
-      { label: "Repository", href: "https://github.com/itkrivoshei/itkrivoshei.github.io" },
-      { label: "Live site", href: "https://itkrivoshei.github.io/" },
+      { label: "Repository", href: "https://github.com/itkrivoshei/linux-networking-shell-basics" },
+    ],
+  },
+  {
+    name: "Serverless commerce dashboard",
+    repo: "angular-serverless-commerce-dashboard",
+    description:
+      "Angular and NgRx commerce dashboard using an AWS API Gateway/Lambda data proxy, tests, and GitHub Pages deployment.",
+    highlight: "AWS API Gateway/Lambda data proxy",
+    tags: ["Angular", "NgRx", "AWS Lambda", "API Gateway", "CI/CD"],
+    links: [
+      {
+        label: "Repository",
+        href: "https://github.com/itkrivoshei/angular-serverless-commerce-dashboard",
+      },
+      {
+        label: "Live app",
+        href: "https://itkrivoshei.github.io/angular-serverless-commerce-dashboard/",
+      },
+    ],
+  },
+  {
+    name: "Dockerized ML app pipeline",
+    repo: "salary-prediction-linear-regression",
+    description:
+      "Streamlit salary prediction app packaged with Docker and validated by pytest, ruff, CI, and an image build.",
+    highlight: "Docker",
+    tags: ["Python", "Docker", "Streamlit", "pytest", "GitHub Actions"],
+    links: [
+      {
+        label: "Repository",
+        href: "https://github.com/itkrivoshei/salary-prediction-linear-regression",
+      },
+      { label: "Live app", href: "https://salary-prediction-linear-regression.streamlit.app/" },
     ],
   },
   {
     name: "Media publishing platforms",
     repo: "client work",
     description:
-      "Production web delivery work for publisher platforms, including MOPO and BikeRadar-related implementation and release support.",
-    highlight: "release support",
-    tags: ["TypeScript", "Jenkins", "staging", "release checks"],
+      "Production web delivery for publisher platforms, including MOPO and BikeRadar-related release support, staging validation, and troubleshooting.",
+    highlight: "release support, staging validation, and troubleshooting",
+    tags: ["TypeScript", "Jenkins", "staging", "release checks", "troubleshooting"],
     links: [
       { label: "MOPO", href: "https://www.mopo.de/" },
       { label: "BikeRadar", href: "https://www.bikeradar.com/" },
@@ -146,8 +179,8 @@ export const projects = [
     name: "Public services portal work",
     repo: "gosuslugi.ru",
     description:
-      "Large-scale public-service platform work focused on citizen-facing flows, integration support, validation, and production debugging.",
-    highlight: "production debugging",
+      "Large-scale public-service platform work covering citizen-facing flows, integration support, release validation, and production debugging.",
+    highlight: "release validation, and production debugging",
     tags: ["Angular", "GitLab", "Jenkins", "Docker", "Kubernetes"],
     links: [{ label: "Website", href: "https://www.gosuslugi.ru/" }],
   },

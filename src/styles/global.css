@@ -3,8 +3,8 @@
 :root {
   color-scheme: dark;
   --bg: #020617;
-  --panel: rgba(2, 6, 23, 0.74);
-  --panel-strong: rgba(15, 23, 42, 0.78);
+  --panel: rgba(2, 6, 23, 0.78);
+  --panel-strong: rgba(15, 23, 42, 0.84);
   --line: rgba(148, 163, 184, 0.16);
   --text: #e5e7eb;
   --muted: #cbd5e1;
@@ -37,10 +37,10 @@ body {
   min-height: 100vh;
   font-family: var(--sans);
   background:
-    radial-gradient(circle at 15% 0%, rgba(34, 211, 238, 0.1), transparent 32rem),
-    radial-gradient(circle at 85% 12%, rgba(137, 180, 250, 0.065), transparent 28rem),
-    linear-gradient(rgba(148, 163, 184, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.022) 1px, transparent 1px),
+    radial-gradient(circle at 16% 0%, rgba(34, 211, 238, 0.075), transparent 32rem),
+    radial-gradient(circle at 86% 12%, rgba(137, 180, 250, 0.055), transparent 28rem),
+    linear-gradient(rgba(148, 163, 184, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.018) 1px, transparent 1px),
     linear-gradient(135deg, #020617 0%, #08111f 48%, #0f172a 100%);
   background-size:
     auto,
@@ -70,6 +70,23 @@ a {
 
 ::selection {
   background: rgba(166, 227, 161, 0.24);
+}
+
+.network-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.network-background canvas {
+  display: block;
+}
+
+.network-background[data-network-disabled="true"] {
+  display: none;
 }
 
 .site-shell {
@@ -336,10 +353,6 @@ h3 {
 
 .terminal-card p {
   margin: 0.35rem 0;
-}
-
-.terminal-card span {
-  color: var(--terminal-blue);
 }
 
 .terminal-dots {
@@ -648,6 +661,10 @@ h3 {
 }
 
 @media (hover: none), (pointer: coarse) {
+  .network-background {
+    display: none;
+  }
+
   .hero-card,
   .section-block,
   .footer-block,
@@ -689,5 +706,9 @@ h3 {
     scroll-behavior: auto !important;
     transition-duration: 1ms !important;
     animation-duration: 1ms !important;
+  }
+
+  .network-background {
+    display: none;
   }
 }

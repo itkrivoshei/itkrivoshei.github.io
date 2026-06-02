@@ -1,0 +1,148 @@
+---
+const command = "deploy portfolio --target github-pages";
+const result = "ready";
+---
+
+<div
+  class="terminal-typewriter"
+  data-terminal-typewriter
+  data-command={command}
+  data-result={result}
+>
+  <p class="typewriter-line typewriter-command-line">
+    <span class="terminal-prompt" aria-hidden="true">$</span>
+    <span data-typewriter-command>{command}</span>
+  </p>
+  <p class="typewriter-line typewriter-result-line">
+    <span data-typewriter-result>{result}</span><span class="typewriter-cursor" aria-hidden="true"
+    ></span>
+  </p>
+</div>
+
+<script>
+  const typewriterBlocks = document.querySelectorAll<HTMLElement>("[data-terminal-typewriter]");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  typewriterBlocks.forEach((block) => {
+    const commandLine = block.querySelector<HTMLElement>(".typewriter-command-line");
+    const resultLine = block.querySelector<HTMLElement>(".typewriter-result-line");
+    const commandTarget = block.querySelector<HTMLElement>("[data-typewriter-command]");
+    const resultTarget = block.querySelector<HTMLElement>("[data-typewriter-result]");
+    const cursor = block.querySelector<HTMLElement>(".typewriter-cursor");
+    const command = block.getAttribute("data-command") ?? "";
+    const result = block.getAttribute("data-result") ?? "";
+
+    block.setAttribute("aria-label", `$ ${command} ${result}`);
+
+    if (!commandLine || !resultLine || !commandTarget || !resultTarget || !cursor) {
+      return;
+    }
+
+    if (prefersReducedMotion) {
+      block.classList.add("typewriter-complete");
+      return;
+    }
+
+    commandTarget.textContent = "";
+    resultTarget.textContent = "";
+    commandLine.append(cursor);
+
+    let commandIndex = 0;
+    let resultIndex = 0;
+
+    const typeResult = () => {
+      resultTarget.textContent = result.slice(0, resultIndex);
+      resultLine.append(cursor);
+
+      if (resultIndex < result.length) {
+        resultIndex += 1;
+        window.setTimeout(typeResult, 36);
+        return;
+      }
+
+      block.classList.add("typewriter-complete");
+    };
+
+    const typeCommand = () => {
+      commandTarget.textContent = command.slice(0, commandIndex);
+
+      if (commandIndex < command.length) {
+        commandIndex += 1;
+        window.setTimeout(typeCommand, 28 + Math.random() * 14);
+        return;
+      }
+
+      window.setTimeout(typeResult, 260);
+    };
+
+    window.setTimeout(typeCommand, 380);
+  });
+</script>
+
+<style>
+  .terminal-typewriter {
+    display: grid;
+    gap: 0.15rem;
+    font-size: 0.95rem;
+  }
+
+  .typewriter-line {
+    min-height: 1.55em;
+    white-space: nowrap;
+  }
+
+  .typewriter-command-line {
+    color: var(--muted);
+  }
+
+  .typewriter-result-line {
+    color: var(--terminal-green);
+  }
+
+  .terminal-prompt {
+    color: var(--terminal-blue);
+  }
+
+  .typewriter-cursor {
+    display: inline-block;
+    width: 0.58ch;
+    height: 1.08em;
+    margin-left: 0.18rem;
+    border-radius: 0.16rem;
+    background: var(--terminal-green);
+    box-shadow: 0 0 14px rgba(166, 227, 161, 0.32);
+    transform: translateY(0.16em);
+    animation: terminal-cursor-blink 1s steps(2, end) infinite;
+  }
+
+  @keyframes terminal-cursor-blink {
+    0%,
+    48% {
+      opacity: 1;
+    }
+
+    49%,
+    100% {
+      opacity: 0.28;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .typewriter-cursor {
+      opacity: 1;
+      animation: none;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .terminal-typewriter {
+      font-size: 0.82rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .terminal-typewriter {
+      font-size: 0.76rem;
+    }
+  }
+</style>

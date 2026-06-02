@@ -28,7 +28,20 @@ const description = splitDescription();
 ---
 
 <article class:list={["content-card", "project-card", project.featured && "project-card-featured"]}>
+  {project.featured && <span class="featured-card-glow" aria-hidden="true"></span>}
+
   <div class="project-copy">
+    {
+      project.featured && (
+        <span class="featured-badge">
+          <span class="featured-star" aria-hidden="true">
+            ★
+          </span>
+          Featured
+        </span>
+      )
+    }
+
     <p class="eyebrow">
       {
         primaryLink ? (
@@ -47,16 +60,6 @@ const description = splitDescription();
         )
       }
     </p>
-    {
-      project.featured && (
-        <span class="featured-badge">
-          <span class="featured-star" aria-hidden="true">
-            ★
-          </span>
-          Featured
-        </span>
-      )
-    }
     <h3>{project.name}</h3>
     <p>
       {description.before}
@@ -109,18 +112,53 @@ const description = splitDescription();
     box-shadow: 0 0 18px rgba(166, 227, 161, 0.68);
   }
 
+  .featured-card-glow {
+    position: absolute;
+    top: -2.5rem;
+    left: -2.25rem;
+    z-index: 0;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(166, 227, 161, 0.085), transparent 68%);
+    pointer-events: none;
+    transition: opacity 700ms ease;
+  }
+
+  .project-card-featured:hover .featured-card-glow {
+    opacity: 0;
+  }
+
   .featured-badge {
     display: inline-flex;
     width: fit-content;
     align-items: center;
     gap: 0.34rem;
-    border: 1px solid rgba(148, 163, 184, 0.18);
+    border: 1px solid rgba(var(--accent-rgb), 0.52);
     border-radius: 999px;
-    padding: 0.26rem 0.56rem;
-    color: var(--muted);
+    padding: 0.36rem 0.68rem;
+    background: rgba(var(--accent-rgb), 0.07);
+    box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.09);
+    color: #e7ffe4;
     font-family: var(--mono);
-    font-size: 0.76rem;
+    font-size: 0.85rem;
     letter-spacing: 0.01em;
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease,
+      background 160ms ease,
+      box-shadow 160ms ease,
+      color 160ms ease;
+  }
+
+  .featured-badge:hover {
+    border-color: rgba(var(--accent-rgb), 0.64);
+    background: rgba(var(--accent-rgb), 0.12);
+    box-shadow:
+      0 0 0 1px rgba(var(--accent-rgb), 0.08),
+      0 0 22px rgba(var(--accent-rgb), 0.14);
+    color: #f0ffed;
+    transform: scale(1.006);
   }
 
   .featured-star {

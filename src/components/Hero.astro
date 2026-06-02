@@ -54,3 +54,32 @@ import { profile } from "../data/profile";
     window.setTimeout(typeNextCharacter, 450);
   }
 </script>
+
+<style>
+  .typewriter-line {
+    min-height: 1.55rem;
+    color: var(--terminal-green);
+  }
+
+  .typewriter-line .typewriter-text {
+    color: var(--terminal-green);
+  }
+
+  .typewriter-cursor {
+    display: inline-block;
+    color: var(--terminal-green) !important;
+    animation: cursor-blink 1s steps(2, start) infinite;
+  }
+
+  @keyframes cursor-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .typewriter-cursor {
+      animation: none;
+    }
+  }
+</style>

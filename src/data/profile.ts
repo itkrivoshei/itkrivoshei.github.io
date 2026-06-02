@@ -160,15 +160,21 @@ export const projects = [
     links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
   },
   {
-    name: "Personal portfolio site",
-    repo: "itkrivoshei.github.io",
+    name: "Production App Infrastructure",
+    repo: "production-app-infrastructure",
     description:
-      "Astro portfolio deployed to GitHub Pages with typed profile content, Prettier/Astro checks, GitHub Actions verification, and Docker build support.",
-    highlight: "GitHub Actions verification",
-    tags: ["Astro", "TypeScript", "Tailwind CSS", "GitHub Actions", "Docker"],
+      "Main current project: a production-like DevOps Control Center covering Dockerized services, observability, CI/CD, security scans, load testing, rollback, and optional Terraform.",
+    highlight: "Main current project",
+    tags: ["Main project", "Docker", "Prometheus", "Grafana", "CI/CD", "Terraform"],
     links: [
-      { label: "Repository", href: "https://github.com/itkrivoshei/itkrivoshei.github.io" },
-      { label: "Live site", href: "https://itkrivoshei.github.io" },
+      {
+        label: "Repository",
+        href: "https://github.com/itkrivoshei/production-app-infrastructure",
+      },
+      {
+        label: "Live preview",
+        href: "https://itkrivoshei.github.io/production-app-infrastructure/",
+      },
     ],
   },
   {

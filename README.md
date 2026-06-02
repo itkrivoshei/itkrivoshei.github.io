@@ -4,14 +4,15 @@
 
 Personal GitHub Pages site for Nikita Krivoshei, built with Astro, TypeScript, Tailwind CSS, and GitHub Actions.
 
-[![Check](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/check.yml/badge.svg)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/check.yml)
-[![Deploy](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/deploy.yml)
-[![Live site](https://img.shields.io/badge/Live%20site-itkrivoshei.github.io-2ea44f?logo=githubpages&logoColor=white)](https://itkrivoshei.github.io)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Live site](https://img.shields.io/badge/live-itkrivoshei.github.io-2ea44f?style=for-the-badge&logo=githubpages&logoColor=white)](https://itkrivoshei.github.io)
+[![Check](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/check.yml?branch=main&style=for-the-badge&label=check&logo=githubactions&logoColor=white)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/check.yml)
+[![Deploy](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/deploy.yml?branch=main&style=for-the-badge&label=deploy&logo=githubactions&logoColor=white)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/deploy.yml)
+[![CodeQL](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/codeql.yml?branch=main&style=for-the-badge&label=codeql&logo=github&logoColor=white)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/codeql.yml)
+[![License](https://img.shields.io/github/license/itkrivoshei/itkrivoshei.github.io?style=for-the-badge)](LICENSE)
 
-[![GitHub](https://img.shields.io/badge/GitHub-itkrivoshei-181717?logo=github&logoColor=white)](https://github.com/itkrivoshei)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nikita%20Krivoshei-0a66c2?logo=linkedin&logoColor=white)](https://linkedin.com/in/itkivoshei)
-[![Email](https://img.shields.io/badge/Email-NikitaKrivoshei%40gmail.com-d14836?logo=gmail&logoColor=white)](mailto:NikitaKrivoshei@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-itkrivoshei-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/itkrivoshei)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nikita%20Krivoshei-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/itkivoshei)
+[![Email](https://img.shields.io/badge/Email-NikitaKrivoshei%40gmail.com-d14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:NikitaKrivoshei@gmail.com)
 
 </div>
 

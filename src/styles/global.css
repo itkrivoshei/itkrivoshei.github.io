@@ -17,8 +17,6 @@
   --accent-rgb: 166, 227, 161;
   --link-rgb: 137, 180, 250;
   --surface-glow-rgb: var(--accent-rgb);
-  --cursor-x: 50vw;
-  --cursor-y: 12vh;
   --sans:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --mono:
@@ -74,25 +72,6 @@ a {
   background: rgba(166, 227, 161, 0.24);
 }
 
-.cursor-spotlight {
-  --x: 50vw;
-  --y: 12vh;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      520px circle at var(--x) var(--y),
-      rgba(166, 227, 161, 0.034),
-      rgba(166, 227, 161, 0.014) 28%,
-      transparent 64%
-    ),
-    radial-gradient(320px circle at var(--x) var(--y), rgba(137, 180, 250, 0.038), transparent 60%),
-    radial-gradient(160px circle at var(--x) var(--y), rgba(255, 255, 255, 0.022), transparent 58%);
-  opacity: 0.72;
-}
-
 .site-shell {
   position: relative;
   z-index: 1;
@@ -107,87 +86,12 @@ a {
 .terminal-card,
 .content-card,
 .timeline-card {
-  --mx: var(--cursor-x);
-  --my: var(--cursor-y);
   position: relative;
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--panel);
   box-shadow: 0 24px 90px rgba(2, 6, 23, 0.42);
   backdrop-filter: blur(18px);
-}
-
-.hero-card::before,
-.section-block::before,
-.footer-block::before,
-.terminal-card::before,
-.content-card::before,
-.timeline-card::before,
-.hero-card::after,
-.section-block::after,
-.footer-block::after,
-.terminal-card::after,
-.content-card::after,
-.timeline-card::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 160ms ease;
-}
-
-.hero-card::before,
-.section-block::before,
-.footer-block::before,
-.terminal-card::before,
-.content-card::before,
-.timeline-card::before {
-  inset: 0;
-  z-index: 0;
-  background: radial-gradient(
-    420px circle at var(--mx) var(--my),
-    rgba(var(--surface-glow-rgb), 0.055),
-    transparent 54%
-  );
-}
-
-.hero-card::after,
-.section-block::after,
-.footer-block::after,
-.terminal-card::after,
-.content-card::after,
-.timeline-card::after {
-  inset: -1px;
-  z-index: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: radial-gradient(
-    260px circle at var(--mx) var(--my),
-    rgba(var(--surface-glow-rgb), 0.4),
-    transparent 62%
-  );
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-}
-
-.hero-card:hover::before,
-.section-block:hover::before,
-.footer-block:hover::before,
-.terminal-card:hover::before,
-.content-card:hover::before,
-.timeline-card:hover::before {
-  opacity: 1;
-}
-
-.hero-card:hover::after,
-.section-block:hover::after,
-.footer-block:hover::after,
-.terminal-card:hover::after,
-.content-card:hover::after,
-.timeline-card:hover::after {
-  opacity: 0.86;
 }
 
 .hero-card > *,
@@ -522,12 +426,8 @@ h3 {
     box-shadow 180ms ease;
 }
 
-.timeline-card {
-  --surface-glow-rgb: var(--link-rgb);
-}
-
-.content-card:hover,
-.timeline-card:hover {
+.skill-card:hover,
+.project-card:hover {
   border-color: rgba(var(--surface-glow-rgb), 0.32);
   background: rgba(15, 23, 42, 0.88);
   box-shadow:
@@ -720,13 +620,6 @@ h3 {
 }
 
 @media (hover: none), (pointer: coarse) {
-  .cursor-spotlight {
-    background:
-      radial-gradient(circle at 50% 0%, rgba(166, 227, 161, 0.045), transparent 26rem),
-      radial-gradient(circle at 85% 12%, rgba(137, 180, 250, 0.04), transparent 24rem);
-    opacity: 1;
-  }
-
   .hero-card,
   .section-block,
   .footer-block,
@@ -734,25 +627,6 @@ h3 {
   .content-card,
   .timeline-card {
     border-color: rgba(148, 163, 184, 0.18);
-  }
-
-  .hero-card::before,
-  .section-block::before,
-  .footer-block::before,
-  .terminal-card::before,
-  .content-card::before,
-  .timeline-card::before {
-    opacity: 0.5;
-    background: linear-gradient(135deg, rgba(var(--surface-glow-rgb), 0.045), transparent 48%);
-  }
-
-  .hero-card::after,
-  .section-block::after,
-  .footer-block::after,
-  .terminal-card::after,
-  .content-card::after,
-  .timeline-card::after {
-    opacity: 0;
   }
 }
 
@@ -787,9 +661,5 @@ h3 {
     scroll-behavior: auto !important;
     transition-duration: 1ms !important;
     animation-duration: 1ms !important;
-  }
-
-  .cursor-spotlight {
-    display: none;
   }
 }

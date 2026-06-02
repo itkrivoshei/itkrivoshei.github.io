@@ -155,8 +155,7 @@ export const projects = [
     name: "Production App Infrastructure",
     repo: "production-app-infrastructure",
     description:
-      "Main current project: a production-like DevOps Control Center covering Dockerized services, observability, CI/CD, security scans, load testing, rollback, and optional Terraform.",
-    highlight: "Main current project",
+      "Production-like DevOps control center with Dockerized services, observability, CI/CD, security scans, load testing, and rollback.",
     featured: true,
     tags: ["Docker", "Prometheus", "Grafana", "CI/CD", "Terraform"],
     links: [

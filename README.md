@@ -4,17 +4,17 @@
 
 Personal engineering website presenting work history, technical background, selected projects, and repositories. Built with Astro, TypeScript, Tailwind CSS, and GitHub Actions.
 
-[![Live site](https://img.shields.io/badge/live-site-2ea44f?style=for-the-badge\&logo=githubpages\&logoColor=white\&labelColor=0f172a)](https://itkrivoshei.github.io)
-[![Check](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/check.yml?branch=main\&style=for-the-badge\&label=check\&logo=githubactions\&logoColor=white\&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/check.yml)
-[![Deploy](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/deploy.yml?branch=main\&style=for-the-badge\&label=deploy\&logo=githubactions\&logoColor=white\&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/deploy.yml)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/codeql.yml?branch=main\&style=for-the-badge\&label=codeql\&logo=github\&logoColor=white\&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/codeql.yml)
-[![License](https://img.shields.io/github/license/itkrivoshei/itkrivoshei.github.io?style=for-the-badge\&labelColor=0f172a)](LICENSE)
+[![Live site](https://img.shields.io/badge/live-site-2ea44f?style=for-the-badge&logo=githubpages&logoColor=white&labelColor=0f172a)](https://itkrivoshei.github.io)
+[![Check](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/check.yml?branch=main&style=for-the-badge&label=check&logo=githubactions&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/check.yml)
+[![Deploy](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/deploy.yml?branch=main&style=for-the-badge&label=deploy&logo=githubactions&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/deploy.yml)
+[![CodeQL](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/codeql.yml?branch=main&style=for-the-badge&label=codeql&logo=github&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/codeql.yml)
+[![License](https://img.shields.io/github/license/itkrivoshei/itkrivoshei.github.io?style=for-the-badge&labelColor=0f172a)](LICENSE)
 
 <br />
 
-[![GitHub](https://img.shields.io/badge/GitHub-itkrivoshei-181717?style=for-the-badge\&logo=github\&logoColor=white\&labelColor=0f172a)](https://github.com/itkrivoshei)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nikita%20Krivoshei-0a66c2?style=for-the-badge\&logo=linkedin\&logoColor=white\&labelColor=0f172a)](https://linkedin.com/in/itkivoshei)
-[![Email](https://img.shields.io/badge/Email-nikitakrivoshei%40gmail.com-d14836?style=for-the-badge\&logo=gmail\&logoColor=white\&labelColor=0f172a)](mailto:nikitakrivoshei@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-itkrivoshei-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nikita%20Krivoshei-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0f172a)](https://linkedin.com/in/itkivoshei)
+[![Email](https://img.shields.io/badge/Email-nikitakrivoshei%40gmail.com-d14836?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0f172a)](mailto:nikitakrivoshei@gmail.com)
 
 </div>
 
@@ -22,26 +22,24 @@ Personal engineering website presenting work history, technical background, sele
 
 The site presents work history, technical background, selected projects, availability, and contact links from a typed content source:
 
-```text
-src/data/profile.ts
-```
+[`src/data/profile.ts`](src/data/profile.ts)
 
-Astro components render the content into reusable sections, while Tailwind CSS v4 is wired through Vite for styling.
+[Astro](https://astro.build/) components render the content into reusable sections, while [Tailwind CSS v4](https://tailwindcss.com/) is wired through [Vite](https://vite.dev/) for styling.
 
-Tooling is aligned around Node.js 22 via `.node-version`, GitHub Actions, and the Docker build image.
+Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`](.node-version), [GitHub Actions](https://github.com/itkrivoshei/itkrivoshei.github.io/actions), and the [Docker](https://www.docker.com/) build image from [`Dockerfile`](Dockerfile).
 
 ## Tech Stack
 
-| Area      | Tools                                                  |
-| --------- | ------------------------------------------------------ |
-| Framework | Astro 5                                                |
-| Language  | TypeScript                                             |
-| Styling   | Tailwind CSS 4                                         |
-| Runtime   | Node.js 22, npm                                        |
-| Checks    | Prettier + Astro plugin, Astro check, production build |
-| Hosting   | GitHub Pages                                           |
-| Container | Docker, nginx                                          |
-| Updates   | Dependabot                                             |
+| Area      | Tools                                                                                                                                                                                                    |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework | [Astro 5](https://astro.build/)                                                                                                                                                                          |
+| Language  | [TypeScript](https://www.typescriptlang.org/)                                                                                                                                                            |
+| Styling   | [Tailwind CSS 4](https://tailwindcss.com/)                                                                                                                                                               |
+| Runtime   | [Node.js 22](https://nodejs.org/), [npm](https://www.npmjs.com/)                                                                                                                                         |
+| Checks    | [Prettier](https://prettier.io/) + [Astro plugin](https://github.com/withastro/prettier-plugin-astro), [Astro check](https://docs.astro.build/en/reference/cli-reference/#astro-check), production build |
+| Hosting   | [GitHub Pages](https://pages.github.com/)                                                                                                                                                                |
+| Container | [Docker](https://www.docker.com/), [nginx](https://nginx.org/)                                                                                                                                           |
+| Updates   | [Dependabot](.github/dependabot.yml)                                                                                                                                                                     |
 
 ## Local Workflow
 
@@ -65,6 +63,8 @@ npm run preview
 
 ## Scripts
 
+Scripts are defined in [`package.json`](package.json).
+
 | Command                 | Purpose                                             |
 | ----------------------- | --------------------------------------------------- |
 | `npm run dev`           | Start Astro locally                                 |
@@ -77,9 +77,11 @@ npm run preview
 | `npm run ready`         | Format first, then check and build                  |
 | `npm run hooks:install` | Enable local Git hooks                              |
 
-Astro file formatting is backed by `prettier-plugin-astro`, so targeted checks such as `npx prettier --check src/pages/index.astro` work outside the editor too.
+Astro file formatting is backed by [`prettier-plugin-astro`](https://github.com/withastro/prettier-plugin-astro), so targeted checks such as `npx prettier --check src/pages/index.astro` work outside the editor too.
 
 ## Docker
+
+Docker image configuration is defined in [`Dockerfile`](Dockerfile).
 
 ```bash
 docker build -t itkrivoshei-site .
@@ -90,11 +92,11 @@ Open `http://localhost:8080`.
 
 ## Automation
 
-* `.github/workflows/check.yml` validates formatting, Astro checks, and production builds.
-* `.github/workflows/deploy.yml` runs the same verification gate before publishing `dist` to GitHub Pages on pushes to `main`.
-* `.github/workflows/codeql.yml` runs GitHub CodeQL analysis.
-* `.github/dependabot.yml` tracks npm package and GitHub Actions updates.
-* `.githooks/pre-commit` is intentionally non-mutating: it checks formatting and Astro diagnostics without rewriting or staging files.
+- [`.github/workflows/check.yml`](.github/workflows/check.yml) validates formatting, Astro checks, and production builds.
+- [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs the same verification gate before publishing `dist` to [GitHub Pages](https://itkrivoshei.github.io) on pushes to [`main`](https://github.com/itkrivoshei/itkrivoshei.github.io/tree/main).
+- [`.github/workflows/codeql.yml`](.github/workflows/codeql.yml) runs GitHub [CodeQL](https://codeql.github.com/) analysis.
+- [`.github/dependabot.yml`](.github/dependabot.yml) tracks npm package and GitHub Actions updates.
+- [`.githooks/pre-commit`](.githooks/pre-commit) is intentionally non-mutating: it checks formatting and Astro diagnostics without rewriting or staging files.
 
 ## License
 

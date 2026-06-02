@@ -24,6 +24,7 @@ export interface ProjectItem {
   repo: string;
   description: string;
   highlight?: string;
+  featured?: boolean;
   tags: string[];
   links?: ProfileLink[];
   href?: string;
@@ -151,21 +152,13 @@ export const experience = [
 
 export const projects = [
   {
-    name: "Linux workstation automation",
-    repo: "dotfiles",
-    description:
-      "Ubuntu-focused dotfiles and bootstrap scripts with shell health checks, ShellCheck, shfmt, and GitHub Actions.",
-    highlight: "ShellCheck, shfmt, and GitHub Actions",
-    tags: ["Linux", "Bash", "zsh", "ShellCheck", "GitHub Actions"],
-    links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
-  },
-  {
     name: "Production App Infrastructure",
     repo: "production-app-infrastructure",
     description:
       "Main current project: a production-like DevOps Control Center covering Dockerized services, observability, CI/CD, security scans, load testing, rollback, and optional Terraform.",
     highlight: "Main current project",
-    tags: ["Main project", "Docker", "Prometheus", "Grafana", "CI/CD", "Terraform"],
+    featured: true,
+    tags: ["Docker", "Prometheus", "Grafana", "CI/CD", "Terraform"],
     links: [
       {
         label: "Repository",
@@ -176,6 +169,15 @@ export const projects = [
         href: "https://itkrivoshei.github.io/production-app-infrastructure/",
       },
     ],
+  },
+  {
+    name: "Linux workstation automation",
+    repo: "dotfiles",
+    description:
+      "Ubuntu-focused dotfiles and bootstrap scripts with shell health checks, ShellCheck, shfmt, and GitHub Actions.",
+    highlight: "ShellCheck, shfmt, and GitHub Actions",
+    tags: ["Linux", "Bash", "zsh", "ShellCheck", "GitHub Actions"],
+    links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
   },
   {
     name: "Serverless commerce dashboard",

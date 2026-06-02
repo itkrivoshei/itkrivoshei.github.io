@@ -27,59 +27,6 @@ const {
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
-    <div class="cursor-spotlight" aria-hidden="true"></div>
     <slot />
-    <script>
-      const root = document.documentElement;
-      const spotlight = document.querySelector<HTMLElement>(".cursor-spotlight");
-      const glowTargets = document.querySelectorAll<HTMLElement>(
-        ".hero-card, .section-block, .footer-block, .terminal-card, .content-card, .timeline-card",
-      );
-      const canAnimateGlow = window.matchMedia(
-        "(pointer: fine) and (prefers-reduced-motion: no-preference)",
-      ).matches;
-
-      if (spotlight && canAnimateGlow) {
-        let targetX = window.innerWidth / 2;
-        let targetY = window.innerHeight * 0.12;
-        let currentX = targetX;
-        let currentY = targetY;
-        let animationFrame = 0;
-
-        const renderGlow = () => {
-          currentX += (targetX - currentX) * 0.12;
-          currentY += (targetY - currentY) * 0.12;
-
-          spotlight.style.setProperty("--x", `${currentX}px`);
-          spotlight.style.setProperty("--y", `${currentY}px`);
-          root.style.setProperty("--cursor-x", `${currentX}px`);
-          root.style.setProperty("--cursor-y", `${currentY}px`);
-
-          glowTargets.forEach((target) => {
-            const rect = target.getBoundingClientRect();
-
-            target.style.setProperty("--mx", `${currentX - rect.left}px`);
-            target.style.setProperty("--my", `${currentY - rect.top}px`);
-          });
-
-          animationFrame = window.requestAnimationFrame(renderGlow);
-        };
-
-        window.addEventListener(
-          "pointermove",
-          (event) => {
-            targetX = event.clientX;
-            targetY = event.clientY;
-          },
-          { passive: true },
-        );
-
-        animationFrame = window.requestAnimationFrame(renderGlow);
-
-        window.addEventListener("pagehide", () => {
-          window.cancelAnimationFrame(animationFrame);
-        });
-      }
-    </script>
   </body>
 </html>

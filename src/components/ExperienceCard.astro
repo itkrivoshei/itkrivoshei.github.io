@@ -100,7 +100,7 @@ const splitPoint = (point: ExperiencePoint) => {
   </ul>
 
   <ul class="tag-list experience-skill-list" aria-label={`${item.company} skills`}>
-    {skills.map((skill) => <li tabindex="0">{skill}</li>)}
+    {skills.map((skill) => <li>{skill}</li>)}
   </ul>
 </article>
 
@@ -176,19 +176,12 @@ const splitPoint = (point: ExperiencePoint) => {
   }
 
   .timeline-card .experience-skill-list li:hover,
-  .timeline-card .experience-skill-list li:active,
-  .timeline-card .experience-skill-list li:focus-visible {
+  .timeline-card .experience-skill-list li:active {
     border-color: rgba(var(--accent-rgb), 0.52) !important;
     background: rgba(var(--accent-rgb), 0.07) !important;
     box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.09) !important;
     color: #e7ffe4 !important;
     transform: scale(1.006);
-  }
-
-  .timeline-card .experience-skill-list li:focus-visible {
-    box-shadow:
-      0 0 0 2px rgba(var(--accent-rgb), 0.16),
-      0 0 18px rgba(var(--accent-rgb), 0.09) !important;
   }
 
   @media (max-width: 560px) {

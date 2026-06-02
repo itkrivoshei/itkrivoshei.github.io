@@ -1,0 +1,157 @@
+<canvas class="network-background" aria-hidden="true"></canvas>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>(".network-background");
+  const context = canvas?.getContext("2d");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const coarsePointer = window.matchMedia("(pointer: coarse)");
+
+  if (canvas && context && !reduceMotion.matches) {
+    const pointer = { x: -9999, y: -9999, active: false };
+    const config = {
+      distance: 145,
+      maxNodes: coarsePointer.matches ? 26 : 54,
+      minNodes: coarsePointer.matches ? 16 : 34,
+      repulseRadius: 105,
+      repulseStrength: 0.18,
+      speed: 0.14,
+    };
+
+    let animationFrame = 0;
+    let nodes: Array<{ x: number; y: number; vx: number; vy: number; radius: number; alpha: number }> = [];
+
+    const getNodeCount = () => {
+      const area = window.innerWidth * window.innerHeight;
+      const count = Math.round(area / 28000);
+
+      return Math.max(config.minNodes, Math.min(config.maxNodes, count));
+    };
+
+    const resize = () => {
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.75);
+
+      canvas.width = Math.floor(window.innerWidth * pixelRatio);
+      canvas.height = Math.floor(window.innerHeight * pixelRatio);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+      nodes = Array.from({ length: getNodeCount() }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        vx: (Math.random() - 0.5) * config.speed,
+        vy: (Math.random() - 0.5) * config.speed,
+        radius: Math.random() * 1.2 + 0.55,
+        alpha: Math.random() * 0.16 + 0.12,
+      }));
+    };
+
+    const draw = () => {
+      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      for (const node of nodes) {
+        node.x += node.vx;
+        node.y += node.vy;
+
+        if (pointer.active) {
+          const dx = node.x - pointer.x;
+          const dy = node.y - pointer.y;
+          const distance = Math.hypot(dx, dy);
+
+          if (distance > 0 && distance < config.repulseRadius) {
+            const force = (1 - distance / config.repulseRadius) * config.repulseStrength;
+            node.x += (dx / distance) * force;
+            node.y += (dy / distance) * force;
+          }
+        }
+
+        if (node.x < -20) node.x = window.innerWidth + 20;
+        if (node.x > window.innerWidth + 20) node.x = -20;
+        if (node.y < -20) node.y = window.innerHeight + 20;
+        if (node.y > window.innerHeight + 20) node.y = -20;
+      }
+
+      for (let index = 0; index < nodes.length; index += 1) {
+        const current = nodes[index];
+
+        for (let nextIndex = index + 1; nextIndex < nodes.length; nextIndex += 1) {
+          const next = nodes[nextIndex];
+          const distance = Math.hypot(current.x - next.x, current.y - next.y);
+
+          if (distance < config.distance) {
+            const opacity = (1 - distance / config.distance) * 0.11;
+            const gradient = context.createLinearGradient(current.x, current.y, next.x, next.y);
+
+            gradient.addColorStop(0, `rgba(137, 180, 250, ${opacity})`);
+            gradient.addColorStop(1, `rgba(166, 227, 161, ${opacity * 0.82})`);
+
+            context.beginPath();
+            context.strokeStyle = gradient;
+            context.lineWidth = 1;
+            context.moveTo(current.x, current.y);
+            context.lineTo(next.x, next.y);
+            context.stroke();
+          }
+        }
+      }
+
+      for (const node of nodes) {
+        context.beginPath();
+        context.fillStyle = `rgba(226, 232, 240, ${node.alpha})`;
+        context.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        context.fill();
+      }
+
+      animationFrame = window.requestAnimationFrame(draw);
+    };
+
+    const handlePointerMove = (event: PointerEvent) => {
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+      pointer.active = true;
+    };
+
+    const handlePointerLeave = () => {
+      pointer.active = false;
+    };
+
+    const stop = () => {
+      window.cancelAnimationFrame(animationFrame);
+      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    };
+
+    resize();
+    draw();
+
+    window.addEventListener("resize", resize);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerleave", handlePointerLeave);
+
+    reduceMotion.addEventListener("change", (event) => {
+      if (event.matches) {
+        stop();
+      } else {
+        resize();
+        draw();
+      }
+    });
+  }
+</script>
+
+<style>
+  .network-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    opacity: 0.68;
+  }
+
+  @media (max-width: 720px), (prefers-reduced-motion: reduce) {
+    .network-background {
+      display: none;
+    }
+  }
+</style>

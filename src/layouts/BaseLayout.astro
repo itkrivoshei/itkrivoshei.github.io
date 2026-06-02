@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import "../styles/link-colors.css";
+import NetworkBackground from "../components/NetworkBackground.astro";
 
 interface Props {
   title?: string;
@@ -27,6 +28,7 @@ const {
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <NetworkBackground />
     <slot />
   </body>
 </html>

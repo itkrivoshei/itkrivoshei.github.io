@@ -1,0 +1,135 @@
+<div class="network-background" data-network-background aria-hidden="true"></div>
+
+<script>
+  import { tsParticles, type Container, type ISourceOptions } from "@tsparticles/engine";
+  import { loadSlim } from "@tsparticles/slim";
+
+  const background = document.querySelector<HTMLElement>("[data-network-background]");
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const desktopPointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+  let container: Container | undefined;
+  let slimLoaded = false;
+
+  const options = {
+    autoPlay: true,
+    background: {
+      color: {
+        value: "transparent",
+      },
+    },
+    clear: true,
+    detectRetina: true,
+    fpsLimit: 35,
+    fullScreen: {
+      enable: false,
+    },
+    interactivity: {
+      detectsOn: "canvas",
+      events: {
+        onHover: {
+          enable: true,
+          mode: "repulse",
+        },
+        resize: {
+          enable: true,
+        },
+      },
+      modes: {
+        repulse: {
+          distance: 92,
+          duration: 0.2,
+          speed: 0.18,
+        },
+      },
+    },
+    particles: {
+      color: {
+        value: ["#89b4fa", "#89b4fa", "#89b4fa", "#94e2d5", "#a6e3a1"],
+      },
+      links: {
+        color: "#89b4fa",
+        distance: 132,
+        enable: true,
+        opacity: 0.075,
+        width: 1,
+      },
+      move: {
+        direction: "none",
+        enable: true,
+        outModes: {
+          default: "bounce",
+        },
+        random: false,
+        speed: {
+          min: 0.15,
+          max: 0.32,
+        },
+        straight: false,
+      },
+      number: {
+        density: {
+          enable: true,
+          height: 760,
+          width: 1080,
+        },
+        value: 44,
+      },
+      opacity: {
+        value: {
+          min: 0.14,
+          max: 0.28,
+        },
+      },
+      shape: {
+        type: "circle",
+      },
+      size: {
+        value: {
+          min: 1,
+          max: 2.2,
+        },
+      },
+    },
+    pauseOnBlur: true,
+    pauseOnOutsideViewport: true,
+  } satisfies ISourceOptions;
+
+  const destroyNetwork = () => {
+    container?.destroy();
+    container = undefined;
+  };
+
+  const syncNetwork = async () => {
+    if (!background || reducedMotionQuery.matches || !desktopPointerQuery.matches) {
+      destroyNetwork();
+      background?.setAttribute("data-network-disabled", "true");
+      return;
+    }
+
+    background.removeAttribute("data-network-disabled");
+
+    if (container && !container.destroyed) {
+      return;
+    }
+
+    if (!slimLoaded) {
+      await loadSlim(tsParticles);
+      slimLoaded = true;
+    }
+
+    container = await tsParticles.load({
+      element: background,
+      id: "network-background",
+      options,
+    });
+  };
+
+  const scheduleSync = () => {
+    void syncNetwork();
+  };
+
+  scheduleSync();
+  reducedMotionQuery.addEventListener("change", scheduleSync);
+  desktopPointerQuery.addEventListener("change", scheduleSync);
+  window.addEventListener("pagehide", destroyNetwork);
+</script>

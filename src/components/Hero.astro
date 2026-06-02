@@ -22,5 +22,35 @@ import { profile } from "../data/profile";
     <p><span>role</span>=devops-focused-engineer</p>
     <p><span>location</span>=berlin</p>
     <p><span>focus</span>=ci-cd linux docker cloud</p>
+    <p class="typewriter-line" data-typewriter="$ deploy portfolio --target github-pages">
+      <span class="typewriter-text">$ deploy portfolio --target github-pages</span><span
+        class="typewriter-cursor"
+        aria-hidden="true">_</span
+      >
+    </p>
   </aside>
 </section>
+
+<script>
+  const typewriterLine = document.querySelector<HTMLElement>("[data-typewriter]");
+  const typewriterText = typewriterLine?.querySelector<HTMLElement>(".typewriter-text");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  if (typewriterLine && typewriterText && !reduceMotion.matches) {
+    const text = typewriterLine.dataset.typewriter ?? "";
+    let index = 0;
+
+    typewriterText.textContent = "";
+
+    const typeNextCharacter = () => {
+      typewriterText.textContent = text.slice(0, index);
+      index += 1;
+
+      if (index <= text.length) {
+        window.setTimeout(typeNextCharacter, 38 + Math.random() * 28);
+      }
+    };
+
+    window.setTimeout(typeNextCharacter, 450);
+  }
+</script>

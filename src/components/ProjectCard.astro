@@ -27,8 +27,21 @@ const splitDescription = () => {
 const description = splitDescription();
 ---
 
-<article class="content-card project-card">
+<article class:list={["content-card", "project-card", project.featured && "project-card-featured"]}>
+  {project.featured && <span class="featured-card-glow" aria-hidden="true" />}
+
   <div class="project-copy">
+    {
+      project.featured && (
+        <span class="featured-badge">
+          <span class="featured-star" aria-hidden="true">
+            ★
+          </span>
+          <span>Featured</span>
+        </span>
+      )
+    }
+
     <p class="eyebrow">
       {
         primaryLink ? (
@@ -48,7 +61,7 @@ const description = splitDescription();
       }
     </p>
     <h3>{project.name}</h3>
-    <p>
+    <p class="project-description">
       {description.before}
       {description.highlight && <strong>{description.highlight}</strong>}
       {description.after}
@@ -88,3 +101,86 @@ const description = splitDescription();
     )
   }
 </article>
+
+<style>
+  .project-card-featured:hover {
+    --surface-glow-rgb: var(--accent-rgb);
+  }
+
+  .project-card-featured:hover .project-copy::after {
+    background: var(--terminal-green);
+    box-shadow: 0 0 18px rgba(166, 227, 161, 0.68);
+  }
+
+  .featured-card-glow {
+    position: absolute;
+    top: -2.5rem;
+    left: -2.25rem;
+    z-index: 0;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(166, 227, 161, 0.085), transparent 68%);
+    pointer-events: none;
+    transition: opacity 700ms ease;
+  }
+
+  .project-card-featured:hover .featured-card-glow {
+    opacity: 0;
+  }
+
+  .featured-badge {
+    display: inline-flex;
+    width: fit-content;
+    min-height: 2.05rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.38rem;
+    margin: 0;
+    border: 1px solid rgba(var(--accent-rgb), 0.56);
+    border-radius: 999px;
+    padding: 0.42rem 0.68rem;
+    background: rgba(var(--accent-rgb), 0.11);
+    box-shadow:
+      0 0 0 1px rgba(var(--accent-rgb), 0.06),
+      0 0 20px rgba(var(--accent-rgb), 0.14);
+    color: #e7ffe4;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease,
+      background 160ms ease,
+      box-shadow 160ms ease,
+      color 160ms ease;
+  }
+
+  .featured-badge:hover {
+    border-color: rgba(var(--accent-rgb), 0.76);
+    background: rgba(var(--accent-rgb), 0.17);
+    box-shadow:
+      0 0 0 1px rgba(var(--accent-rgb), 0.12),
+      0 0 26px rgba(var(--accent-rgb), 0.22);
+    color: #f0ffed;
+    transform: scale(1.006);
+  }
+
+  .featured-star {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--terminal-green);
+    font-size: 1.08rem;
+    line-height: 1;
+    transform: translateY(-0.01em);
+  }
+
+  .project-description {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+</style>

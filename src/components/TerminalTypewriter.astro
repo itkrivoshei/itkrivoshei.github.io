@@ -84,11 +84,14 @@ const result = "ready";
     display: grid;
     gap: 0.15rem;
     font-size: 0.95rem;
+    min-width: 0;
   }
 
   .typewriter-line {
     min-height: 1.55em;
-    white-space: nowrap;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
   }
 
   .typewriter-command-line {

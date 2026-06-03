@@ -3,9 +3,9 @@
 :root {
   color-scheme: dark;
   --bg: #020617;
-  --panel: rgba(2, 6, 23, 0.78);
-  --panel-strong: rgba(15, 23, 42, 0.84);
-  --line: rgba(148, 163, 184, 0.16);
+  --panel: rgba(2, 6, 23, 0.7);
+  --panel-strong: rgba(15, 23, 42, 0.78);
+  --line: rgba(148, 163, 184, 0.2);
   --text: #e5e7eb;
   --muted: #cbd5e1;
   --soft: #94a3b8;
@@ -37,12 +37,14 @@ body {
   min-height: 100vh;
   font-family: var(--sans);
   background:
-    radial-gradient(circle at 16% 0%, rgba(34, 211, 238, 0.075), transparent 32rem),
-    radial-gradient(circle at 86% 12%, rgba(137, 180, 250, 0.055), transparent 28rem),
-    linear-gradient(rgba(148, 163, 184, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.018) 1px, transparent 1px),
-    linear-gradient(135deg, #020617 0%, #08111f 48%, #0f172a 100%);
+    radial-gradient(circle at 16% -8%, rgba(34, 211, 238, 0.1), transparent 34rem),
+    radial-gradient(circle at 88% 10%, rgba(137, 180, 250, 0.09), transparent 30rem),
+    radial-gradient(circle at 50% 112%, rgba(20, 184, 166, 0.05), transparent 28rem),
+    linear-gradient(rgba(148, 163, 184, 0.024) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.024) 1px, transparent 1px),
+    linear-gradient(135deg, #01040d 0%, #06101d 46%, #0b1324 100%);
   background-size:
+    auto,
     auto,
     auto,
     44px 44px,
@@ -77,15 +79,63 @@ a {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  opacity: 0.55;
+  opacity: 0.78;
   pointer-events: none;
+}
+
+.network-background::before,
+.network-background::after {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  pointer-events: none;
+}
+
+.network-background::before {
+  background:
+    radial-gradient(circle at 18% 22%, rgba(var(--link-rgb), 0.32) 0 1px, transparent 2.4px),
+    radial-gradient(circle at 78% 16%, rgba(var(--link-rgb), 0.28) 0 1px, transparent 2.2px),
+    radial-gradient(circle at 62% 62%, rgba(148, 226, 213, 0.24) 0 1px, transparent 2.2px),
+    radial-gradient(circle at 28% 76%, rgba(var(--accent-rgb), 0.2) 0 1px, transparent 2.1px),
+    linear-gradient(28deg, transparent 0 48%, rgba(var(--link-rgb), 0.12) 49%, transparent 50%),
+    linear-gradient(145deg, transparent 0 47%, rgba(148, 226, 213, 0.08) 48%, transparent 49%);
+  background-size:
+    13rem 13rem,
+    17rem 17rem,
+    15rem 15rem,
+    19rem 19rem,
+    22rem 22rem,
+    24rem 24rem;
+  opacity: 0.52;
+}
+
+.network-background::after {
+  background:
+    radial-gradient(
+      circle at 50% 28%,
+      transparent 0,
+      transparent 32rem,
+      rgba(1, 4, 13, 0.18) 54rem
+    ),
+    linear-gradient(
+      180deg,
+      rgba(1, 4, 13, 0.2),
+      transparent 18%,
+      transparent 76%,
+      rgba(1, 4, 13, 0.42)
+    );
 }
 
 .network-background canvas {
   display: block;
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0.94;
 }
 
-.network-background[data-network-disabled="true"] {
+.network-background[data-network-mode="static"] canvas {
   display: none;
 }
 
@@ -107,7 +157,7 @@ a {
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--panel);
-  box-shadow: 0 24px 90px rgba(2, 6, 23, 0.42);
+  box-shadow: 0 24px 90px rgba(1, 4, 13, 0.48);
   backdrop-filter: blur(18px);
 }
 
@@ -345,7 +395,7 @@ h3 {
 
 .terminal-card {
   border-radius: 1.25rem;
-  background: rgba(0, 0, 0, 0.34);
+  background: rgba(0, 0, 0, 0.42);
   padding: 1.25rem;
   font-family: var(--mono);
   color: var(--muted);
@@ -662,7 +712,7 @@ h3 {
 
 @media (hover: none), (pointer: coarse) {
   .network-background {
-    display: none;
+    opacity: 0.52;
   }
 
   .hero-card,
@@ -689,7 +739,7 @@ h3 {
 
 @media (min-width: 840px) {
   .hero-card {
-    grid-template-columns: 1.35fr 0.65fr;
+    grid-template-columns: minmax(0, 1.15fr) minmax(22rem, 0.85fr);
   }
 }
 
@@ -709,6 +759,10 @@ h3 {
   }
 
   .network-background {
+    opacity: 0.5;
+  }
+
+  .network-background canvas {
     display: none;
   }
 }

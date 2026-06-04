@@ -16,15 +16,19 @@ const getLinkLabel = (label: string) => (getLinkType(label) === "repo" ? "GitHub
 
 const splitDescription = () => {
   if (!project.highlight || !project.description.includes(project.highlight)) {
-    return { before: project.description, highlight: "", after: "" };
+    return [{ text: project.description, highlighted: false }];
   }
 
   const [before, after] = project.description.split(project.highlight);
 
-  return { before, highlight: project.highlight, after };
+  return [
+    { text: before, highlighted: false },
+    { text: project.highlight, highlighted: true },
+    { text: after, highlighted: false },
+  ];
 };
 
-const description = splitDescription();
+const descriptionParts = splitDescription();
 ---
 
 <article
@@ -65,9 +69,11 @@ const description = splitDescription();
     </p>
     <h3>{project.name}</h3>
     <p class="project-description">
-      {description.before}
-      {description.highlight && <strong>{description.highlight}</strong>}
-      {description.after}
+      {
+        descriptionParts.map((part) =>
+          part.highlighted ? <strong>{part.text}</strong> : part.text,
+        )
+      }
     </p>
   </div>
 

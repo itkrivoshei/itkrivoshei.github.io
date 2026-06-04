@@ -11,12 +11,16 @@ const skills = item.skills;
 
 const splitPoint = (point: ExperiencePoint) => {
   if (!point.highlight || !point.text.includes(point.highlight)) {
-    return { before: point.text, highlight: "", after: "" };
+    return [{ text: point.text, highlighted: false }];
   }
 
   const [before, after] = point.text.split(point.highlight);
 
-  return { before, highlight: point.highlight, after };
+  return [
+    { text: before, highlighted: false },
+    { text: point.highlight, highlighted: true },
+    { text: after, highlighted: false },
+  ];
 };
 ---
 
@@ -81,7 +85,7 @@ const splitPoint = (point: ExperiencePoint) => {
   <ul class="experience-points">
     {
       item.points.map((point) => {
-        const parts = splitPoint(point);
+        const pointParts = splitPoint(point);
 
         return (
           <li>
@@ -89,9 +93,9 @@ const splitPoint = (point: ExperiencePoint) => {
               ❯
             </span>
             <span>
-              {parts.before}
-              {parts.highlight && <strong>{parts.highlight}</strong>}
-              {parts.after}
+              {pointParts.map((part) =>
+                part.highlighted ? <strong>{part.text}</strong> : part.text,
+              )}
             </span>
           </li>
         );

@@ -41,22 +41,22 @@ export const profile = {
   role: "DevOps-focused Software Engineer",
   location: "Berlin, Germany",
   summary:
-    "Software engineer with 4+ years of production experience in web platforms, CI/CD workflows, release support, debugging, and cross-team delivery.",
+    "Software engineer with 4+ years across TypeScript web platforms, release workflows, staging environments, and production troubleshooting.",
   about: [
     {
       prompt: "prod",
-      text: "Production experience across TypeScript web platforms, CI/CD collaboration, staging environments, release validation, and production troubleshooting.",
-      highlight: "CI/CD collaboration",
+      text: "Software engineer with 4+ years across TypeScript web platforms, release workflows, staging environments, and production troubleshooting.",
+      highlight: "release workflows",
     },
     {
-      prompt: "focus",
-      text: "Current focus: Linux, Docker, Kubernetes, Terraform, AWS, monitoring, deployment automation, and reliable delivery pipelines.",
+      prompt: "infra",
+      text: "Working with Linux, Docker, Kubernetes, Terraform, AWS, CI/CD, monitoring, and deployment automation.",
       highlight: "Linux, Docker, Kubernetes, Terraform, AWS",
     },
     {
       prompt: "ship",
-      text: "Practical delivery style: build small, verify in CI, deploy through controlled environments, document what matters, and keep production stable.",
-      highlight: "keep production stable",
+      text: "Small changes, clear checks, documented delivery, and stable releases.",
+      highlight: "clear checks",
     },
   ],
   links: [
@@ -253,6 +253,6 @@ export const certifications = [
 ];
 
 export const availability = {
-  text: "Open to DevOps, Cloud, Platform, Build and Release, and Software Engineering roles with DevOps focus.",
-  highlights: ["DevOps focus"],
+  text: "Available for DevOps, Cloud, Platform, Build & Release, and Software Engineering roles.",
+  highlights: ["DevOps", "Cloud", "Platform", "Build & Release", "Software Engineering"],
 };

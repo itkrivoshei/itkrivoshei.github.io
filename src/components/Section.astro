@@ -7,7 +7,7 @@ const { title } = Astro.props;
 const sectionClass = `section-${title.toLowerCase().replace(/\s+/g, "-")}`;
 ---
 
-<section class:list={["section-block", sectionClass]}>
+<section class:list={["section-block", sectionClass]} data-reveal="section">
   <div class="section-title">
     <span></span>
     <h2>{title}</h2>

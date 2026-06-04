@@ -27,7 +27,10 @@ const splitDescription = () => {
 const description = splitDescription();
 ---
 
-<article class:list={["content-card", "project-card", project.featured && "project-card-featured"]}>
+<article
+  class:list={["content-card", "project-card", project.featured && "project-card-featured"]}
+  data-reveal="card"
+>
   {project.featured && <span class="featured-card-glow" aria-hidden="true" />}
 
   <div class="project-copy">
@@ -148,7 +151,7 @@ const description = splitDescription();
     font-family: var(--mono);
     font-size: 0.85rem;
     line-height: 1;
-    letter-spacing: 0.01em;
+    letter-spacing: 0;
     transition:
       transform 160ms ease,
       border-color 160ms ease,

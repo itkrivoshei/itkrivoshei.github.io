@@ -28,7 +28,7 @@
       },
       clear: true,
       detectRetina: true,
-      fpsLimit: 40,
+      fpsLimit: 36,
       fullScreen: {
         enable: false,
       },
@@ -37,17 +37,18 @@
         events: {
           onHover: {
             enable: enableHover,
-            mode: "repulse",
+            mode: "bubble",
           },
           resize: {
             enable: true,
           },
         },
         modes: {
-          repulse: {
-            distance: 96,
-            duration: 0.2,
-            speed: 0.16,
+          bubble: {
+            distance: 92,
+            duration: 0.28,
+            opacity: 0.56,
+            size: 3.1,
           },
         },
       },
@@ -57,10 +58,10 @@
         },
         links: {
           color: "#89b4fa",
-          distance: 152,
+          distance: 164,
           enable: true,
-          opacity: 0.18,
-          width: 1.08,
+          opacity: 0.24,
+          width: 1,
         },
         move: {
           direction: "none",
@@ -70,8 +71,8 @@
           },
           random: false,
           speed: {
-            min: 0.1,
-            max: 0.24,
+            min: 0.06,
+            max: 0.18,
           },
           straight: false,
         },
@@ -81,12 +82,12 @@
             height: 720,
             width: 1040,
           },
-          value: 62,
+          value: 70,
         },
         opacity: {
           value: {
-            min: 0.26,
-            max: 0.52,
+            min: 0.32,
+            max: 0.58,
           },
         },
         shape: {
@@ -107,6 +108,7 @@
     container?.destroy();
     container = undefined;
     activeHover = false;
+    background?.removeAttribute("data-network-ready");
   };
 
   const syncNetwork = async () => {
@@ -131,12 +133,24 @@
       slimLoaded = true;
     }
 
-    container = await tsParticles.load({
+    const loadedContainer = await tsParticles.load({
       element: background,
       id: "network-background",
       options: createOptions(enableHover),
     });
+
+    if (!loadedContainer) {
+      return;
+    }
+
+    container = loadedContainer;
     activeHover = enableHover;
+
+    window.requestAnimationFrame(() => {
+      if (container === loadedContainer && !loadedContainer.destroyed) {
+        background.setAttribute("data-network-ready", "true");
+      }
+    });
   };
 
   const scheduleSync = () => {

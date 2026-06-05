@@ -1,4 +1,5 @@
 ---
+import Icon from "./Icon.astro";
 import type { ExperienceItem, ExperiencePoint } from "../data/profile";
 
 interface Props {
@@ -38,11 +39,7 @@ const splitPoint = (point: ExperiencePoint) => {
             >
               <span>{item.company}</span>
               <span class="experience-link-icon" aria-hidden="true">
-                <svg class="external-link-icon" viewBox="0 0 24 24" role="img">
-                  <path d="M14 5h5v5" />
-                  <path d="m19 5-8 8" />
-                  <path d="M12 7H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-5" />
-                </svg>
+                <Icon name="external-link" class="external-link-icon" />
               </span>
             </a>
           </h3>
@@ -62,11 +59,7 @@ const splitPoint = (point: ExperiencePoint) => {
                 <a class="experience-blue-link" href={link.href} target="_blank" rel="noreferrer">
                   <span>{link.label}</span>
                   <span class="experience-link-icon" aria-hidden="true">
-                    <svg class="external-link-icon" viewBox="0 0 24 24" role="img">
-                      <path d="M14 5h5v5" />
-                      <path d="m19 5-8 8" />
-                      <path d="M12 7H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-5" />
-                    </svg>
+                    <Icon name="external-link" class="external-link-icon" />
                   </span>
                 </a>
                 {index < links.length - 1 && <span class="link-separator"> / </span>}
@@ -103,30 +96,18 @@ const splitPoint = (point: ExperiencePoint) => {
     }
   </ul>
 
-  <ul class="tag-list experience-skill-list" aria-label={`${item.company} skills`}>
+  <ul class="tag-list experience-skill-list">
     {skills.map((skill) => <li>{skill}</li>)}
   </ul>
 </article>
 
 <style is:global>
-  .timeline-card .experience-blue-link,
-  .timeline-card .experience-blue-link span,
-  .timeline-card .experience-blue-link .experience-link-icon,
-  .timeline-card .company-link,
-  .timeline-card .company-link span,
-  .timeline-card .experience-inline-links a,
-  .timeline-card .experience-inline-links a span {
-    color: var(--terminal-blue) !important;
+  .timeline-card .experience-blue-link {
+    color: var(--terminal-blue);
   }
 
-  .timeline-card .experience-blue-link:hover,
-  .timeline-card .experience-blue-link:hover span,
-  .timeline-card .experience-blue-link:hover .experience-link-icon,
-  .timeline-card .company-link:hover,
-  .timeline-card .company-link:hover span,
-  .timeline-card .experience-inline-links a:hover,
-  .timeline-card .experience-inline-links a:hover span {
-    color: #dbeafe !important;
+  .timeline-card .experience-blue-link:hover {
+    color: #dbeafe;
   }
 
   .timeline-card .experience-role {
@@ -134,7 +115,7 @@ const splitPoint = (point: ExperiencePoint) => {
   }
 
   .timeline-card .timeline-head .experience-period {
-    color: var(--muted) !important;
+    color: var(--muted);
   }
 
   .timeline-card .experience-points {
@@ -166,31 +147,31 @@ const splitPoint = (point: ExperiencePoint) => {
   }
 
   .timeline-card .experience-skill-list {
-    margin: 0.85rem 0 0 1.95rem !important;
-    padding-left: 0 !important;
+    margin: 0.85rem 0 0 1.95rem;
+    padding-left: 0;
     line-height: 1;
   }
 
   .timeline-card .experience-skill-list li {
     cursor: default;
     outline: none;
-    border-color: rgba(148, 163, 184, 0.18) !important;
-    background: transparent !important;
-    color: var(--muted) !important;
+    border-color: rgba(148, 163, 184, 0.18);
+    background: transparent;
+    color: var(--muted);
   }
 
   .timeline-card .experience-skill-list li:hover,
   .timeline-card .experience-skill-list li:active {
-    border-color: rgba(var(--accent-rgb), 0.52) !important;
-    background: rgba(var(--accent-rgb), 0.07) !important;
-    box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.09) !important;
-    color: #e7ffe4 !important;
+    border-color: rgba(var(--accent-rgb), 0.52);
+    background: rgba(var(--accent-rgb), 0.07);
+    box-shadow: 0 0 18px rgba(var(--accent-rgb), 0.09);
+    color: #e7ffe4;
     transform: scale(1.006);
   }
 
   @media (max-width: 560px) {
     .timeline-card .experience-skill-list {
-      margin-left: 0 !important;
+      margin-left: 0;
     }
   }
 </style>

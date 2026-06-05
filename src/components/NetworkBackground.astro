@@ -7,18 +7,18 @@
 </div>
 
 <script>
-  import { tsParticles, type Container, type ISourceOptions } from "@tsparticles/engine";
-  import { loadSlim } from "@tsparticles/slim";
+  import type { Container, Engine, ISourceOptions } from "@tsparticles/engine";
 
   const background = document.querySelector<HTMLElement>("[data-network-background]");
   const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const desktopWidthQuery = window.matchMedia("(min-width: 760px)");
+  const desktopWidthQuery = window.matchMedia("(min-width: 1024px)");
   const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
   let container: Container | undefined;
+  let engine: Engine | undefined;
   let slimLoaded = false;
-  let activeHover = false;
+  let syncVersion = 0;
 
-  const createOptions = (enableHover: boolean) =>
+  const createOptions = () =>
     ({
       autoPlay: true,
       background: {
@@ -28,15 +28,15 @@
       },
       clear: true,
       detectRetina: true,
-      fpsLimit: 36,
+      fpsLimit: 30,
       fullScreen: {
         enable: false,
       },
       interactivity: {
-        detectsOn: "canvas",
+        detectsOn: "window",
         events: {
           onHover: {
-            enable: enableHover,
+            enable: true,
             mode: "bubble",
           },
           resize: {
@@ -47,8 +47,8 @@
           bubble: {
             distance: 92,
             duration: 0.28,
-            opacity: 0.56,
-            size: 3.1,
+            opacity: 0.5,
+            size: 2.8,
           },
         },
       },
@@ -58,7 +58,7 @@
         },
         links: {
           color: "#89b4fa",
-          distance: 164,
+          distance: 148,
           enable: true,
           opacity: 0.24,
           width: 1,
@@ -82,7 +82,7 @@
             height: 720,
             width: 1040,
           },
-          value: 70,
+          value: 46,
         },
         opacity: {
           value: {
@@ -107,12 +107,21 @@
   const destroyNetwork = () => {
     container?.destroy();
     container = undefined;
-    activeHover = false;
     background?.removeAttribute("data-network-ready");
   };
 
+  const shouldAnimate = () =>
+    Boolean(
+      background &&
+      !reducedMotionQuery.matches &&
+      desktopWidthQuery.matches &&
+      finePointerQuery.matches,
+    );
+
   const syncNetwork = async () => {
-    if (!background || reducedMotionQuery.matches || !desktopWidthQuery.matches) {
+    const currentVersion = ++syncVersion;
+
+    if (!background || !shouldAnimate()) {
       destroyNetwork();
       background?.setAttribute("data-network-mode", "static");
       return;
@@ -120,37 +129,55 @@
 
     background.setAttribute("data-network-mode", "animated");
 
-    const enableHover = finePointerQuery.matches;
-
-    if (container && !container.destroyed && activeHover === enableHover) {
+    if (container && !container.destroyed) {
       return;
     }
 
     destroyNetwork();
 
-    if (!slimLoaded) {
-      await loadSlim(tsParticles);
-      slimLoaded = true;
-    }
+    try {
+      const [{ tsParticles }, { loadSlim }] = await Promise.all([
+        import("@tsparticles/engine"),
+        import("@tsparticles/slim"),
+      ]);
 
-    const loadedContainer = await tsParticles.load({
-      element: background,
-      id: "network-background",
-      options: createOptions(enableHover),
-    });
-
-    if (!loadedContainer) {
-      return;
-    }
-
-    container = loadedContainer;
-    activeHover = enableHover;
-
-    window.requestAnimationFrame(() => {
-      if (container === loadedContainer && !loadedContainer.destroyed) {
-        background.setAttribute("data-network-ready", "true");
+      if (currentVersion !== syncVersion || !shouldAnimate()) {
+        return;
       }
-    });
+
+      engine = tsParticles;
+
+      if (!slimLoaded) {
+        await loadSlim(engine);
+        slimLoaded = true;
+      }
+
+      if (currentVersion !== syncVersion || !shouldAnimate() || !background) {
+        return;
+      }
+
+      const loadedContainer = await engine.load({
+        element: background,
+        id: "network-background",
+        options: createOptions(),
+      });
+
+      if (!loadedContainer || currentVersion !== syncVersion || !shouldAnimate()) {
+        loadedContainer?.destroy();
+        return;
+      }
+
+      container = loadedContainer;
+
+      window.requestAnimationFrame(() => {
+        if (container === loadedContainer && !loadedContainer.destroyed) {
+          background.setAttribute("data-network-ready", "true");
+        }
+      });
+    } catch {
+      destroyNetwork();
+      background?.setAttribute("data-network-mode", "static");
+    }
   };
 
   const scheduleSync = () => {
@@ -161,5 +188,8 @@
   reducedMotionQuery.addEventListener("change", scheduleSync);
   desktopWidthQuery.addEventListener("change", scheduleSync);
   finePointerQuery.addEventListener("change", scheduleSync);
-  window.addEventListener("pagehide", destroyNetwork);
+  window.addEventListener("pagehide", () => {
+    syncVersion += 1;
+    destroyNetwork();
+  });
 </script>

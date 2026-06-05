@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://itkrivoshei.github.io/sitemap-index.xml

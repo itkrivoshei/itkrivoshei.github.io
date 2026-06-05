@@ -32,8 +32,6 @@ const result = "ready";
     const command = block.getAttribute("data-command") ?? "";
     const result = block.getAttribute("data-result") ?? "";
 
-    block.setAttribute("aria-label", `$ ${command} ${result}`);
-
     if (!commandLine || !resultLine || !commandTarget || !resultTarget || !cursor) {
       return;
     }

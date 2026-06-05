@@ -24,22 +24,22 @@ The site presents work history, technical background, selected projects, availab
 
 [`src/data/profile.ts`](src/data/profile.ts)
 
-[Astro](https://astro.build/) components render the content into reusable sections, while [Tailwind CSS v4](https://tailwindcss.com/) is wired through [Vite](https://vite.dev/) for styling.
+[Astro](https://astro.build/) components render the content into reusable sections. [Tailwind CSS v4](https://tailwindcss.com/) provides design tokens, utilities, and component layers, while focused custom CSS handles the animated network background and complex visual effects.
 
 Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`](.node-version), [GitHub Actions](https://github.com/itkrivoshei/itkrivoshei.github.io/actions), and the [Docker](https://www.docker.com/) build image from [`Dockerfile`](Dockerfile).
 
 ## Tech Stack
 
-| Area      | Tools                                                                                                                                                                                                    |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Framework | [Astro 5](https://astro.build/)                                                                                                                                                                          |
-| Language  | [TypeScript](https://www.typescriptlang.org/)                                                                                                                                                            |
-| Styling   | [Tailwind CSS 4](https://tailwindcss.com/)                                                                                                                                                               |
-| Runtime   | [Node.js 22](https://nodejs.org/), [npm](https://www.npmjs.com/)                                                                                                                                         |
-| Checks    | [Prettier](https://prettier.io/) + [Astro plugin](https://github.com/withastro/prettier-plugin-astro), [Astro check](https://docs.astro.build/en/reference/cli-reference/#astro-check), production build |
-| Hosting   | [GitHub Pages](https://pages.github.com/)                                                                                                                                                                |
-| Container | [Docker](https://www.docker.com/), [nginx](https://nginx.org/)                                                                                                                                           |
-| Updates   | [Dependabot](.github/dependabot.yml)                                                                                                                                                                     |
+| Area      | Tools                                                                             |
+| --------- | --------------------------------------------------------------------------------- |
+| Framework | [Astro 6](https://astro.build/)                                                   |
+| Language  | [TypeScript](https://www.typescriptlang.org/)                                     |
+| Styling   | [Tailwind CSS 4](https://tailwindcss.com/)                                        |
+| Runtime   | [Node.js 22](https://nodejs.org/), [npm](https://www.npmjs.com/)                  |
+| Checks    | Prettier, ESLint, Astro check, HTML validation, link checks, Playwright, axe-core |
+| Hosting   | [GitHub Pages](https://pages.github.com/)                                         |
+| Container | [Docker](https://www.docker.com/), [nginx](https://nginx.org/)                    |
+| Updates   | [Dependabot](.github/dependabot.yml)                                              |
 
 ## Local Workflow
 
@@ -65,17 +65,22 @@ npm run preview
 
 Scripts are defined in [`package.json`](package.json).
 
-| Command                 | Purpose                                             |
-| ----------------------- | --------------------------------------------------- |
-| `npm run dev`           | Start Astro locally                                 |
-| `npm run check`         | Run Astro checks                                    |
-| `npm run build`         | Build `dist/`                                       |
-| `npm run preview`       | Preview the production build                        |
-| `npm run format`        | Format Astro, JS/TS, CSS, docs, and YAML            |
-| `npm run format:check`  | Check formatting, including `.astro` files          |
-| `npm run verify`        | CI-style gate: format check, Astro check, and build |
-| `npm run ready`         | Format first, then check and build                  |
-| `npm run hooks:install` | Enable local Git hooks                              |
+| Command                       | Purpose                                            |
+| ----------------------------- | -------------------------------------------------- |
+| `npm run dev`                 | Start Astro locally                                |
+| `npm run check`               | Run Astro checks                                   |
+| `npm run build`               | Build `dist/`                                      |
+| `npm run preview`             | Preview the production build                       |
+| `npm run lint`                | Run ESLint for TypeScript, JavaScript, and Astro   |
+| `npm run validate:html`       | Validate generated HTML                            |
+| `npm run test:links:internal` | Check local pages, assets, CSS URLs, and fragments |
+| `npm run test:links:external` | Report unavailable external links                  |
+| `npm run test:smoke`          | Run Playwright and axe-core browser smoke tests    |
+| `npm run format`              | Format Astro, JS/TS, CSS, docs, and YAML           |
+| `npm run format:check`        | Check formatting, including `.astro` files         |
+| `npm run verify`              | Run the complete non-browser CI quality gate       |
+| `npm run ready`               | Format first, then run the verification gate       |
+| `npm run hooks:install`       | Enable local Git hooks                             |
 
 Astro file formatting is backed by [`prettier-plugin-astro`](https://github.com/withastro/prettier-plugin-astro), so targeted checks such as `npx prettier --check src/pages/index.astro` work outside the editor too.
 
@@ -92,11 +97,15 @@ Open `http://localhost:8080`.
 
 ## Automation
 
-- [`.github/workflows/check.yml`](.github/workflows/check.yml) validates formatting, Astro checks, and production builds.
-- [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs the same verification gate before publishing `dist` to [GitHub Pages](https://itkrivoshei.github.io) on pushes to [`main`](https://github.com/itkrivoshei/itkrivoshei.github.io/tree/main).
+- [`.github/workflows/check.yml`](.github/workflows/check.yml) runs the quality gate, browser/accessibility smoke tests, and a non-blocking external-link report.
+- [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs verification and browser smoke tests before publishing `dist` to [GitHub Pages](https://itkrivoshei.github.io) on pushes to [`main`](https://github.com/itkrivoshei/itkrivoshei.github.io/tree/main).
 - [`.github/workflows/codeql.yml`](.github/workflows/codeql.yml) runs GitHub [CodeQL](https://codeql.github.com/) analysis.
 - [`.github/dependabot.yml`](.github/dependabot.yml) tracks npm package and GitHub Actions updates.
 - [`.githooks/pre-commit`](.githooks/pre-commit) is intentionally non-mutating: it checks formatting and Astro diagnostics without rewriting or staging files.
+
+## SEO and Progressive Enhancement
+
+The site includes canonical, Open Graph, Twitter Card, and JSON-LD metadata, plus a generated sitemap, `robots.txt`, branded social preview, and custom 404 page. Primary content remains visible without JavaScript; reveal effects and the animated desktop background are optional enhancements.
 
 ## License
 

@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page not found | Nikita Krivoshei"
+  description="The requested page could not be found."
+>
+  <main class="site-shell">
+    <section class="hero-card error-card">
+      <div>
+        <p class="eyebrow">~/404</p>
+        <h1>Page not found</h1>
+        <p class="summary">
+          The requested route does not exist. Return to the engineering profile and selected work.
+        </p>
+        <div class="link-row">
+          <a href="/">Back to profile</a>
+        </div>
+      </div>
+      <aside class="terminal-card" aria-label="Error details">
+        <p><span class="prompt-label">$</span> resolve route</p>
+        <p class="error-status">not found</p>
+      </aside>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .error-card {
+    min-height: min(34rem, calc(100vh - 2rem));
+  }
+
+  .error-status {
+    color: var(--terminal-red);
+  }
+</style>

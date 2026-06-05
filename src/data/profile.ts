@@ -208,7 +208,6 @@ export const projects = [
         label: "Repository",
         href: "https://github.com/itkrivoshei/salary-prediction-linear-regression",
       },
-      { label: "Live app", href: "https://salary-prediction-linear-regression.streamlit.app/" },
     ],
   },
   {

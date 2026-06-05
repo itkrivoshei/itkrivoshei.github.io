@@ -6,6 +6,8 @@ dist/
 .astro/
 build/
 coverage/
+playwright-report/
+test-results/
 
 # Environment files
 .env

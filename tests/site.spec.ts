@@ -98,6 +98,8 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   });
   await expect(background).toHaveAttribute("data-spotlight-active", "false");
 
+  await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
+
   for (const theme of ["skills", "experience", "projects"]) {
     await page
       .locator(`[data-background-theme="${theme}"]:not([data-network-background])`)

@@ -1,17 +1,36 @@
 ---
 import "../styles/global.css";
-import "../styles/link-colors.css";
 import NetworkBackground from "../components/NetworkBackground.astro";
+import { profile } from "../data/profile";
 
 interface Props {
   title?: string;
   description?: string;
+  canonical?: string;
+  image?: string;
 }
 
 const {
   title = "Nikita Krivoshei",
   description = "Personal engineering website for DevOps-focused software engineering work.",
+  canonical = Astro.site
+    ? new URL(Astro.url.pathname, Astro.site).toString()
+    : Astro.url.toString(),
+  image = Astro.site ? new URL("/og-image.png", Astro.site).toString() : "/og-image.png",
 } = Astro.props;
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: profile.role,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: profile.location,
+  },
+  url: canonical,
+  sameAs: profile.links.filter((link) => link.href.startsWith("https://")).map((link) => link.href),
+};
 ---
 
 <!doctype html>
@@ -21,69 +40,35 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://itkrivoshei.github.io" />
-    <meta name="twitter:card" content="summary" />
-    <script is:inline>
-      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        document.documentElement.classList.add("motion-ready");
-      }
-    </script>
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:alt" content={`${profile.name} — ${profile.role}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
-    <div class="ambient-layer" aria-hidden="true"></div>
     <NetworkBackground />
     <slot />
     <script>
-      const root = document.documentElement;
       const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-      const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
       const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-      let pointerTrackingEnabled = false;
-      let frameId = 0;
       let revealObserver: IntersectionObserver | undefined;
-
-      const setCursorPosition = (clientX: number, clientY: number) => {
-        root.style.setProperty("--cursor-x", `${clientX}px`);
-        root.style.setProperty("--cursor-y", `${clientY}px`);
-      };
-
-      const handlePointerMove = (event: PointerEvent) => {
-        if (frameId) return;
-
-        const { clientX, clientY } = event;
-
-        frameId = window.requestAnimationFrame(() => {
-          setCursorPosition(clientX, clientY);
-          frameId = 0;
-        });
-      };
-
-      const syncPointerTracking = () => {
-        const shouldTrack = !reducedMotionQuery.matches && finePointerQuery.matches;
-
-        if (shouldTrack && !pointerTrackingEnabled) {
-          setCursorPosition(window.innerWidth * 0.56, window.innerHeight * 0.24);
-          window.addEventListener("pointermove", handlePointerMove, { passive: true });
-          pointerTrackingEnabled = true;
-          return;
-        }
-
-        if (!shouldTrack && pointerTrackingEnabled) {
-          window.removeEventListener("pointermove", handlePointerMove);
-          if (frameId) {
-            window.cancelAnimationFrame(frameId);
-            frameId = 0;
-          }
-          pointerTrackingEnabled = false;
-        }
-      };
+      let revealFallbackId = 0;
 
       const showRevealTargets = () => {
         revealTargets.forEach((target) => {
+          target.classList.remove("reveal-pending");
           target.classList.add("is-visible");
         });
       };
@@ -91,24 +76,23 @@ const {
       const disconnectRevealObserver = () => {
         revealObserver?.disconnect();
         revealObserver = undefined;
+        window.clearTimeout(revealFallbackId);
       };
 
       const syncPageMotion = () => {
         disconnectRevealObserver();
 
         if (reducedMotionQuery.matches || !("IntersectionObserver" in window)) {
-          root.classList.remove("motion-ready");
           showRevealTargets();
           return;
         }
-
-        root.classList.add("motion-ready");
 
         revealObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
               if (!entry.isIntersecting) return;
 
+              entry.target.classList.remove("reveal-pending");
               entry.target.classList.add("is-visible");
               revealObserver?.unobserve(entry.target);
             });
@@ -120,28 +104,24 @@ const {
         );
 
         revealTargets.forEach((target, index) => {
-          const delay =
-            target.dataset.reveal === "hero"
-              ? 300
-              : target.dataset.reveal === "section"
-                ? 80
-                : Math.min((index % 5) * 42, 168);
+          if (target.getBoundingClientRect().top < window.innerHeight) {
+            target.classList.add("is-visible");
+            return;
+          }
+
+          const delay = target.dataset.reveal === "section" ? 80 : Math.min((index % 5) * 42, 168);
           target.style.setProperty("--reveal-delay", `${delay}ms`);
+          target.classList.remove("is-visible");
+          target.classList.add("reveal-pending");
           revealObserver?.observe(target);
         });
+
+        revealFallbackId = window.setTimeout(showRevealTargets, 1800);
       };
 
-      syncPointerTracking();
       syncPageMotion();
-      reducedMotionQuery.addEventListener("change", () => {
-        syncPointerTracking();
-        syncPageMotion();
-      });
-      finePointerQuery.addEventListener("change", syncPointerTracking);
-      window.addEventListener("pagehide", () => {
-        disconnectRevealObserver();
-        window.removeEventListener("pointermove", handlePointerMove);
-      });
+      reducedMotionQuery.addEventListener("change", syncPageMotion);
+      window.addEventListener("pagehide", disconnectRevealObserver);
     </script>
   </body>
 </html>

@@ -105,7 +105,7 @@ Open `http://localhost:8080`.
 
 ## SEO and Progressive Enhancement
 
-The site includes canonical, Open Graph, Twitter Card, and JSON-LD metadata, plus a generated sitemap, `robots.txt`, branded social preview, and custom 404 page. Primary content remains visible without JavaScript; reveal effects and the animated desktop background are optional enhancements.
+The site includes canonical, Open Graph, Twitter Card, and JSON-LD metadata, plus a generated sitemap, `robots.txt`, branded social preview, and custom 404 page. Primary content remains visible without JavaScript; reveal effects and the section-aware interactive desktop background are optional enhancements. Mobile, coarse-pointer, and reduced-motion environments keep a static background and do not load the particle runtime.
 
 ## License
 

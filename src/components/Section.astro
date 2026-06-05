@@ -1,13 +1,20 @@
 ---
+import type { BackgroundTheme } from "../types/background";
+
 interface Props {
   title: string;
+  backgroundTheme: BackgroundTheme;
 }
 
-const { title } = Astro.props;
+const { title, backgroundTheme } = Astro.props;
 const sectionClass = `section-${title.toLowerCase().replace(/\s+/g, "-")}`;
 ---
 
-<section class:list={["section-block", sectionClass]} data-reveal="section">
+<section
+  class:list={["section-block", sectionClass]}
+  data-background-theme={backgroundTheme}
+  data-reveal="section"
+>
   <div class="section-title">
     <span></span>
     <h2>{title}</h2>

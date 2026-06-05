@@ -21,6 +21,24 @@
   --default-transition-timing-function: ease;
 }
 
+@property --background-primary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #89b4fa;
+}
+
+@property --background-secondary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #94e2d5;
+}
+
+@property --background-tertiary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #a6e3a1;
+}
+
 @layer base {
   :root {
     color-scheme: dark;
@@ -56,16 +74,10 @@
     min-height: 100vh;
     font-family: var(--sans);
     background:
-      radial-gradient(circle at 16% -8%, rgba(34, 211, 238, 0.1), transparent 34rem),
-      radial-gradient(circle at 88% 10%, rgba(137, 180, 250, 0.09), transparent 30rem),
-      radial-gradient(circle at 50% 112%, rgba(20, 184, 166, 0.05), transparent 28rem),
       linear-gradient(rgba(148, 163, 184, 0.024) 1px, transparent 1px),
       linear-gradient(90deg, rgba(148, 163, 184, 0.024) 1px, transparent 1px),
       linear-gradient(135deg, #01040d 0%, #06101d 46%, #0b1324 100%);
     background-size:
-      auto,
-      auto,
-      auto,
       44px 44px,
       44px 44px,
       auto;
@@ -83,6 +95,10 @@
 }
 
 .network-background {
+  --background-primary: #89b4fa;
+  --background-secondary: #94e2d5;
+  --background-tertiary: #a6e3a1;
+  --particle-filter: hue-rotate(0deg) saturate(1) brightness(1);
   position: fixed;
   inset: 0;
   z-index: 0;
@@ -90,63 +106,141 @@
   opacity: 0;
   pointer-events: none;
   animation: network-layer-in 700ms ease forwards 280ms;
+  transition:
+    --background-primary 1200ms ease,
+    --background-secondary 1200ms ease,
+    --background-tertiary 1200ms ease;
 }
 
-.network-background[data-network-mode="static"] {
-  animation-delay: 220ms;
+.network-background[data-background-theme="about"] {
+  --background-primary: #94e2d5;
+  --background-secondary: #a6e3a1;
+  --background-tertiary: #89b4fa;
+  --particle-filter: hue-rotate(28deg) saturate(0.9) brightness(1);
 }
 
-.network-background::before,
-.network-background::after {
-  content: "";
+.network-background[data-background-theme="skills"] {
+  --background-primary: #89b4fa;
+  --background-secondary: #74c7ec;
+  --background-tertiary: #94e2d5;
+  --particle-filter: hue-rotate(-10deg) saturate(1.12) brightness(1);
+}
+
+.network-background[data-background-theme="experience"] {
+  --background-primary: #74c7ec;
+  --background-secondary: #89b4fa;
+  --background-tertiary: #94a3b8;
+  --particle-filter: hue-rotate(-22deg) saturate(0.78) brightness(0.94);
+}
+
+.network-background[data-background-theme="projects"] {
+  --background-primary: #a6e3a1;
+  --background-secondary: #89b4fa;
+  --background-tertiary: #94e2d5;
+  --particle-filter: hue-rotate(36deg) saturate(0.96) brightness(1);
+}
+
+.ambient-glow,
+.network-pattern,
+.network-particles,
+.cursor-spotlight,
+.background-noise,
+.background-vignette {
   position: absolute;
-  inset: -8%;
-  pointer-events: none;
 }
 
-.network-background::before {
+.ambient-glow {
+  z-index: 0;
+  border-radius: 50%;
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.ambient-glow-primary {
+  top: -20rem;
+  left: -18rem;
+  width: 52rem;
+  height: 52rem;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--background-primary) 15%, transparent),
+    transparent 69%
+  );
+}
+
+.ambient-glow-secondary {
+  top: 7vh;
+  right: -21rem;
+  width: 48rem;
+  height: 48rem;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--background-secondary) 12%, transparent),
+    transparent 70%
+  );
+}
+
+.ambient-glow-static {
+  bottom: -24rem;
+  left: calc(50% - 26rem);
+  width: 52rem;
+  height: 52rem;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--background-tertiary) 9%, transparent),
+    transparent 71%
+  );
+}
+
+.network-pattern {
+  inset: -8%;
+  z-index: 1;
+  opacity: 0.48;
   background:
-    radial-gradient(circle at 18% 22%, rgba(var(--link-rgb), 0.32) 0 1px, transparent 2.4px),
-    radial-gradient(circle at 78% 16%, rgba(var(--link-rgb), 0.28) 0 1px, transparent 2.2px),
-    radial-gradient(circle at 62% 62%, rgba(148, 226, 213, 0.24) 0 1px, transparent 2.2px),
-    radial-gradient(circle at 28% 76%, rgba(var(--accent-rgb), 0.2) 0 1px, transparent 2.1px),
-    linear-gradient(28deg, transparent 0 48%, rgba(var(--link-rgb), 0.12) 49%, transparent 50%),
-    linear-gradient(145deg, transparent 0 47%, rgba(148, 226, 213, 0.08) 48%, transparent 49%);
+    radial-gradient(
+      circle at 18% 22%,
+      color-mix(in srgb, var(--background-primary) 30%, transparent) 0 1px,
+      transparent 2.4px
+    ),
+    radial-gradient(
+      circle at 78% 16%,
+      color-mix(in srgb, var(--background-primary) 25%, transparent) 0 1px,
+      transparent 2.2px
+    ),
+    radial-gradient(
+      circle at 62% 62%,
+      color-mix(in srgb, var(--background-secondary) 22%, transparent) 0 1px,
+      transparent 2.2px
+    ),
+    linear-gradient(
+      28deg,
+      transparent 0 48%,
+      color-mix(in srgb, var(--background-primary) 10%, transparent) 49%,
+      transparent 50%
+    );
   background-size:
     13rem 13rem,
     17rem 17rem,
     15rem 15rem,
-    19rem 19rem,
-    22rem 22rem,
-    24rem 24rem;
-  opacity: 0.52;
+    22rem 22rem;
 }
 
-.network-background::after {
-  background:
-    radial-gradient(
-      circle at 50% 28%,
-      transparent 0,
-      transparent 32rem,
-      rgba(1, 4, 13, 0.18) 54rem
-    ),
-    linear-gradient(
-      180deg,
-      rgba(1, 4, 13, 0.2),
-      transparent 18%,
-      transparent 76%,
-      rgba(1, 4, 13, 0.42)
-    );
+.network-particles {
+  inset: 0;
+  z-index: 2;
 }
 
-.network-background canvas {
+.network-particles canvas {
   display: block;
   position: absolute !important;
   inset: 0;
   width: 100% !important;
   height: 100% !important;
+  filter: var(--particle-filter);
   opacity: 0;
-  transition: opacity 700ms ease 120ms;
+  transition:
+    filter 1200ms ease,
+    opacity 700ms ease 120ms;
 }
 
 .network-background[data-network-ready="true"] canvas {
@@ -155,6 +249,63 @@
 
 .network-background[data-network-mode="static"] canvas {
   display: none;
+}
+
+.cursor-spotlight {
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: min(44rem, 72vw);
+  height: min(44rem, 72vw);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--background-primary) 17%, transparent),
+    color-mix(in srgb, var(--background-secondary) 7%, transparent) 38%,
+    transparent 70%
+  );
+  opacity: 0;
+  transform: translate3d(56vw, 24vh, 0) translate(-50%, -50%);
+  transition:
+    background 1200ms ease,
+    opacity 360ms ease;
+  will-change: transform;
+}
+
+.network-background[data-spotlight-active="true"] .cursor-spotlight {
+  opacity: 0.78;
+}
+
+.background-noise {
+  inset: 0;
+  z-index: 4;
+  background: url("/noise.png");
+  opacity: 0.025;
+}
+
+.background-vignette {
+  inset: 0;
+  z-index: 5;
+  background: radial-gradient(
+    circle at 50% 42%,
+    transparent 20%,
+    rgba(1, 4, 13, 0.16) 68%,
+    rgba(1, 4, 13, 0.5)
+  );
+}
+
+.network-background[data-background-paused] .ambient-glow {
+  animation-play-state: paused;
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .ambient-glow-primary {
+    animation: ambient-primary-drift 32s ease-in-out infinite alternate;
+  }
+
+  .ambient-glow-secondary {
+    animation: ambient-secondary-drift 44s ease-in-out infinite alternate;
+  }
 }
 
 @layer components {
@@ -205,6 +356,7 @@
 
     gap: clamp(1.5rem, 4vw, 3rem);
     border-radius: var(--radius-hero);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.66), rgba(2, 6, 23, 0.48)), var(--panel);
     padding: clamp(1.5rem, 5vw, 3.25rem);
   }
 
@@ -483,6 +635,19 @@
       background 180ms ease,
       border-color 180ms ease,
       box-shadow 180ms ease;
+  }
+
+  .section-about {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.68), rgba(2, 6, 23, 0.5)), var(--panel);
+  }
+
+  .section-skills {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.76), rgba(2, 6, 23, 0.62)), var(--panel);
+  }
+
+  .section-experience,
+  .section-selected-engineering-work {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.84), rgba(2, 6, 23, 0.72)), var(--panel);
   }
 
   .section-block:hover {
@@ -822,11 +987,6 @@
 }
 
 @media (hover: none), (pointer: coarse) {
-  .network-background {
-    opacity: 0.52;
-    animation-name: network-layer-in-mobile;
-  }
-
   .hero-card,
   .section-block,
   .footer-block,
@@ -834,6 +994,27 @@
   .content-card,
   .timeline-card {
     border-color: rgba(148, 163, 184, 0.18);
+  }
+
+  .section-block:hover {
+    border-color: rgba(148, 163, 184, 0.18);
+    box-shadow: none;
+  }
+
+  .skill-card:hover,
+  .project-card:hover,
+  .timeline-card:hover,
+  .skill-card[data-reveal].is-visible:hover,
+  .project-card[data-reveal].is-visible:hover,
+  .timeline-card[data-reveal].is-visible:hover {
+    border-color: rgba(148, 163, 184, 0.18);
+    background: var(--panel-strong);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .cursor-spotlight {
+    display: none;
   }
 }
 
@@ -895,10 +1076,15 @@
   }
 
   .network-background {
-    opacity: 0.5;
+    opacity: 1;
     animation: none;
   }
 
+  .ambient-glow {
+    animation: none;
+  }
+
+  .cursor-spotlight,
   .network-background canvas {
     display: none;
   }
@@ -919,16 +1105,26 @@
   }
 
   to {
-    opacity: 0.86;
+    opacity: 1;
   }
 }
 
-@keyframes network-layer-in-mobile {
+@keyframes ambient-primary-drift {
   from {
-    opacity: 0;
+    transform: translate3d(-2vw, -1vh, 0) scale(0.98);
   }
 
   to {
-    opacity: 0.52;
+    transform: translate3d(8vw, 7vh, 0) scale(1.06);
+  }
+}
+
+@keyframes ambient-secondary-drift {
+  from {
+    transform: translate3d(3vw, -2vh, 0) scale(1.04);
+  }
+
+  to {
+    transform: translate3d(-9vw, 9vh, 0) scale(0.97);
   }
 }

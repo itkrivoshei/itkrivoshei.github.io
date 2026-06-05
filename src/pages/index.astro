@@ -26,7 +26,7 @@ const splitHighlight = (text: string, highlight: string) => {
 <BaseLayout title={profile.name} description={profile.summary}>
   <main class="site-shell">
     <Hero />
-    <Section title="About">
+    <Section title="About" backgroundTheme="about">
       <div class="copy-grid">
         {
           profile.about.map((paragraph) => (
@@ -40,15 +40,15 @@ const splitHighlight = (text: string, highlight: string) => {
         }
       </div>
     </Section>
-    <Section title="Skills">
+    <Section title="Skills" backgroundTheme="skills">
       <div class="card-grid skills-grid">
         {skillGroups.map((group) => <SkillGroup group={group} />)}
       </div>
     </Section>
-    <Section title="Experience">
+    <Section title="Experience" backgroundTheme="experience">
       <div class="timeline-list">{experience.map((item) => <ExperienceCard item={item} />)}</div>
     </Section>
-    <Section title="Selected Engineering Work">
+    <Section title="Selected Engineering Work" backgroundTheme="projects">
       <div class="card-grid projects-grid">
         {projects.map((project) => <ProjectCard project={project} />)}
       </div>

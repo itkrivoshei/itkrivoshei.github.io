@@ -72,6 +72,9 @@ test("does not initialize particles when reduced motion is enabled", async ({ pa
 });
 
 test("runs the desktop background system and destroys it on mobile", async ({ page }) => {
+  const pageErrors: Error[] = [];
+  page.on("pageerror", (error) => pageErrors.push(error));
+
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
 
@@ -82,7 +85,39 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
     timeout: 10_000,
   });
   await expect(background).toHaveAttribute("data-network-ready", "true");
-  await expect(background).toHaveAttribute("data-network-hover-modes", "grab bubble");
+
+  const networkConfig = await background.evaluate((element) =>
+    JSON.parse(element.getAttribute("data-network-config") ?? "{}"),
+  );
+
+  expect(networkConfig).toMatchObject({
+    clickEnabled: false,
+    clickModes: [],
+    hoverModes: ["repulse", "bubble"],
+    linkWarp: false,
+    moveDecay: 0,
+    moveSpeed: {
+      max: 0.18,
+      min: 0.06,
+    },
+    outMode: "destroy",
+    repulse: {
+      distance: 165,
+      factor: 6,
+      maxSpeed: 1.1,
+      restore: {
+        delay: 0,
+        enable: true,
+        follow: true,
+        speed: 0.03,
+      },
+      speed: 0.22,
+    },
+    warp: false,
+  });
+  expect(networkConfig.hoverModes).not.toContain("grab");
+  expect(networkConfig.particleCount).toBeGreaterThan(0);
+  expect(networkConfig.targetParticles).toBe(networkConfig.particleCount);
 
   await page.mouse.move(160, 180);
   await expect(background).toHaveAttribute("data-spotlight-active", "true");
@@ -98,6 +133,43 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   });
   await expect(background).toHaveAttribute("data-spotlight-active", "false");
 
+  for (const [x, y] of [
+    [1, 120],
+    [1, 500],
+    [1, 880],
+    [1439, 120],
+    [1439, 500],
+    [1439, 880],
+    [360, 1],
+    [1080, 1],
+    [360, 999],
+    [1080, 999],
+  ]) {
+    await page.mouse.move(x, y);
+    await page.waitForTimeout(180);
+  }
+  await page.mouse.move(720, 500);
+
+  await expect
+    .poll(async () => {
+      const config = await background.evaluate((element) =>
+        JSON.parse(element.getAttribute("data-network-config") ?? "{}"),
+      );
+
+      return config.refillCount;
+    })
+    .toBeGreaterThan(0);
+
+  await expect
+    .poll(async () => {
+      const config = await background.evaluate((element) =>
+        JSON.parse(element.getAttribute("data-network-config") ?? "{}"),
+      );
+
+      return config.particleCount;
+    })
+    .toBeGreaterThanOrEqual(networkConfig.targetParticles);
+
   await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
 
   for (const theme of ["skills", "experience", "projects"]) {
@@ -110,8 +182,10 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await page.setViewportSize({ width: 800, height: 1000 });
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
+  await expect(background).not.toHaveAttribute("data-network-config");
   await expect(background).toHaveAttribute("data-background-theme", "hero");
   await expect(background).toHaveAttribute("data-spotlight-active", "false");
+  expect(pageErrors).toEqual([]);
 });
 
 test("publishes SEO metadata and static discovery files", async ({ page, request }) => {
@@ -134,4 +208,13 @@ test("publishes SEO metadata and static discovery files", async ({ page, request
     const response = await request.get(path);
     expect(response.ok(), `${path} should be available`).toBe(true);
   }
+
+  await page.goto("/404.html");
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+  await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
+
+  const missingResponse = await request.get("/missing-smoke-route");
+  expect(missingResponse.status()).toBe(404);
+  expect(await missingResponse.text()).toContain("Page not found");
 });

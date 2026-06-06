@@ -24,9 +24,9 @@ The site presents work history, technical background, selected projects, availab
 
 [`src/data/profile.ts`](src/data/profile.ts)
 
-[Astro](https://astro.build/) components render the content into reusable sections. [Tailwind CSS v4](https://tailwindcss.com/) provides design tokens, utilities, and component layers, while focused custom CSS handles the animated network background and complex visual effects.
+[Astro](https://astro.build/) components render the content into reusable sections. [Tailwind CSS v4](https://tailwindcss.com/) provides design tokens, utilities, and component layers, while focused custom CSS handles the animated network background and complex visual effects. The desktop-only particle runtime loads only the tsParticles modules required for links, repulse, and bubble interactions. Particles are destroyed at the canvas edge and restored through debounced density updates, avoiding bounce and wrap artifacts without slowing the base network motion.
 
-Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`](.node-version), [GitHub Actions](https://github.com/itkrivoshei/itkrivoshei.github.io/actions), and the [Docker](https://www.docker.com/) build image from [`Dockerfile`](Dockerfile).
+Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`](.node-version), the npm version declared in [`package.json`](package.json), [GitHub Actions](https://github.com/itkrivoshei/itkrivoshei.github.io/actions), and the [Docker](https://www.docker.com/) build image from [`Dockerfile`](Dockerfile).
 
 ## Tech Stack
 
@@ -76,6 +76,8 @@ Scripts are defined in [`package.json`](package.json).
 | `npm run test:links:internal` | Check local pages, assets, CSS URLs, and fragments |
 | `npm run test:links:external` | Report unavailable external links                  |
 | `npm run test:smoke`          | Run Playwright and axe-core browser smoke tests    |
+| `npm run test:container`      | Build and smoke-test the nginx container           |
+| `npm run validate:bundle`     | Enforce CSS and background bootstrap budgets       |
 | `npm run format`              | Format Astro, JS/TS, CSS, docs, and YAML           |
 | `npm run format:check`        | Check formatting, including `.astro` files         |
 | `npm run verify`              | Run the complete non-browser CI quality gate       |
@@ -95,9 +97,11 @@ docker run --rm -p 8080:80 itkrivoshei-site
 
 Open `http://localhost:8080`.
 
+The container uses [`nginx/default.conf`](nginx/default.conf) to serve the branded 404 page, immutable hashed assets, and baseline security headers.
+
 ## Automation
 
-- [`.github/workflows/check.yml`](.github/workflows/check.yml) runs the quality gate, browser/accessibility smoke tests, and a non-blocking external-link report.
+- [`.github/workflows/check.yml`](.github/workflows/check.yml) runs the quality gate, browser/accessibility and container smoke tests, and a non-blocking external-link report.
 - [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs verification and browser smoke tests before publishing `dist` to [GitHub Pages](https://itkrivoshei.github.io) on pushes to [`main`](https://github.com/itkrivoshei/itkrivoshei.github.io/tree/main).
 - [`.github/workflows/codeql.yml`](.github/workflows/codeql.yml) runs GitHub [CodeQL](https://codeql.github.com/) analysis.
 - [`.github/dependabot.yml`](.github/dependabot.yml) tracks npm package and GitHub Actions updates.

@@ -6,18 +6,27 @@ import { profile } from "../data/profile";
 interface Props {
   title?: string;
   description?: string;
-  canonical?: string;
+  canonical?: string | false;
   image?: string;
+  includePersonSchema?: boolean;
+  noindex?: boolean;
 }
 
+const defaultCanonical = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).toString()
+  : Astro.url.toString();
 const {
   title = "Nikita Krivoshei",
   description = "Personal engineering website for DevOps-focused software engineering work.",
-  canonical = Astro.site
-    ? new URL(Astro.url.pathname, Astro.site).toString()
-    : Astro.url.toString(),
   image = Astro.site ? new URL("/og-image.png", Astro.site).toString() : "/og-image.png",
+  includePersonSchema = true,
+  noindex = false,
 } = Astro.props;
+const canonical =
+  Astro.props.canonical === false ? undefined : (Astro.props.canonical ?? defaultCanonical);
+const profileUrl = Astro.site
+  ? new URL("/", Astro.site).toString()
+  : new URL("/", Astro.url).toString();
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -28,7 +37,7 @@ const personSchema = {
     "@type": "PostalAddress",
     addressLocality: profile.location,
   },
-  url: canonical,
+  url: profileUrl,
   sameAs: profile.links.filter((link) => link.href.startsWith("https://")).map((link) => link.href),
 };
 ---
@@ -39,12 +48,13 @@ const personSchema = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={canonical} />
+    {canonical && <link rel="canonical" href={canonical} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
+    {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content={profile.name} />
     <meta property="og:image" content={image} />
     <meta property="og:image:alt" content={`${profile.name} — ${profile.role}`} />
@@ -54,7 +64,11 @@ const personSchema = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    {
+      includePersonSchema && (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+      )
+    }
     <title>{title}</title>
   </head>
   <body class="min-h-screen bg-slate-950 text-slate-100 antialiased">

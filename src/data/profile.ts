@@ -3,6 +3,14 @@ export interface ProfileLink {
   href: string;
 }
 
+export interface SocialLink extends ProfileLink {
+  icon: "github" | "linkedin" | "email" | "telegram";
+}
+
+export interface ProjectLink extends ProfileLink {
+  kind: "repository" | "site";
+}
+
 export interface ExperiencePoint {
   text: string;
   highlight?: string;
@@ -26,8 +34,7 @@ export interface ProjectItem {
   highlight?: string;
   featured?: boolean;
   tags: string[];
-  links?: ProfileLink[];
-  href?: string;
+  links?: ProjectLink[];
 }
 
 export interface SkillGroup {
@@ -60,11 +67,11 @@ export const profile = {
     },
   ],
   links: [
-    { label: "GitHub", href: "https://github.com/itkrivoshei" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/itkivoshei" },
-    { label: "Email", href: "mailto:NikitaKrivoshei@gmail.com" },
-    { label: "Telegram", href: "https://t.me/itkrivoshei" },
-  ],
+    { label: "GitHub", href: "https://github.com/itkrivoshei", icon: "github" },
+    { label: "LinkedIn", href: "https://linkedin.com/in/itkivoshei", icon: "linkedin" },
+    { label: "Email", href: "mailto:NikitaKrivoshei@gmail.com", icon: "email" },
+    { label: "Telegram", href: "https://t.me/itkrivoshei", icon: "telegram" },
+  ] satisfies SocialLink[],
 };
 
 export const skillGroups = [
@@ -162,10 +169,12 @@ export const projects = [
       {
         label: "Repository",
         href: "https://github.com/itkrivoshei/production-app-infrastructure",
+        kind: "repository",
       },
       {
         label: "Live preview",
         href: "https://itkrivoshei.github.io/production-app-infrastructure/",
+        kind: "site",
       },
     ],
   },
@@ -176,7 +185,13 @@ export const projects = [
       "Ubuntu-focused dotfiles and bootstrap scripts with shell health checks, ShellCheck, shfmt, and GitHub Actions.",
     highlight: "ShellCheck, shfmt, and GitHub Actions",
     tags: ["Linux", "Bash", "zsh", "ShellCheck", "GitHub Actions"],
-    links: [{ label: "Repository", href: "https://github.com/itkrivoshei/dotfiles" }],
+    links: [
+      {
+        label: "Repository",
+        href: "https://github.com/itkrivoshei/dotfiles",
+        kind: "repository",
+      },
+    ],
   },
   {
     name: "Serverless commerce dashboard",
@@ -189,10 +204,12 @@ export const projects = [
       {
         label: "Repository",
         href: "https://github.com/itkrivoshei/angular-serverless-commerce-dashboard",
+        kind: "repository",
       },
       {
         label: "Live app",
         href: "https://itkrivoshei.github.io/angular-serverless-commerce-dashboard/",
+        kind: "site",
       },
     ],
   },
@@ -207,6 +224,7 @@ export const projects = [
       {
         label: "Repository",
         href: "https://github.com/itkrivoshei/salary-prediction-linear-regression",
+        kind: "repository",
       },
     ],
   },
@@ -218,8 +236,8 @@ export const projects = [
     highlight: "release support, staging validation, and troubleshooting",
     tags: ["TypeScript", "Jenkins", "staging", "release checks", "troubleshooting"],
     links: [
-      { label: "MOPO", href: "https://www.mopo.de/" },
-      { label: "BikeRadar", href: "https://www.bikeradar.com/" },
+      { label: "MOPO", href: "https://www.mopo.de/", kind: "site" },
+      { label: "BikeRadar", href: "https://www.bikeradar.com/", kind: "site" },
     ],
   },
   {
@@ -229,27 +247,9 @@ export const projects = [
       "Large-scale public-service platform work covering citizen-facing flows, integration support, release validation, and production debugging.",
     highlight: "release validation, and production debugging",
     tags: ["Angular", "GitLab", "Jenkins", "Docker", "Kubernetes"],
-    links: [{ label: "Website", href: "https://www.gosuslugi.ru/" }],
+    links: [{ label: "Website", href: "https://www.gosuslugi.ru/", kind: "site" }],
   },
 ] satisfies ProjectItem[];
-
-export const education = [
-  {
-    title: "B.Sc. Computer Science and Digitization",
-    place: "Berlin School of Business & Innovation",
-    period: "2023 – 2026",
-  },
-  {
-    title: "Advanced Programming Certificate",
-    place: "42",
-    period: "2019 – 2022",
-  },
-];
-
-export const certifications = [
-  "Data Protection Training",
-  "Certificate of Completion — 42 Curriculum of Architect in Digital Technologies",
-];
 
 export const availability = {
   text: "Available for DevOps, Cloud, Platform, Build & Release, and Software Engineering roles.",

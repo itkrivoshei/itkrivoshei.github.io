@@ -1,35 +1,20 @@
 ---
 import Icon from "./Icon.astro";
 import type { ProjectItem } from "../data/profile";
+import { splitHighlightedText } from "../utils/text";
 
 interface Props {
   project: ProjectItem;
 }
 
 const { project } = Astro.props as Props;
-const links = project.links ?? (project.href ? [{ label: "Repository", href: project.href }] : []);
+const links = project.links ?? [];
 const primaryLink = links[0];
 
-const getLinkType = (label: string) =>
-  label.toLowerCase().includes("repository") ? "repo" : "site";
+const getLinkLabel = (kind: "repository" | "site", label: string) =>
+  kind === "repository" ? "GitHub" : label;
 
-const getLinkLabel = (label: string) => (getLinkType(label) === "repo" ? "GitHub" : label);
-
-const splitDescription = () => {
-  if (!project.highlight || !project.description.includes(project.highlight)) {
-    return [{ text: project.description, highlighted: false }];
-  }
-
-  const [before, after] = project.description.split(project.highlight);
-
-  return [
-    { text: before, highlighted: false },
-    { text: project.highlight, highlighted: true },
-    { text: after, highlighted: false },
-  ];
-};
-
-const descriptionParts = splitDescription();
+const descriptionParts = splitHighlightedText(project.description, project.highlight);
 ---
 
 <article
@@ -53,7 +38,12 @@ const descriptionParts = splitDescription();
     <p class="eyebrow">
       {
         primaryLink ? (
-          <a class="project-repo-link" href={primaryLink.href} target="_blank" rel="noreferrer">
+          <a
+            class="project-repo-link"
+            href={primaryLink.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <span>{project.repo}</span>
             <span class="link-icon" aria-hidden="true">
               <Icon name="external-link" class="external-link-icon" />
@@ -82,17 +72,22 @@ const descriptionParts = splitDescription();
     links.length > 0 && (
       <div class="mini-link-row project-links">
         {links.map((link) => {
-          const linkType = getLinkType(link.label);
+          const isRepository = link.kind === "repository";
 
           return (
-            <a href={link.href} target="_blank" rel="noreferrer" data-link-type={linkType}>
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-link-type={link.kind}
+            >
               <span class="link-icon" aria-hidden="true">
                 <Icon
-                  name={linkType === "repo" ? "github" : "external-link"}
-                  class={linkType === "repo" ? undefined : "external-link-icon"}
+                  name={isRepository ? "github" : "external-link"}
+                  class={isRepository ? undefined : "external-link-icon"}
                 />
               </span>
-              {getLinkLabel(link.label)}
+              {getLinkLabel(link.kind, link.label)}
             </a>
           );
         })}

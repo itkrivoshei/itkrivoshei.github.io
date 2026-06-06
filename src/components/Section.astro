@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { title, backgroundTheme } = Astro.props;
-const sectionClass = `section-${title.toLowerCase().replace(/\s+/g, "-")}`;
+const sectionClass = `section-${backgroundTheme}`;
 ---
 
 <section

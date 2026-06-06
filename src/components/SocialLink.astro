@@ -4,20 +4,20 @@ import Icon, { type IconName } from "./Icon.astro";
 interface Props {
   label: string;
   href: string;
+  icon: IconName;
 }
 
-const { label, href } = Astro.props;
+const { label, href, icon } = Astro.props;
 const isExternal = href.startsWith("http");
-const iconName = label.toLowerCase() as IconName;
 ---
 
 <a
   href={href}
   target={isExternal ? "_blank" : undefined}
-  rel={isExternal ? "noreferrer" : undefined}
+  rel={isExternal ? "noopener noreferrer" : undefined}
 >
   <span class="link-icon" aria-hidden="true">
-    <Icon name={iconName} />
+    <Icon name={icon} />
   </span>
   {label}
 </a>

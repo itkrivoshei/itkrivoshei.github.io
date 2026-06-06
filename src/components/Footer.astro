@@ -1,35 +1,9 @@
 ---
 import SocialLink from "./SocialLink.astro";
 import { availability, profile } from "../data/profile";
+import { splitHighlightedText } from "../utils/text";
 
-const renderText = () => {
-  const matches = availability.highlights
-    .filter((highlight) => availability.text.includes(highlight))
-    .map((highlight) => ({ highlight, index: availability.text.indexOf(highlight) }))
-    .sort((a, b) => a.index - b.index);
-
-  const parts: Array<{ text: string; highlighted: boolean }> = [];
-  let cursor = 0;
-
-  matches.forEach(({ highlight, index }) => {
-    if (index < cursor) return;
-
-    if (index > cursor) {
-      parts.push({ text: availability.text.slice(cursor, index), highlighted: false });
-    }
-
-    parts.push({ text: highlight, highlighted: true });
-    cursor = index + highlight.length;
-  });
-
-  if (cursor < availability.text.length) {
-    parts.push({ text: availability.text.slice(cursor), highlighted: false });
-  }
-
-  return parts;
-};
-
-const footerTextParts = renderText();
+const footerTextParts = splitHighlightedText(availability.text, availability.highlights);
 ---
 
 <footer class="footer-block" data-reveal="footer">
@@ -41,6 +15,10 @@ const footerTextParts = renderText();
     }
   </p>
   <div class="link-row">
-    {profile.links.map((link) => <SocialLink label={link.label} href={link.href} />)}
+    {
+      profile.links.map((link) => (
+        <SocialLink label={link.label} href={link.href} icon={link.icon} />
+      ))
+    }
   </div>
 </footer>

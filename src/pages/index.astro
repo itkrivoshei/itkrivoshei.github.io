@@ -7,20 +7,7 @@ import Section from "../components/Section.astro";
 import SkillGroup from "../components/SkillGroup.astro";
 import { experience, profile, projects, skillGroups } from "../data/profile";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const splitHighlight = (text: string, highlight: string) => {
-  if (!text.includes(highlight)) {
-    return [{ text, highlighted: false }];
-  }
-
-  const [before, after] = text.split(highlight);
-
-  return [
-    { text: before, highlighted: false },
-    { text: highlight, highlighted: true },
-    { text: after, highlighted: false },
-  ];
-};
+import { splitHighlightedText } from "../utils/text";
 ---
 
 <BaseLayout title={profile.name} description={profile.summary}>
@@ -32,7 +19,7 @@ const splitHighlight = (text: string, highlight: string) => {
           profile.about.map((paragraph) => (
             <p>
               <span class="prompt-label">{paragraph.prompt}&gt;</span>{" "}
-              {splitHighlight(paragraph.text, paragraph.highlight).map((part) =>
+              {splitHighlightedText(paragraph.text, paragraph.highlight).map((part) =>
                 part.highlighted ? <strong>{part.text}</strong> : part.text,
               )}
             </p>

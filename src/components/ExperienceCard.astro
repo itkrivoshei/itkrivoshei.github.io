@@ -1,6 +1,7 @@
 ---
 import Icon from "./Icon.astro";
-import type { ExperienceItem, ExperiencePoint } from "../data/profile";
+import type { ExperienceItem } from "../data/profile";
+import { splitHighlightedText } from "../utils/text";
 
 interface Props {
   item: ExperienceItem;
@@ -9,20 +10,6 @@ interface Props {
 const { item } = Astro.props as Props;
 const links = item.links ?? [];
 const skills = item.skills;
-
-const splitPoint = (point: ExperiencePoint) => {
-  if (!point.highlight || !point.text.includes(point.highlight)) {
-    return [{ text: point.text, highlighted: false }];
-  }
-
-  const [before, after] = point.text.split(point.highlight);
-
-  return [
-    { text: before, highlighted: false },
-    { text: point.highlight, highlighted: true },
-    { text: after, highlighted: false },
-  ];
-};
 ---
 
 <article class="timeline-card" data-reveal="card">
@@ -35,7 +22,7 @@ const splitPoint = (point: ExperiencePoint) => {
               class="text-link company-link experience-blue-link"
               href={item.href}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               <span>{item.company}</span>
               <span class="experience-link-icon" aria-hidden="true">
@@ -56,7 +43,12 @@ const splitPoint = (point: ExperiencePoint) => {
             references:{" "}
             {links.map((link, index) => (
               <>
-                <a class="experience-blue-link" href={link.href} target="_blank" rel="noreferrer">
+                <a
+                  class="experience-blue-link"
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <span>{link.label}</span>
                   <span class="experience-link-icon" aria-hidden="true">
                     <Icon name="external-link" class="external-link-icon" />
@@ -78,7 +70,7 @@ const splitPoint = (point: ExperiencePoint) => {
   <ul class="experience-points">
     {
       item.points.map((point) => {
-        const pointParts = splitPoint(point);
+        const pointParts = splitHighlightedText(point.text, point.highlight);
 
         return (
           <li>

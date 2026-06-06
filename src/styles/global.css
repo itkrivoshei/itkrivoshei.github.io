@@ -153,7 +153,6 @@
   z-index: 0;
   border-radius: 50%;
   opacity: 0.5;
-  will-change: transform;
 }
 
 .ambient-glow-primary {
@@ -269,11 +268,11 @@
   transition:
     background 1200ms ease,
     opacity 360ms ease;
-  will-change: transform;
 }
 
 .network-background[data-spotlight-active="true"] .cursor-spotlight {
   opacity: 0.78;
+  will-change: transform;
 }
 
 .background-noise {
@@ -301,10 +300,12 @@
 @media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .ambient-glow-primary {
     animation: ambient-primary-drift 32s ease-in-out infinite alternate;
+    will-change: transform;
   }
 
   .ambient-glow-secondary {
     animation: ambient-secondary-drift 44s ease-in-out infinite alternate;
+    will-change: transform;
   }
 }
 
@@ -646,7 +647,7 @@
   }
 
   .section-experience,
-  .section-selected-engineering-work {
+  .section-projects {
     background: linear-gradient(135deg, rgba(15, 23, 42, 0.84), rgba(2, 6, 23, 0.72)), var(--panel);
   }
 
@@ -738,11 +739,11 @@
       0 0 30px rgba(var(--accent-rgb), 0.12);
   }
 
-  .timeline-card::after {
+  .timeline-card::after,
+  .skill-card .card-heading::after,
+  .project-card .project-copy::after {
     content: "";
     position: absolute;
-    right: 1.25rem;
-    bottom: 1.25rem;
     z-index: 2;
     width: 0.55rem;
     height: 0.55rem;
@@ -755,7 +756,13 @@
       transform 160ms ease;
   }
 
-  .timeline-card:hover::after {
+  .timeline-card::after {
+    right: 1.25rem;
+    bottom: 1.25rem;
+  }
+
+  .timeline-card:hover::after,
+  .project-card:hover .project-copy::after {
     background: var(--terminal-blue);
     box-shadow: 0 0 18px rgba(137, 180, 250, 0.62);
     transform: scale(1.12);
@@ -783,30 +790,13 @@
 
   .skill-card .card-heading::after,
   .project-card .project-copy::after {
-    content: "";
-    position: absolute;
     top: 0.15rem;
     right: 0;
-    width: 0.55rem;
-    height: 0.55rem;
-    border-radius: var(--radius-pill);
-    background: rgba(51, 65, 85, 0.95);
-    box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.35);
-    transition:
-      background 160ms ease,
-      box-shadow 160ms ease,
-      transform 160ms ease;
   }
 
   .skill-card:hover .card-heading::after {
     background: var(--terminal-green);
     box-shadow: 0 0 18px rgba(166, 227, 161, 0.68);
-    transform: scale(1.12);
-  }
-
-  .project-card:hover .project-copy::after {
-    background: var(--terminal-blue);
-    box-shadow: 0 0 18px rgba(137, 180, 250, 0.62);
     transform: scale(1.12);
   }
 
@@ -929,12 +919,6 @@
 
   .timeline-card li::marker {
     color: var(--terminal-green);
-  }
-
-  .timeline-card .experience-skill-list {
-    margin: 1rem 0 0;
-    padding-left: 0;
-    line-height: 1;
   }
 
   .footer-block {

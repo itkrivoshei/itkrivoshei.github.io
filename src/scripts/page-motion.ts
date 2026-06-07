@@ -1,22 +1,13 @@
 import type { AtroposInstance } from "atropos";
 import type Lenis from "lenis";
-import {
-  backgroundThemeChangeEvent,
-  type BackgroundTheme,
-  type BackgroundThemeChangeDetail,
-} from "../types/background";
 
 const body = document.body;
 const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-const themeTargets = Array.from(
-  document.querySelectorAll<HTMLElement>("[data-background-theme]:not([data-network-background])"),
-);
-const featuredCards = Array.from(document.querySelectorAll<HTMLElement>("[data-atropos-card]"));
+const terminalCards = Array.from(document.querySelectorAll<HTMLElement>("[data-atropos-terminal]"));
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 const desktopWidthQuery = window.matchMedia("(min-width: 1024px)");
 const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
-const hasMotionTargets =
-  revealTargets.length > 0 || themeTargets.length > 0 || featuredCards.length > 0;
+const hasMotionTargets = revealTargets.length > 0 || terminalCards.length > 0;
 let motionVersion = 0;
 let documentLoaded = document.readyState === "complete";
 let cleanupMotion: (() => void) | undefined;
@@ -24,23 +15,16 @@ let cleanupMotion: (() => void) | undefined;
 const shouldEnableMotion = () =>
   hasMotionTargets &&
   documentLoaded &&
+  !document.hidden &&
   !reducedMotionQuery.matches &&
   desktopWidthQuery.matches &&
   finePointerQuery.matches;
-
-const setBackgroundTheme = (theme: BackgroundTheme) => {
-  window.dispatchEvent(
-    new CustomEvent<BackgroundThemeChangeDetail>(backgroundThemeChangeEvent, {
-      detail: { theme },
-    }),
-  );
-};
 
 const clearRuntimeAttributes = () => {
   body.removeAttribute("data-motion-mode");
   body.removeAttribute("data-lenis-ready");
   body.removeAttribute("data-scrolltrigger-ready");
-  featuredCards.forEach((card) => card.removeAttribute("data-atropos-ready"));
+  terminalCards.forEach((card) => card.removeAttribute("data-atropos-ready"));
 };
 
 const destroyMotion = () => {
@@ -48,7 +32,6 @@ const destroyMotion = () => {
   cleanupMotion?.();
   cleanupMotion = undefined;
   clearRuntimeAttributes();
-  setBackgroundTheme("hero");
 };
 
 const initializeMotion = async () => {
@@ -61,7 +44,6 @@ const initializeMotion = async () => {
 
   if (!shouldEnableMotion()) {
     body.setAttribute("data-motion-mode", "static");
-    setBackgroundTheme("hero");
     return;
   }
 
@@ -82,7 +64,7 @@ const initializeMotion = async () => {
       anchors: {
         duration: 0.72,
       },
-      autoRaf: true,
+      autoRaf: false,
       autoToggle: true,
       lerp: 0.14,
       overscroll: false,
@@ -92,49 +74,12 @@ const initializeMotion = async () => {
       wheelMultiplier: 0.9,
     });
     const syncScrollTrigger = () => ScrollTrigger.update();
+    const updateLenis = (time: number) => lenis.raf(time * 1000);
     lenis.on("scroll", syncScrollTrigger);
-
-    const context = gsap.context(() => {
-      revealTargets.forEach((target) => {
-        if (target.getBoundingClientRect().top <= window.innerHeight * 0.78) return;
-
-        const isCard = target.dataset.reveal === "card";
-        gsap.fromTo(
-          target,
-          {
-            opacity: 0,
-            y: isCard ? 9 : 14,
-          },
-          {
-            clearProps: "opacity,transform",
-            duration: isCard ? 0.52 : 0.64,
-            ease: "power2.out",
-            opacity: 1,
-            scrollTrigger: {
-              once: true,
-              start: "top 90%",
-              trigger: target,
-            },
-            y: 0,
-          },
-        );
-      });
-
-      themeTargets.forEach((target) => {
-        const theme = target.dataset.backgroundTheme as BackgroundTheme | undefined;
-        if (!theme) return;
-
-        ScrollTrigger.create({
-          end: "bottom center",
-          onEnter: () => setBackgroundTheme(theme),
-          onEnterBack: () => setBackgroundTheme(theme),
-          start: "top center",
-          trigger: target,
-        });
-      });
-    });
+    gsap.ticker.add(updateLenis);
 
     const atroposInstances: AtroposInstance[] = [];
+    const runtime: { context?: ReturnType<typeof gsap.context> } = {};
     cleanupInitializedMotion = () => {
       atroposInstances.forEach((instance) => {
         instance.destroy();
@@ -146,12 +91,40 @@ const initializeMotion = async () => {
           .querySelectorAll<HTMLElement>(".atropos-scale, .atropos-rotate, .atropos-inner")
           .forEach((element) => element.removeAttribute("style"));
       });
-      context.revert();
+      runtime.context?.revert();
       lenis.off("scroll", syncScrollTrigger);
+      gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };
 
-    if (featuredCards.length > 0) {
+    runtime.context = gsap.context(() => {
+      revealTargets.forEach((target) => {
+        if (target.getBoundingClientRect().top <= window.innerHeight * 0.78) return;
+
+        const isCard = target.dataset.reveal === "card";
+        gsap.fromTo(
+          target,
+          {
+            opacity: 0,
+            y: isCard ? 8 : 10,
+          },
+          {
+            clearProps: "opacity,transform",
+            duration: isCard ? 0.48 : 0.56,
+            ease: "power2.out",
+            opacity: 1,
+            scrollTrigger: {
+              once: true,
+              start: "top 90%",
+              trigger: target,
+            },
+            y: 0,
+          },
+        );
+      });
+    });
+
+    if (terminalCards.length > 0) {
       const { default: Atropos } = await import("atropos");
 
       if (currentVersion !== motionVersion || !shouldEnableMotion()) {
@@ -159,20 +132,18 @@ const initializeMotion = async () => {
         return;
       }
 
-      featuredCards.forEach((card) => {
+      terminalCards.forEach((card) => {
         atroposInstances.push(
           Atropos({
-            activeOffset: 1,
+            activeOffset: 0.5,
             commonOrigin: true,
-            duration: 650,
+            duration: 700,
             el: card,
             highlight: false,
             rotateTouch: false,
-            rotateXMax: 1.1,
-            rotateYMax: 1.5,
-            shadow: true,
-            shadowOffset: 10,
-            shadowScale: 1.01,
+            rotateXMax: 0.65,
+            rotateYMax: 0.85,
+            shadow: false,
           }),
         );
         card.setAttribute("data-atropos-ready", "true");
@@ -189,7 +160,6 @@ const initializeMotion = async () => {
     cleanupInitializedMotion?.();
     clearRuntimeAttributes();
     body.setAttribute("data-motion-mode", "static");
-    setBackgroundTheme("hero");
   }
 };
 
@@ -213,6 +183,14 @@ const handlePageShow = (event: PageTransitionEvent) => {
   }
 };
 
+const handleVisibilityChange = () => {
+  if (document.hidden) {
+    destroyMotion();
+  } else {
+    scheduleMotion();
+  }
+};
+
 if (documentLoaded) {
   scheduleMotion();
 } else {
@@ -222,5 +200,6 @@ if (documentLoaded) {
 reducedMotionQuery.addEventListener("change", scheduleMotion);
 desktopWidthQuery.addEventListener("change", scheduleMotion);
 finePointerQuery.addEventListener("change", scheduleMotion);
+document.addEventListener("visibilitychange", handleVisibilityChange);
 window.addEventListener("pageshow", handlePageShow);
 window.addEventListener("pagehide", handlePageHide);

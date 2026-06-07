@@ -4,17 +4,17 @@ const assetDirectory = new URL("../dist/_astro/", import.meta.url);
 const budgets = [
   {
     label: "generated CSS",
-    limit: 28 * 1024,
+    limit: 25 * 1024,
     pattern: /^BaseLayout\..+\.css$/,
   },
   {
     label: "background bootstrap",
-    limit: 8 * 1024,
+    limit: 4 * 1024,
     pattern: /^NetworkBackground\..+\.js$/,
   },
   {
     label: "motion bootstrap",
-    limit: 6 * 1024,
+    limit: 4 * 1024,
     pattern: /^BaseLayout\..+\.js$/,
   },
   {

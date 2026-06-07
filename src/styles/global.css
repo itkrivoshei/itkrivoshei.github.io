@@ -23,24 +23,6 @@
   --default-transition-timing-function: ease;
 }
 
-@property --background-primary {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #89b4fa;
-}
-
-@property --background-secondary {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #94e2d5;
-}
-
-@property --background-tertiary {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #a6e3a1;
-}
-
 @layer base {
   :root {
     color-scheme: dark;
@@ -75,14 +57,7 @@
     margin: 0;
     min-height: 100vh;
     font-family: var(--sans);
-    background:
-      linear-gradient(rgba(148, 163, 184, 0.024) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.024) 1px, transparent 1px),
-      linear-gradient(135deg, #01040d 0%, #06101d 46%, #0b1324 100%);
-    background-size:
-      44px 44px,
-      44px 44px,
-      auto;
+    background: #020617;
     color: var(--text);
   }
 
@@ -97,137 +72,31 @@
 }
 
 .network-background {
-  --background-primary: #89b4fa;
-  --background-secondary: #94e2d5;
-  --background-tertiary: #a6e3a1;
-  --network-filter: hue-rotate(0deg) saturate(0.76) brightness(0.84);
   position: fixed;
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  opacity: 0;
+  background: #020617;
   pointer-events: none;
-  animation: network-layer-in 700ms ease forwards 280ms;
-  transition:
-    --background-primary 1200ms ease,
-    --background-secondary 1200ms ease,
-    --background-tertiary 1200ms ease;
-}
-
-.network-background[data-background-theme="about"] {
-  --background-primary: #94e2d5;
-  --background-secondary: #a6e3a1;
-  --background-tertiary: #89b4fa;
-  --network-filter: hue-rotate(12deg) saturate(0.72) brightness(0.84);
-}
-
-.network-background[data-background-theme="skills"] {
-  --background-primary: #89b4fa;
-  --background-secondary: #74c7ec;
-  --background-tertiary: #94e2d5;
-  --network-filter: hue-rotate(-8deg) saturate(0.84) brightness(0.86);
-}
-
-.network-background[data-background-theme="experience"] {
-  --background-primary: #74c7ec;
-  --background-secondary: #89b4fa;
-  --background-tertiary: #94a3b8;
-  --network-filter: hue-rotate(-16deg) saturate(0.68) brightness(0.8);
-}
-
-.network-background[data-background-theme="projects"] {
-  --background-primary: #a6e3a1;
-  --background-secondary: #89b4fa;
-  --background-tertiary: #94e2d5;
-  --network-filter: hue-rotate(20deg) saturate(0.74) brightness(0.84);
 }
 
 .ambient-glow,
-.network-pattern,
 .network-effect,
 .background-noise,
 .background-vignette {
   position: absolute;
+  pointer-events: none;
 }
 
 .ambient-glow {
+  inset: -18%;
   z-index: 0;
-  border-radius: 50%;
-  opacity: 0.44;
-}
-
-.ambient-glow-primary {
-  top: -20rem;
-  left: -18rem;
-  width: 52rem;
-  height: 52rem;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--background-primary) 15%, transparent),
-    transparent 69%
-  );
-}
-
-.ambient-glow-secondary {
-  top: 7vh;
-  right: -21rem;
-  width: 48rem;
-  height: 48rem;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--background-secondary) 12%, transparent),
-    transparent 70%
-  );
-}
-
-.ambient-glow-static {
-  bottom: -24rem;
-  left: calc(50% - 26rem);
-  width: 52rem;
-  height: 52rem;
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--background-tertiary) 9%, transparent),
-    transparent 71%
-  );
-}
-
-.network-pattern {
-  inset: -8%;
-  z-index: 1;
-  opacity: 0.34;
-  background:
-    radial-gradient(
-      circle at 18% 22%,
-      color-mix(in srgb, var(--background-primary) 30%, transparent) 0 1px,
-      transparent 2.4px
-    ),
-    radial-gradient(
-      circle at 78% 16%,
-      color-mix(in srgb, var(--background-primary) 25%, transparent) 0 1px,
-      transparent 2.2px
-    ),
-    radial-gradient(
-      circle at 62% 62%,
-      color-mix(in srgb, var(--background-secondary) 22%, transparent) 0 1px,
-      transparent 2.2px
-    ),
-    linear-gradient(
-      28deg,
-      transparent 0 48%,
-      color-mix(in srgb, var(--background-primary) 10%, transparent) 49%,
-      transparent 50%
-    );
-  background-size:
-    13rem 13rem,
-    17rem 17rem,
-    15rem 15rem,
-    22rem 22rem;
+  background: radial-gradient(ellipse at 50% 18%, rgba(116, 199, 236, 0.065), transparent 58%);
 }
 
 .network-effect {
   inset: 0;
-  z-index: 2;
+  z-index: 1;
 }
 
 .network-effect .vanta-canvas {
@@ -236,15 +105,14 @@
   inset: 0;
   width: 100% !important;
   height: 100% !important;
-  filter: var(--network-filter);
+  filter: saturate(0.58) brightness(0.68);
   opacity: 0;
-  transition:
-    filter 1200ms ease,
-    opacity 600ms ease;
+  pointer-events: none;
+  transition: opacity 600ms ease;
 }
 
 .network-background[data-network-ready="true"] .vanta-canvas {
-  opacity: 0.4;
+  opacity: 0.3;
 }
 
 .network-background[data-network-mode="static"] canvas {
@@ -253,36 +121,20 @@
 
 .background-noise {
   inset: 0;
-  z-index: 4;
+  z-index: 2;
   background: url("/noise.png");
-  opacity: 0.025;
+  opacity: 0.02;
 }
 
 .background-vignette {
   inset: 0;
-  z-index: 5;
+  z-index: 3;
   background: radial-gradient(
     circle at 50% 42%,
-    transparent 20%,
-    rgba(1, 4, 13, 0.16) 68%,
-    rgba(1, 4, 13, 0.5)
+    transparent 24%,
+    rgba(1, 4, 13, 0.2) 70%,
+    rgba(1, 4, 13, 0.58)
   );
-}
-
-.network-background[data-background-paused] .ambient-glow {
-  animation-play-state: paused;
-}
-
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .ambient-glow-primary {
-    animation: ambient-primary-drift 32s ease-in-out infinite alternate;
-    will-change: transform;
-  }
-
-  .ambient-glow-secondary {
-    animation: ambient-secondary-drift 44s ease-in-out infinite alternate;
-    will-change: transform;
-  }
 }
 
 @layer components {
@@ -721,6 +573,7 @@
     content: "";
     position: absolute;
     z-index: 2;
+    pointer-events: none;
     width: 0.55rem;
     height: 0.55rem;
     border-radius: var(--radius-pill);
@@ -849,6 +702,8 @@
   }
 
   .project-links {
+    position: relative;
+    z-index: 3;
     margin-top: 0;
   }
 
@@ -913,6 +768,8 @@
   .project-repo-link {
     @apply inline-flex items-center;
 
+    position: relative;
+    z-index: 3;
     gap: 0.42rem;
   }
 }
@@ -999,15 +856,6 @@
     animation-duration: 1ms !important;
   }
 
-  .network-background {
-    opacity: 1;
-    animation: none;
-  }
-
-  .ambient-glow {
-    animation: none;
-  }
-
   .network-background canvas {
     display: none;
   }
@@ -1017,35 +865,5 @@
     animation: none;
     transform: none;
     transition: none;
-  }
-}
-
-@keyframes network-layer-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes ambient-primary-drift {
-  from {
-    transform: translate3d(-2vw, -1vh, 0) scale(0.98);
-  }
-
-  to {
-    transform: translate3d(8vw, 7vh, 0) scale(1.06);
-  }
-}
-
-@keyframes ambient-secondary-drift {
-  from {
-    transform: translate3d(3vw, -2vh, 0) scale(1.04);
-  }
-
-  to {
-    transform: translate3d(-9vw, 9vh, 0) scale(0.97);
   }
 }

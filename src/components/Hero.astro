@@ -4,7 +4,7 @@ import TerminalTypewriter from "./TerminalTypewriter.astro";
 import { profile } from "../data/profile";
 ---
 
-<section class="hero-card" data-background-theme="hero">
+<section class="hero-card">
   <div>
     <p class="eyebrow">~/profile on main</p>
     <h1>{profile.name}</h1>
@@ -18,12 +18,34 @@ import { profile } from "../data/profile";
       }
     </div>
   </div>
-  <aside class="terminal-card" aria-label="Profile metadata">
-    <div class="terminal-dots" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
+  <div class="terminal-card-shell atropos" data-atropos-terminal>
+    <div class="atropos-scale">
+      <div class="atropos-rotate">
+        <div class="atropos-inner">
+          <aside class="terminal-card" aria-label="Profile metadata">
+            <div class="terminal-dots" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <TerminalTypewriter />
+          </aside>
+        </div>
+      </div>
     </div>
-    <TerminalTypewriter />
-  </aside>
+  </div>
 </section>
+
+<style>
+  .terminal-card-shell,
+  .terminal-card-shell .atropos-scale,
+  .terminal-card-shell .atropos-rotate,
+  .terminal-card-shell .atropos-inner,
+  .terminal-card-shell .terminal-card {
+    min-height: 100%;
+  }
+
+  .terminal-card-shell {
+    border-radius: var(--radius-card);
+  }
+</style>

@@ -1,8 +1,3 @@
-import {
-  backgroundThemeChangeEvent,
-  type BackgroundTheme,
-  type BackgroundThemeChangeDetail,
-} from "../types/background";
 import type { VantaNetEffect, VantaNetOptions } from "vanta/src/vanta.net.js";
 
 interface NetworkRuntimeConfig {
@@ -20,23 +15,16 @@ const networkOptions = {
   backgroundAlpha: 0,
   backgroundColor: 0x020617,
   gyroControls: false,
-  maxDistance: 18,
-  mouseControls: true,
-  mouseEase: true,
-  points: 7,
+  maxDistance: 17,
+  mouseControls: false,
+  points: 6,
   scale: 1,
   showDots: true,
-  spacing: 23,
+  spacing: 26,
   touchControls: false,
 } satisfies Omit<VantaNetOptions, "THREE" | "color" | "el">;
 
-const themeColors: Record<BackgroundTheme, number> = {
-  hero: 0x89b4fa,
-  about: 0x94e2d5,
-  skills: 0x74c7ec,
-  experience: 0x89b4fa,
-  projects: 0xa6e3a1,
-};
+const networkColor = 0x74c7ec;
 
 const background = document.querySelector<HTMLElement>("[data-network-background]");
 const networkLayer = background?.querySelector<HTMLElement>("[data-network-effect]");
@@ -50,6 +38,7 @@ const shouldAnimate = () =>
   Boolean(
     background &&
     networkLayer &&
+    !document.hidden &&
     !reducedMotionQuery.matches &&
     desktopWidthQuery.matches &&
     finePointerQuery.matches,
@@ -82,18 +71,6 @@ const destroyNetwork = () => {
   background?.removeAttribute("data-network-provider");
 };
 
-const setBackgroundTheme = (theme: BackgroundTheme) => {
-  const color = themeColors[theme];
-  background?.setAttribute("data-background-theme", theme);
-  background?.setAttribute("data-network-color", `#${color.toString(16).padStart(6, "0")}`);
-  network?.setOptions({ color });
-};
-
-const handleBackgroundThemeChange = (event: Event) => {
-  const theme = (event as CustomEvent<BackgroundThemeChangeDetail>).detail?.theme;
-  if (theme && themeColors[theme]) setBackgroundTheme(theme);
-};
-
 const syncNetwork = async () => {
   const currentVersion = ++syncVersion;
 
@@ -120,8 +97,7 @@ const syncNetwork = async () => {
     const loadedNetwork = createVantaNet({
       ...networkOptions,
       THREE,
-      color:
-        themeColors[(background.dataset.backgroundTheme as BackgroundTheme | undefined) ?? "hero"],
+      color: networkColor,
       el: networkLayer,
     });
 
@@ -153,7 +129,13 @@ const scheduleSync = () => {
 };
 
 const syncVisibility = () => {
-  background?.toggleAttribute("data-background-paused", document.hidden);
+  if (document.hidden) {
+    syncVersion += 1;
+    destroyNetwork();
+    background?.setAttribute("data-network-mode", "static");
+  } else {
+    scheduleSync();
+  }
 };
 
 const handlePageShow = (event: PageTransitionEvent) => {
@@ -162,18 +144,14 @@ const handlePageShow = (event: PageTransitionEvent) => {
 
 const handlePageHide = () => {
   syncVersion += 1;
-  setBackgroundTheme("hero");
   destroyNetwork();
   background?.setAttribute("data-network-mode", "static");
 };
 
-setBackgroundTheme("hero");
-scheduleSync();
 syncVisibility();
 reducedMotionQuery.addEventListener("change", scheduleSync);
 desktopWidthQuery.addEventListener("change", scheduleSync);
 finePointerQuery.addEventListener("change", scheduleSync);
 document.addEventListener("visibilitychange", syncVisibility);
-window.addEventListener(backgroundThemeChangeEvent, handleBackgroundThemeChange);
 window.addEventListener("pageshow", handlePageShow);
 window.addEventListener("pagehide", handlePageHide);

@@ -17,125 +17,86 @@ const getLinkLabel = (kind: "repository" | "site", label: string) =>
 const descriptionParts = splitHighlightedText(project.description, project.highlight);
 ---
 
-<div
-  class:list={["project-card-shell", project.featured && "atropos"]}
-  data-atropos-card={project.featured ? "featured-project" : undefined}
+<article
+  class:list={["content-card", "project-card", project.featured && "project-card-featured"]}
+  data-reveal="card"
 >
-  <div class:list={[project.featured && "atropos-scale"]}>
-    <div class:list={[project.featured && "atropos-rotate"]}>
-      <div class:list={[project.featured && "atropos-inner"]}>
-        <article
-          class:list={["content-card", "project-card", project.featured && "project-card-featured"]}
-          data-reveal="card"
-        >
-          {project.featured && <span class="featured-card-glow" aria-hidden="true" />}
+  {project.featured && <span class="featured-card-glow" aria-hidden="true" />}
 
-          <div class="project-copy">
-            {
-              project.featured && (
-                <span class="featured-badge">
-                  <span class="featured-star" aria-hidden="true">
-                    ★
-                  </span>
-                  <span>Featured</span>
-                </span>
-              )
-            }
+  <div class="project-copy">
+    {
+      project.featured && (
+        <span class="featured-badge">
+          <span class="featured-star" aria-hidden="true">
+            ★
+          </span>
+          <span>Featured</span>
+        </span>
+      )
+    }
 
-            <p class="eyebrow">
-              {
-                primaryLink ? (
-                  <a
-                    class="project-repo-link"
-                    href={primaryLink.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span>{project.repo}</span>
-                    <span class="link-icon" aria-hidden="true">
-                      <Icon name="external-link" class="external-link-icon" />
-                    </span>
-                  </a>
-                ) : (
-                  project.repo
-                )
-              }
-            </p>
-            <h3>{project.name}</h3>
-            <p class="project-description">
-              {
-                descriptionParts.map((part) =>
-                  part.highlighted ? <strong>{part.text}</strong> : part.text,
-                )
-              }
-            </p>
-          </div>
-
-          <ul class="tag-list project-tag-list">
-            {project.tags.map((tag) => <li>{tag}</li>)}
-          </ul>
-
-          {
-            links.length > 0 && (
-              <div class="mini-link-row project-links">
-                {links.map((link) => {
-                  const isRepository = link.kind === "repository";
-
-                  return (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-link-type={link.kind}
-                    >
-                      <span class="link-icon" aria-hidden="true">
-                        <Icon
-                          name={isRepository ? "github" : "external-link"}
-                          class={isRepository ? undefined : "external-link-icon"}
-                        />
-                      </span>
-                      {getLinkLabel(link.kind, link.label)}
-                    </a>
-                  );
-                })}
-              </div>
-            )
-          }
-        </article>
-      </div>
-    </div>
+    <p class="eyebrow">
+      {
+        primaryLink ? (
+          <a
+            class="project-repo-link"
+            href={primaryLink.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>{project.repo}</span>
+            <span class="link-icon" aria-hidden="true">
+              <Icon name="external-link" class="external-link-icon" />
+            </span>
+          </a>
+        ) : (
+          project.repo
+        )
+      }
+    </p>
+    <h3>{project.name}</h3>
+    <p class="project-description">
+      {
+        descriptionParts.map((part) =>
+          part.highlighted ? <strong>{part.text}</strong> : part.text,
+        )
+      }
+    </p>
   </div>
-</div>
+
+  <ul class="tag-list project-tag-list">
+    {project.tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+
+  {
+    links.length > 0 && (
+      <div class="mini-link-row project-links">
+        {links.map((link) => {
+          const isRepository = link.kind === "repository";
+
+          return (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-link-type={link.kind}
+            >
+              <span class="link-icon" aria-hidden="true">
+                <Icon
+                  name={isRepository ? "github" : "external-link"}
+                  class={isRepository ? undefined : "external-link-icon"}
+                />
+              </span>
+              {getLinkLabel(link.kind, link.label)}
+            </a>
+          );
+        })}
+      </div>
+    )
+  }
+</article>
 
 <style>
-  .project-card-shell.atropos,
-  .project-card-shell.atropos .atropos-scale,
-  .project-card-shell.atropos .atropos-rotate,
-  .project-card-shell.atropos .atropos-inner,
-  .project-card-shell.atropos .project-card {
-    min-height: 100%;
-  }
-
-  .project-card-shell:not(.atropos),
-  .project-card-shell:not(.atropos) > div,
-  .project-card-shell:not(.atropos) > div > div,
-  .project-card-shell:not(.atropos) > div > div > div {
-    display: contents;
-  }
-
-  .project-card-shell.atropos {
-    border-radius: var(--radius-card);
-  }
-
-  .project-card-shell[data-atropos-ready="true"] .project-card:hover {
-    transform: none;
-  }
-
-  :global(.project-card-shell.atropos .atropos-shadow) {
-    background: rgba(2, 6, 23, 0.42);
-    filter: blur(18px);
-  }
-
   .project-card-featured:hover {
     --surface-glow-rgb: var(--accent-rgb);
   }

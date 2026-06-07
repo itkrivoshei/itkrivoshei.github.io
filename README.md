@@ -24,7 +24,7 @@ The site presents work history, technical background, selected projects, availab
 
 [`src/data/profile.ts`](src/data/profile.ts)
 
-[Astro](https://astro.build/) components render the content into reusable sections. [Tailwind CSS v4](https://tailwindcss.com/) provides design tokens, utilities, and component layers, while focused custom CSS handles the network background and visual effects. The desktop-only runtime lazily loads [Vanta.NET](https://www.vantajs.com/), [Three.js](https://threejs.org/), [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/), [Lenis](https://lenis.darkroom.engineering/), and [Atropos](https://atroposjs.com/) for a restrained interactive layer. Mobile, coarse-pointer, reduced-motion, and no-JavaScript environments keep the same static CSS presentation without loading the animation runtimes.
+[Astro](https://astro.build/) components render the content into reusable sections. [Tailwind CSS v4](https://tailwindcss.com/) provides design tokens, utilities, and component layers, while focused custom CSS handles the dark network background and visual depth. The desktop-only runtime lazily loads [Vanta.NET](https://www.vantajs.com/) and [Three.js](https://threejs.org/) as a calm non-interactive network scene, [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) for small content reveals, [Lenis](https://lenis.darkroom.engineering/) for natural smooth scrolling, and [Atropos](https://atroposjs.com/) only for the decorative terminal panel. Mobile, coarse-pointer, reduced-motion, and no-JavaScript environments keep the same static CSS presentation without loading the animation runtimes.
 
 Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`](.node-version), the npm version declared in [`package.json`](package.json), [GitHub Actions](https://github.com/itkrivoshei/itkrivoshei.github.io/actions), and the [Docker](https://www.docker.com/) build image from [`Dockerfile`](Dockerfile).
 
@@ -110,7 +110,7 @@ The container uses [`nginx/default.conf`](nginx/default.conf) to serve the brand
 
 ## SEO and Progressive Enhancement
 
-The site includes canonical, Open Graph, Twitter Card, and JSON-LD metadata, plus a generated sitemap, `robots.txt`, branded social preview, and custom 404 page. Primary content remains visible without JavaScript. On suitable desktop devices, optional enhancements add subtle section reveals, section-aware background changes, natural smooth scrolling, one low-tilt featured card, and a calm Vanta.NET scene. Mobile, coarse-pointer, and reduced-motion environments remain mostly static and do not load the animation runtimes.
+The site includes canonical, Open Graph, Twitter Card, and JSON-LD metadata, plus a generated sitemap, `robots.txt`, branded social preview, and custom 404 page. Primary content remains visible without JavaScript. On suitable desktop devices, optional enhancements add small heading/card reveals, natural smooth scrolling, a low-tilt decorative terminal, and a calm Vanta.NET scene. Project cards keep stable CSS hover and focus behavior so their links remain directly usable. Mobile, coarse-pointer, and reduced-motion environments remain mostly static and do not load the animation runtimes.
 
 ## License
 

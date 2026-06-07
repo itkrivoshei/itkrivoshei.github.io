@@ -1,21 +1,15 @@
 ---
-import type { BackgroundTheme } from "../types/background";
-
 interface Props {
   title: string;
-  backgroundTheme: BackgroundTheme;
+  variant: "about" | "skills" | "experience" | "projects";
 }
 
-const { title, backgroundTheme } = Astro.props;
-const sectionClass = `section-${backgroundTheme}`;
+const { title, variant } = Astro.props;
+const sectionClass = `section-${variant}`;
 ---
 
-<section
-  class:list={["section-block", sectionClass]}
-  data-background-theme={backgroundTheme}
-  data-reveal="section"
->
-  <div class="section-title">
+<section class:list={["section-block", sectionClass]}>
+  <div class="section-title" data-reveal="heading">
     <span></span>
     <h2>{title}</h2>
   </div>

@@ -102,7 +102,7 @@ export const experience = [
     company: "SPRYLAB",
     href: "https://sprylab.com/en/",
     note: "digital publishing software / Purple platform ecosystem",
-    role: "Software Engineer | CI/CD & Production Delivery",
+    role: "Frontend Software Engineer | CI/CD & Production Delivery",
     period: "09/2023 – 12/2024",
     skills: ["TypeScript", "Jenkins", "CI/CD", "Staging", "Production support"],
     points: [
@@ -123,7 +123,7 @@ export const experience = [
     company: "RTLabs / Gosuslugi.ru",
     href: "https://www.gosuslugi.ru/",
     note: "national citizen-service portal category",
-    role: "Software Engineer | Release & Integration Support",
+    role: "Software Engineer | Frontend, Release & Integration Support",
     period: "10/2020 – 04/2022",
     skills: ["Angular", "TypeScript", "REST APIs", "Docker", "Kubernetes", "GitLab CI"],
     points: [
@@ -142,7 +142,7 @@ export const experience = [
     company: "First Bit",
     href: "https://en.1solution.ru/",
     note: "business automation and enterprise software implementation",
-    role: "Database Developer Intern | Business Systems",
+    role: "Database Developer | Business Systems",
     period: "02/2019 – 01/2020",
     skills: ["PHP", "SQL", "Jira", "Debugging", "Documentation"],
     points: [

@@ -4,13 +4,43 @@ const assetDirectory = new URL("../dist/_astro/", import.meta.url);
 const budgets = [
   {
     label: "generated CSS",
-    limit: 28 * 1024,
+    limit: 25 * 1024,
     pattern: /^BaseLayout\..+\.css$/,
   },
   {
     label: "background bootstrap",
-    limit: 8 * 1024,
+    limit: 4 * 1024,
     pattern: /^NetworkBackground\..+\.js$/,
+  },
+  {
+    label: "motion bootstrap",
+    limit: 4 * 1024,
+    pattern: /^BaseLayout\..+\.js$/,
+  },
+  {
+    label: "lazy WebGL runtime",
+    limit: 510 * 1024,
+    pattern: /^vanta-three\..+\.js$/,
+  },
+  {
+    label: "lazy GSAP runtime",
+    limit: 75 * 1024,
+    pattern: /^index\..+\.js$/,
+  },
+  {
+    label: "lazy ScrollTrigger runtime",
+    limit: 48 * 1024,
+    pattern: /^ScrollTrigger\..+\.js$/,
+  },
+  {
+    label: "lazy Lenis runtime",
+    limit: 22 * 1024,
+    pattern: /^lenis\..+\.js$/,
+  },
+  {
+    label: "lazy Atropos runtime",
+    limit: 10 * 1024,
+    pattern: /^atropos\..+\.js$/,
   },
 ];
 const assets = await readdir(assetDirectory);

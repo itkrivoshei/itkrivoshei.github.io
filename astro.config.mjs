@@ -6,6 +6,9 @@ export default defineConfig({
   site: "https://itkrivoshei.github.io",
   integrations: [sitemap()],
   vite: {
+    build: {
+      chunkSizeWarningLimit: 510,
+    },
     plugins: [tailwindcss()],
   },
 });

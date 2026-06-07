@@ -1,0 +1,46 @@
+import {
+  AdditiveBlending,
+  AmbientLight,
+  BufferAttribute,
+  BufferGeometry,
+  Color,
+  DynamicDrawUsage,
+  Group,
+  LineBasicMaterial,
+  LineSegments,
+  Mesh,
+  MeshLambertMaterial,
+  Object3D,
+  PerspectiveCamera,
+  Scene,
+  SphereGeometry,
+  SpotLight,
+  Vector2,
+  Vector3,
+  WebGLRenderer,
+} from "three";
+
+export {
+  AdditiveBlending,
+  AmbientLight,
+  BufferAttribute,
+  BufferGeometry,
+  Color,
+  DynamicDrawUsage,
+  Group,
+  LineBasicMaterial,
+  LineSegments,
+  Mesh,
+  MeshLambertMaterial,
+  Object3D,
+  PerspectiveCamera,
+  Scene,
+  SphereGeometry,
+  SpotLight,
+  Vector2,
+  Vector3,
+  WebGLRenderer,
+};
+
+// Vanta 0.5 still reads the legacy Three.js constant for colored line vertices.
+export const VertexColors = true;

@@ -51,7 +51,6 @@ test("does not initialize the WebGL network on mobile", async ({ page }) => {
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(background).toHaveAttribute("data-background-theme", "hero");
-  await expect(background).toHaveAttribute("data-spotlight-active", "false");
   await expect(page.locator(".ambient-glow-primary")).toHaveCSS("animation-name", "none");
 
   const networkRequests = await page.evaluate(() =>
@@ -74,7 +73,6 @@ test("does not initialize the WebGL network when reduced motion is enabled", asy
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(background).toHaveAttribute("data-background-theme", "hero");
-  await expect(background).toHaveAttribute("data-spotlight-active", "false");
   await expect(page.locator(".ambient-glow-primary")).toHaveCSS("animation-name", "none");
   await expect(page.getByRole("heading", { level: 2, name: "Experience" })).toBeVisible();
 
@@ -96,7 +94,6 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await page.goto("/");
 
   const background = page.locator("[data-network-background]");
-  const spotlight = page.locator("[data-cursor-spotlight]");
 
   await expect(background.locator("canvas")).toHaveCount(1, {
     timeout: 10_000,
@@ -119,19 +116,7 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   });
   await expect(background).toHaveAttribute("data-network-provider", "vanta-net");
 
-  await page.mouse.move(160, 180);
-  await expect(background).toHaveAttribute("data-spotlight-active", "true");
-  const firstTransform = await spotlight.evaluate((element) => element.style.transform);
-
-  await page.mouse.move(1180, 720);
-  await expect
-    .poll(() => spotlight.evaluate((element) => element.style.transform))
-    .not.toBe(firstTransform);
-
-  await page.evaluate(() => {
-    window.dispatchEvent(new PointerEvent("pointerout", { relatedTarget: null }));
-  });
-  await expect(background).toHaveAttribute("data-spotlight-active", "false");
+  await expect(page.locator("[data-cursor-spotlight]")).toHaveCount(0);
 
   await background.locator(".vanta-canvas").evaluate((canvas) => {
     canvas.setAttribute("data-smoke-canvas", "stable");
@@ -173,7 +158,6 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await expect(background).not.toHaveAttribute("data-network-config");
   await expect(background).not.toHaveAttribute("data-network-provider");
   await expect(background).toHaveAttribute("data-background-theme", "hero");
-  await expect(background).toHaveAttribute("data-spotlight-active", "false");
 
   await page.setViewportSize({ width: 1440, height: 1000 });
   await expect(background.locator(".vanta-canvas")).toHaveCount(1);

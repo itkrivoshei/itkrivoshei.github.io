@@ -36,7 +36,6 @@ const themeColors: Record<BackgroundTheme, number> = {
 
 const background = document.querySelector<HTMLElement>("[data-network-background]");
 const networkLayer = background?.querySelector<HTMLElement>("[data-network-effect]");
-const spotlight = background?.querySelector<HTMLElement>("[data-cursor-spotlight]");
 const themeTargets = Array.from(
   document.querySelectorAll<HTMLElement>("[data-background-theme]:not([data-network-background])"),
 );
@@ -46,12 +45,6 @@ const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)")
 let network: VantaNetEffect | undefined;
 let syncVersion = 0;
 let themeObserver: IntersectionObserver | undefined;
-let interactiveListenersActive = false;
-let spotlightFrameId = 0;
-let spotlightLastFrame = 0;
-let spotlightInitialized = false;
-const spotlightCurrent = { x: 0, y: 0 };
-const spotlightTarget = { x: 0, y: 0 };
 
 const shouldAnimate = () =>
   Boolean(
@@ -134,99 +127,7 @@ const startThemeObserver = () => {
   syncBackgroundTheme();
 };
 
-const setSpotlightActive = (active: boolean) => {
-  background?.setAttribute("data-spotlight-active", String(active));
-};
-
-const stopSpotlightFrame = () => {
-  if (spotlightFrameId) {
-    window.cancelAnimationFrame(spotlightFrameId);
-    spotlightFrameId = 0;
-  }
-
-  spotlightLastFrame = 0;
-};
-
-const hideSpotlight = () => {
-  setSpotlightActive(false);
-  stopSpotlightFrame();
-};
-
-const animateSpotlight = (timestamp: number) => {
-  if (!spotlight || !shouldAnimate()) {
-    hideSpotlight();
-    return;
-  }
-
-  const elapsed = spotlightLastFrame ? timestamp - spotlightLastFrame : 16;
-  const progress = 1 - Math.exp(-elapsed / 120);
-  spotlightLastFrame = timestamp;
-  spotlightCurrent.x += (spotlightTarget.x - spotlightCurrent.x) * progress;
-  spotlightCurrent.y += (spotlightTarget.y - spotlightCurrent.y) * progress;
-  spotlight.style.transform = `translate3d(${spotlightCurrent.x}px, ${spotlightCurrent.y}px, 0) translate(-50%, -50%)`;
-
-  const remainingDistance = Math.hypot(
-    spotlightTarget.x - spotlightCurrent.x,
-    spotlightTarget.y - spotlightCurrent.y,
-  );
-
-  if (remainingDistance > 0.35) {
-    spotlightFrameId = window.requestAnimationFrame(animateSpotlight);
-    return;
-  }
-
-  spotlightCurrent.x = spotlightTarget.x;
-  spotlightCurrent.y = spotlightTarget.y;
-  spotlightFrameId = 0;
-  spotlightLastFrame = 0;
-};
-
-const scheduleSpotlightFrame = () => {
-  if (!spotlightFrameId) {
-    spotlightFrameId = window.requestAnimationFrame(animateSpotlight);
-  }
-};
-
-const handlePointerMove = (event: PointerEvent) => {
-  if (!shouldAnimate() || !spotlight) return;
-
-  spotlightTarget.x = event.clientX;
-  spotlightTarget.y = event.clientY;
-
-  if (!spotlightInitialized) {
-    spotlightCurrent.x = event.clientX;
-    spotlightCurrent.y = event.clientY;
-    spotlightInitialized = true;
-  }
-
-  setSpotlightActive(true);
-  scheduleSpotlightFrame();
-};
-
-const handlePointerExit = (event: PointerEvent) => {
-  if (!event.relatedTarget) hideSpotlight();
-};
-
-const startInteractiveListeners = () => {
-  if (interactiveListenersActive || !shouldAnimate()) return;
-
-  window.addEventListener("pointermove", handlePointerMove, { passive: true });
-  window.addEventListener("pointerout", handlePointerExit);
-  window.addEventListener("blur", hideSpotlight);
-  interactiveListenersActive = true;
-  startThemeObserver();
-};
-
-const stopInteractiveListeners = () => {
-  if (interactiveListenersActive) {
-    window.removeEventListener("pointermove", handlePointerMove);
-    window.removeEventListener("pointerout", handlePointerExit);
-    window.removeEventListener("blur", hideSpotlight);
-    interactiveListenersActive = false;
-  }
-
-  spotlightInitialized = false;
-  hideSpotlight();
+const resetBackgroundTheme = () => {
   stopThemeObserver();
   setBackgroundTheme("hero");
 };
@@ -287,9 +188,9 @@ const syncNetwork = async () => {
 
 const scheduleSync = () => {
   if (shouldAnimate()) {
-    startInteractiveListeners();
+    startThemeObserver();
   } else {
-    stopInteractiveListeners();
+    resetBackgroundTheme();
   }
 
   void syncNetwork();
@@ -297,7 +198,6 @@ const scheduleSync = () => {
 
 const syncVisibility = () => {
   background?.toggleAttribute("data-background-paused", document.hidden);
-  if (document.hidden) hideSpotlight();
 };
 
 const handlePageShow = (event: PageTransitionEvent) => {
@@ -306,7 +206,7 @@ const handlePageShow = (event: PageTransitionEvent) => {
 
 const handlePageHide = () => {
   syncVersion += 1;
-  stopInteractiveListeners();
+  resetBackgroundTheme();
   destroyNetwork();
   background?.setAttribute("data-network-mode", "static");
 };

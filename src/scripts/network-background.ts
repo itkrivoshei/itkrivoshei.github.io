@@ -1,4 +1,8 @@
-import type { BackgroundTheme } from "../types/background";
+import {
+  backgroundThemeChangeEvent,
+  type BackgroundTheme,
+  type BackgroundThemeChangeDetail,
+} from "../types/background";
 import type { VantaNetEffect, VantaNetOptions } from "vanta/src/vanta.net.js";
 
 interface NetworkRuntimeConfig {
@@ -16,13 +20,13 @@ const networkOptions = {
   backgroundAlpha: 0,
   backgroundColor: 0x020617,
   gyroControls: false,
-  maxDistance: 20,
+  maxDistance: 18,
   mouseControls: true,
   mouseEase: true,
-  points: 9,
+  points: 7,
   scale: 1,
   showDots: true,
-  spacing: 20,
+  spacing: 23,
   touchControls: false,
 } satisfies Omit<VantaNetOptions, "THREE" | "color" | "el">;
 
@@ -36,15 +40,11 @@ const themeColors: Record<BackgroundTheme, number> = {
 
 const background = document.querySelector<HTMLElement>("[data-network-background]");
 const networkLayer = background?.querySelector<HTMLElement>("[data-network-effect]");
-const themeTargets = Array.from(
-  document.querySelectorAll<HTMLElement>("[data-background-theme]:not([data-network-background])"),
-);
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 const desktopWidthQuery = window.matchMedia("(min-width: 1024px)");
 const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
 let network: VantaNetEffect | undefined;
 let syncVersion = 0;
-let themeObserver: IntersectionObserver | undefined;
 
 const shouldAnimate = () =>
   Boolean(
@@ -89,47 +89,9 @@ const setBackgroundTheme = (theme: BackgroundTheme) => {
   network?.setOptions({ color });
 };
 
-const syncBackgroundTheme = () => {
-  const viewportCenter = window.innerHeight / 2;
-  const nearestTarget = themeTargets.reduce<HTMLElement | undefined>((nearest, target) => {
-    if (!nearest) return target;
-
-    const targetRect = target.getBoundingClientRect();
-    const nearestRect = nearest.getBoundingClientRect();
-    const targetDistance = Math.abs(targetRect.top + targetRect.height / 2 - viewportCenter);
-    const nearestDistance = Math.abs(nearestRect.top + nearestRect.height / 2 - viewportCenter);
-
-    return targetDistance < nearestDistance ? target : nearest;
-  }, undefined);
-
-  const theme = nearestTarget?.dataset.backgroundTheme as BackgroundTheme | undefined;
-  setBackgroundTheme(theme ?? "hero");
-};
-
-const stopThemeObserver = () => {
-  themeObserver?.disconnect();
-  themeObserver = undefined;
-};
-
-const startThemeObserver = () => {
-  stopThemeObserver();
-
-  if (!shouldAnimate() || !("IntersectionObserver" in window)) {
-    setBackgroundTheme("hero");
-    return;
-  }
-
-  themeObserver = new IntersectionObserver(syncBackgroundTheme, {
-    rootMargin: "-42% 0px -42% 0px",
-    threshold: 0,
-  });
-  themeTargets.forEach((target) => themeObserver?.observe(target));
-  syncBackgroundTheme();
-};
-
-const resetBackgroundTheme = () => {
-  stopThemeObserver();
-  setBackgroundTheme("hero");
+const handleBackgroundThemeChange = (event: Event) => {
+  const theme = (event as CustomEvent<BackgroundThemeChangeDetail>).detail?.theme;
+  if (theme && themeColors[theme]) setBackgroundTheme(theme);
 };
 
 const syncNetwork = async () => {
@@ -158,7 +120,8 @@ const syncNetwork = async () => {
     const loadedNetwork = createVantaNet({
       ...networkOptions,
       THREE,
-      color: themeColors.hero,
+      color:
+        themeColors[(background.dataset.backgroundTheme as BackgroundTheme | undefined) ?? "hero"],
       el: networkLayer,
     });
 
@@ -173,7 +136,6 @@ const syncNetwork = async () => {
 
     network = loadedNetwork;
     publishNetworkConfig();
-    syncBackgroundTheme();
 
     window.requestAnimationFrame(() => {
       if (network === loadedNetwork && shouldAnimate()) {
@@ -187,12 +149,6 @@ const syncNetwork = async () => {
 };
 
 const scheduleSync = () => {
-  if (shouldAnimate()) {
-    startThemeObserver();
-  } else {
-    resetBackgroundTheme();
-  }
-
   void syncNetwork();
 };
 
@@ -206,7 +162,7 @@ const handlePageShow = (event: PageTransitionEvent) => {
 
 const handlePageHide = () => {
   syncVersion += 1;
-  resetBackgroundTheme();
+  setBackgroundTheme("hero");
   destroyNetwork();
   background?.setAttribute("data-network-mode", "static");
 };
@@ -218,5 +174,6 @@ reducedMotionQuery.addEventListener("change", scheduleSync);
 desktopWidthQuery.addEventListener("change", scheduleSync);
 finePointerQuery.addEventListener("change", scheduleSync);
 document.addEventListener("visibilitychange", syncVisibility);
+window.addEventListener(backgroundThemeChangeEvent, handleBackgroundThemeChange);
 window.addEventListener("pageshow", handlePageShow);
 window.addEventListener("pagehide", handlePageHide);

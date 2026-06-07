@@ -5,9 +5,12 @@ test("renders the primary content and passes the accessibility smoke test", asyn
   await page.goto("/");
 
   await expect(page.getByRole("heading", { level: 1, name: "Nikita Krivoshei" })).toBeVisible();
-  await expect(
-    page.getByRole("heading", { level: 2, name: "Selected Engineering Work" }),
-  ).toBeVisible();
+  const projectsHeading = page.getByRole("heading", {
+    level: 2,
+    name: "Selected Engineering Work",
+  });
+  await projectsHeading.scrollIntoViewIfNeeded();
+  await expect(projectsHeading).toBeVisible();
 
   const results = await new AxeBuilder({ page }).analyze();
   const blockingViolations = results.violations.filter(
@@ -37,6 +40,8 @@ test("keeps all content visible without JavaScript", async ({ browser }) => {
     "static",
   );
   await expect(page.locator(".network-pattern")).toBeVisible();
+  await expect(page.locator("[data-atropos-card]")).toBeVisible();
+  await expect(page.locator(".atropos-shadow")).toHaveCount(0);
 
   await context.close();
 });
@@ -51,13 +56,20 @@ test("does not initialize the WebGL network on mobile", async ({ page }) => {
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(background).toHaveAttribute("data-background-theme", "hero");
+  await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "static");
+  await expect(page.locator("[data-atropos-card]")).not.toHaveAttribute("data-atropos-ready");
+  await expect(page.locator(".atropos-shadow")).toHaveCount(0);
   await expect(page.locator(".ambient-glow-primary")).toHaveCSS("animation-name", "none");
 
   const networkRequests = await page.evaluate(() =>
     performance
       .getEntriesByType("resource")
       .map(({ name }) => name)
-      .filter((name) => /(?:vanta(?:\.net|-three)|three\.module)/i.test(name)),
+      .filter((name) =>
+        /(?:vanta(?:\.net|-three)|three\.module|ScrollTrigger|lenis|atropos|\/index\.[^/]+\.js$)/i.test(
+          name,
+        ),
+      ),
   );
 
   expect(networkRequests).toEqual([]);
@@ -73,6 +85,9 @@ test("does not initialize the WebGL network when reduced motion is enabled", asy
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(background).toHaveAttribute("data-background-theme", "hero");
+  await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "static");
+  await expect(page.locator("[data-atropos-card]")).not.toHaveAttribute("data-atropos-ready");
+  await expect(page.locator(".atropos-shadow")).toHaveCount(0);
   await expect(page.locator(".ambient-glow-primary")).toHaveCSS("animation-name", "none");
   await expect(page.getByRole("heading", { level: 2, name: "Experience" })).toBeVisible();
 
@@ -80,7 +95,11 @@ test("does not initialize the WebGL network when reduced motion is enabled", asy
     performance
       .getEntriesByType("resource")
       .map(({ name }) => name)
-      .filter((name) => /(?:vanta(?:\.net|-three)|three\.module)/i.test(name)),
+      .filter((name) =>
+        /(?:vanta(?:\.net|-three)|three\.module|ScrollTrigger|lenis|atropos|\/index\.[^/]+\.js$)/i.test(
+          name,
+        ),
+      ),
   );
 
   expect(networkRequests).toEqual([]);
@@ -99,6 +118,9 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
     timeout: 10_000,
   });
   await expect(background).toHaveAttribute("data-network-ready", "true");
+  await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "desktop");
+  await expect(page.locator("body")).toHaveAttribute("data-lenis-ready", "true");
+  await expect(page.locator("body")).toHaveAttribute("data-scrolltrigger-ready", "true");
 
   const networkConfig = await background.evaluate((element) =>
     JSON.parse(element.getAttribute("data-network-config") ?? "{}"),
@@ -107,16 +129,20 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   expect(networkConfig).toMatchObject({
     backgroundAlpha: 0,
     gyroControls: false,
-    maxDistance: 20,
+    maxDistance: 18,
     mouseControls: true,
-    points: 9,
+    points: 7,
     provider: "vanta-net",
-    spacing: 20,
+    spacing: 23,
     touchControls: false,
   });
   await expect(background).toHaveAttribute("data-network-provider", "vanta-net");
 
   await expect(page.locator("[data-cursor-spotlight]")).toHaveCount(0);
+  const featuredCard = page.locator("[data-atropos-card]");
+  await expect(featuredCard).toHaveCount(1);
+  await expect(featuredCard).toHaveAttribute("data-atropos-ready", "true");
+  await expect(featuredCard.locator(".atropos-shadow")).toHaveCount(1);
 
   await background.locator(".vanta-canvas").evaluate((canvas) => {
     canvas.setAttribute("data-smoke-canvas", "stable");
@@ -152,22 +178,46 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   }
   await expect(background).toHaveAttribute("data-network-color", "#a6e3a1");
 
+  const atroposRotate = featuredCard.locator(".atropos-rotate");
+  const firstAtroposTransform = await atroposRotate.evaluate(
+    (element) => getComputedStyle(element).transform,
+  );
+  const featuredCardBox = await featuredCard.boundingBox();
+  expect(featuredCardBox).not.toBeNull();
+  await page.mouse.move(
+    featuredCardBox!.x + featuredCardBox!.width * 0.72,
+    featuredCardBox!.y + featuredCardBox!.height * 0.28,
+  );
+  await expect
+    .poll(() => atroposRotate.evaluate((element) => getComputedStyle(element).transform))
+    .not.toBe(firstAtroposTransform);
+
   await page.setViewportSize({ width: 800, height: 1000 });
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(background).not.toHaveAttribute("data-network-config");
   await expect(background).not.toHaveAttribute("data-network-provider");
   await expect(background).toHaveAttribute("data-background-theme", "hero");
+  await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "static");
+  await expect(page.locator("body")).not.toHaveAttribute("data-lenis-ready");
+  await expect(featuredCard).not.toHaveAttribute("data-atropos-ready");
+  await expect(featuredCard.locator(".atropos-shadow")).toHaveCount(0);
 
   await page.setViewportSize({ width: 1440, height: 1000 });
   await expect(background.locator(".vanta-canvas")).toHaveCount(1);
+  await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "desktop");
+  await expect(featuredCard).toHaveAttribute("data-atropos-ready", "true");
   await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pagehide")));
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
+  await expect(page.locator("body")).not.toHaveAttribute("data-lenis-ready");
+  await expect(featuredCard).not.toHaveAttribute("data-atropos-ready");
   await page.evaluate(() =>
     window.dispatchEvent(new PageTransitionEvent("pageshow", { persisted: true })),
   );
   await expect(background.locator(".vanta-canvas")).toHaveCount(1);
+  await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "desktop");
+  await expect(featuredCard).toHaveAttribute("data-atropos-ready", "true");
   expect(pageErrors).toEqual([]);
 });
 

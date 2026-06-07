@@ -24,7 +24,7 @@ The site presents work history, technical background, selected projects, availab
 
 [`src/data/profile.ts`](src/data/profile.ts)
 
-[Astro](https://astro.build/) components render the content into reusable sections. [Tailwind CSS v4](https://tailwindcss.com/) provides design tokens, utilities, and component layers, while focused custom CSS handles the animated network background and complex visual effects. The desktop-only network runtime lazily loads [Vanta.NET](https://www.vantajs.com/) and [Three.js](https://threejs.org/) for a stable interactive scene behind the content. Mobile, coarse-pointer, reduced-motion, and no-JavaScript environments keep the same static CSS background without loading the WebGL runtime.
+[Astro](https://astro.build/) components render the content into reusable sections. [Tailwind CSS v4](https://tailwindcss.com/) provides design tokens, utilities, and component layers, while focused custom CSS handles the network background and visual effects. The desktop-only runtime lazily loads [Vanta.NET](https://www.vantajs.com/), [Three.js](https://threejs.org/), [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/), [Lenis](https://lenis.darkroom.engineering/), and [Atropos](https://atroposjs.com/) for a restrained interactive layer. Mobile, coarse-pointer, reduced-motion, and no-JavaScript environments keep the same static CSS presentation without loading the animation runtimes.
 
 Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`](.node-version), the npm version declared in [`package.json`](package.json), [GitHub Actions](https://github.com/itkrivoshei/itkrivoshei.github.io/actions), and the [Docker](https://www.docker.com/) build image from [`Dockerfile`](Dockerfile).
 
@@ -35,7 +35,7 @@ Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`
 | Framework | [Astro 6](https://astro.build/)                                                   |
 | Language  | [TypeScript](https://www.typescriptlang.org/)                                     |
 | Styling   | [Tailwind CSS 4](https://tailwindcss.com/)                                        |
-| Effects   | [Vanta.NET](https://www.vantajs.com/), [Three.js](https://threejs.org/)           |
+| Effects   | Vanta.NET, Three.js, GSAP ScrollTrigger, Lenis, Atropos                           |
 | Runtime   | [Node.js 22](https://nodejs.org/), [npm](https://www.npmjs.com/)                  |
 | Checks    | Prettier, ESLint, Astro check, HTML validation, link checks, Playwright, axe-core |
 | Hosting   | [GitHub Pages](https://pages.github.com/)                                         |
@@ -110,7 +110,7 @@ The container uses [`nginx/default.conf`](nginx/default.conf) to serve the brand
 
 ## SEO and Progressive Enhancement
 
-The site includes canonical, Open Graph, Twitter Card, and JSON-LD metadata, plus a generated sitemap, `robots.txt`, branded social preview, and custom 404 page. Primary content remains visible without JavaScript; reveal effects and the section-aware interactive desktop background are optional enhancements. Mobile, coarse-pointer, and reduced-motion environments keep a static background and do not load the WebGL runtime.
+The site includes canonical, Open Graph, Twitter Card, and JSON-LD metadata, plus a generated sitemap, `robots.txt`, branded social preview, and custom 404 page. Primary content remains visible without JavaScript. On suitable desktop devices, optional enhancements add subtle section reveals, section-aware background changes, natural smooth scrolling, one low-tilt featured card, and a calm Vanta.NET scene. Mobile, coarse-pointer, and reduced-motion environments remain mostly static and do not load the animation runtimes.
 
 ## License
 

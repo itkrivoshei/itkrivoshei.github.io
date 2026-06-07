@@ -75,67 +75,7 @@ const personSchema = {
     <NetworkBackground />
     <slot />
     <script>
-      const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-      const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-      let revealObserver: IntersectionObserver | undefined;
-      let revealFallbackId = 0;
-
-      const showRevealTargets = () => {
-        revealTargets.forEach((target) => {
-          target.classList.remove("reveal-pending");
-          target.classList.add("is-visible");
-        });
-      };
-
-      const disconnectRevealObserver = () => {
-        revealObserver?.disconnect();
-        revealObserver = undefined;
-        window.clearTimeout(revealFallbackId);
-      };
-
-      const syncPageMotion = () => {
-        disconnectRevealObserver();
-
-        if (reducedMotionQuery.matches || !("IntersectionObserver" in window)) {
-          showRevealTargets();
-          return;
-        }
-
-        revealObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) return;
-
-              entry.target.classList.remove("reveal-pending");
-              entry.target.classList.add("is-visible");
-              revealObserver?.unobserve(entry.target);
-            });
-          },
-          {
-            rootMargin: "0px 0px -8% 0px",
-            threshold: 0.08,
-          },
-        );
-
-        revealTargets.forEach((target, index) => {
-          if (target.getBoundingClientRect().top < window.innerHeight) {
-            target.classList.add("is-visible");
-            return;
-          }
-
-          const delay = target.dataset.reveal === "section" ? 80 : Math.min((index % 5) * 42, 168);
-          target.style.setProperty("--reveal-delay", `${delay}ms`);
-          target.classList.remove("is-visible");
-          target.classList.add("reveal-pending");
-          revealObserver?.observe(target);
-        });
-
-        revealFallbackId = window.setTimeout(showRevealTargets, 1800);
-      };
-
-      syncPageMotion();
-      reducedMotionQuery.addEventListener("change", syncPageMotion);
-      window.addEventListener("pagehide", disconnectRevealObserver);
+      import "../scripts/page-motion";
     </script>
   </body>
 </html>

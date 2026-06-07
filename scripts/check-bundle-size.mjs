@@ -12,6 +12,11 @@ const budgets = [
     limit: 8 * 1024,
     pattern: /^NetworkBackground\..+\.js$/,
   },
+  {
+    label: "lazy WebGL runtime",
+    limit: 510 * 1024,
+    pattern: /^vanta-three\..+\.js$/,
+  },
 ];
 const assets = await readdir(assetDirectory);
 

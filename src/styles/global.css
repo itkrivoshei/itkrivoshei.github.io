@@ -98,7 +98,7 @@
   --background-primary: #89b4fa;
   --background-secondary: #94e2d5;
   --background-tertiary: #a6e3a1;
-  --particle-filter: hue-rotate(0deg) saturate(1) brightness(1);
+  --network-filter: hue-rotate(0deg) saturate(0.9) brightness(0.92);
   position: fixed;
   inset: 0;
   z-index: 0;
@@ -116,33 +116,33 @@
   --background-primary: #94e2d5;
   --background-secondary: #a6e3a1;
   --background-tertiary: #89b4fa;
-  --particle-filter: hue-rotate(28deg) saturate(0.9) brightness(1);
+  --network-filter: hue-rotate(12deg) saturate(0.84) brightness(0.92);
 }
 
 .network-background[data-background-theme="skills"] {
   --background-primary: #89b4fa;
   --background-secondary: #74c7ec;
   --background-tertiary: #94e2d5;
-  --particle-filter: hue-rotate(-10deg) saturate(1.12) brightness(1);
+  --network-filter: hue-rotate(-8deg) saturate(1) brightness(0.94);
 }
 
 .network-background[data-background-theme="experience"] {
   --background-primary: #74c7ec;
   --background-secondary: #89b4fa;
   --background-tertiary: #94a3b8;
-  --particle-filter: hue-rotate(-22deg) saturate(0.78) brightness(0.94);
+  --network-filter: hue-rotate(-16deg) saturate(0.76) brightness(0.88);
 }
 
 .network-background[data-background-theme="projects"] {
   --background-primary: #a6e3a1;
   --background-secondary: #89b4fa;
   --background-tertiary: #94e2d5;
-  --particle-filter: hue-rotate(36deg) saturate(0.96) brightness(1);
+  --network-filter: hue-rotate(20deg) saturate(0.88) brightness(0.92);
 }
 
 .ambient-glow,
 .network-pattern,
-.network-particles,
+.network-effect,
 .cursor-spotlight,
 .background-noise,
 .background-vignette {
@@ -224,26 +224,26 @@
     22rem 22rem;
 }
 
-.network-particles {
+.network-effect {
   inset: 0;
   z-index: 2;
 }
 
-.network-particles canvas {
+.network-effect .vanta-canvas {
   display: block;
   position: absolute !important;
   inset: 0;
   width: 100% !important;
   height: 100% !important;
-  filter: var(--particle-filter);
+  filter: var(--network-filter);
   opacity: 0;
   transition:
     filter 1200ms ease,
-    opacity 700ms ease 120ms;
+    opacity 600ms ease;
 }
 
-.network-background[data-network-ready="true"] canvas {
-  opacity: 0.96;
+.network-background[data-network-ready="true"] .vanta-canvas {
+  opacity: 0.52;
 }
 
 .network-background[data-network-mode="static"] canvas {

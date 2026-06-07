@@ -1,69 +1,41 @@
-import type { Container, Engine, ISourceOptions, RangeValue } from "@tsparticles/engine";
 import type { BackgroundTheme } from "../types/background";
+import type { VantaNetEffect, VantaNetOptions } from "vanta/src/vanta.net.js";
 
 interface NetworkRuntimeConfig {
-  bubble?: {
-    distance: number;
-    opacity?: number;
-    size?: number;
-  };
-  clickEnabled: boolean;
-  clickModes: string[];
-  hoverModes: string[];
-  linkWarp: boolean;
-  moveDecay: RangeValue;
-  moveSpeed: RangeValue;
-  outMode: string;
-  particleCount: number;
-  refillCount: number;
-  repulse?: {
-    distance: number;
-    factor: number;
-    maxSpeed: number;
-    restore: {
-      delay: number;
-      enable: boolean;
-      follow: boolean;
-      speed: number;
-    };
-    speed: number;
-  };
-  targetParticles: number;
-  warp: boolean;
+  backgroundAlpha: number;
+  gyroControls: boolean;
+  maxDistance: number;
+  mouseControls: boolean;
+  points: number;
+  provider: "vanta-net";
+  spacing: number;
+  touchControls: boolean;
 }
 
-type NetworkContainer = Container & {
-  actualOptions: Container["actualOptions"] & {
-    interactivity?: {
-      events: {
-        onClick: {
-          enable: boolean;
-          mode: string | string[];
-        };
-        onHover: {
-          mode: string | string[];
-        };
-      };
-      modes: {
-        bubble?: NetworkRuntimeConfig["bubble"];
-        repulse?: NetworkRuntimeConfig["repulse"];
-      };
-    };
-    particles: Container["actualOptions"]["particles"] & {
-      links: {
-        warp: boolean;
-      };
-    };
-  };
+const networkOptions = {
+  backgroundAlpha: 0,
+  backgroundColor: 0x020617,
+  gyroControls: false,
+  maxDistance: 20,
+  mouseControls: true,
+  mouseEase: true,
+  points: 9,
+  scale: 1,
+  showDots: true,
+  spacing: 20,
+  touchControls: false,
+} satisfies Omit<VantaNetOptions, "THREE" | "color" | "el">;
+
+const themeColors: Record<BackgroundTheme, number> = {
+  hero: 0x89b4fa,
+  about: 0x94e2d5,
+  skills: 0x74c7ec,
+  experience: 0x89b4fa,
+  projects: 0xa6e3a1,
 };
 
-type ParticleEngineEvent = {
-  container?: Container;
-};
-
-const particleRefillDelay = 300;
 const background = document.querySelector<HTMLElement>("[data-network-background]");
-const particleLayer = background?.querySelector<HTMLElement>("[data-network-particles]");
+const networkLayer = background?.querySelector<HTMLElement>("[data-network-effect]");
 const spotlight = background?.querySelector<HTMLElement>("[data-cursor-spotlight]");
 const themeTargets = Array.from(
   document.querySelectorAll<HTMLElement>("[data-background-theme]:not([data-network-background])"),
@@ -71,13 +43,7 @@ const themeTargets = Array.from(
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 const desktopWidthQuery = window.matchMedia("(min-width: 1024px)");
 const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
-let container: Container | undefined;
-let engine: Engine | undefined;
-let particlePluginsLoaded = false;
-let particleRefillId = 0;
-let particleRefillListenerActive = false;
-let particleRefillCount = 0;
-let targetParticleCount = 0;
+let network: VantaNetEffect | undefined;
 let syncVersion = 0;
 let themeObserver: IntersectionObserver | undefined;
 let interactiveListenersActive = false;
@@ -87,208 +53,47 @@ let spotlightInitialized = false;
 const spotlightCurrent = { x: 0, y: 0 };
 const spotlightTarget = { x: 0, y: 0 };
 
-const createOptions = () =>
-  ({
-    autoPlay: true,
-    background: {
-      color: {
-        value: "transparent",
-      },
-    },
-    clear: true,
-    detectRetina: true,
-    fpsLimit: 30,
-    fullScreen: {
-      enable: false,
-    },
-    interactivity: {
-      detectsOn: "window",
-      events: {
-        onClick: {
-          enable: false,
-          mode: [],
-        },
-        onHover: {
-          enable: true,
-          mode: ["repulse", "bubble"],
-        },
-        resize: {
-          enable: true,
-        },
-      },
-      modes: {
-        bubble: {
-          distance: 82,
-          duration: 0.6,
-          opacity: 0.64,
-          size: 3.3,
-        },
-        repulse: {
-          distance: 165,
-          easing: "ease-out-quad",
-          factor: 6,
-          maxSpeed: 1.1,
-          restore: {
-            delay: 0,
-            enable: true,
-            follow: true,
-            speed: 0.03,
-          },
-          speed: 0.22,
-        },
-      },
-    },
-    particles: {
-      color: {
-        value: ["#89b4fa", "#89b4fa", "#89b4fa", "#94e2d5", "#a6e3a1"],
-      },
-      links: {
-        color: "#89b4fa",
-        distance: 148,
-        enable: true,
-        opacity: 0.24,
-        warp: false,
-        width: 1,
-      },
-      move: {
-        decay: 0,
-        direction: "none",
-        enable: true,
-        outModes: {
-          default: "destroy",
-        },
-        random: false,
-        speed: {
-          min: 0.06,
-          max: 0.18,
-        },
-        straight: false,
-        warp: false,
-      },
-      number: {
-        density: {
-          enable: true,
-          height: 720,
-          width: 1040,
-        },
-        value: 46,
-      },
-      opacity: {
-        value: {
-          min: 0.32,
-          max: 0.58,
-        },
-      },
-      shape: {
-        type: "circle",
-      },
-      size: {
-        value: {
-          min: 1.2,
-          max: 3,
-        },
-      },
-    },
-    pauseOnBlur: true,
-    pauseOnOutsideViewport: true,
-  }) satisfies ISourceOptions;
-
-const publishNetworkConfig = (activeContainer: NetworkContainer) => {
-  if (!background || activeContainer.destroyed) return;
-
-  const options = activeContainer.actualOptions;
-  const interactivity = options.interactivity;
-  const clickModes = interactivity?.events.onClick.mode ?? [];
-  const hoverModes = interactivity?.events.onHover.mode ?? [];
-  const config: NetworkRuntimeConfig = {
-    bubble: interactivity?.modes.bubble,
-    clickEnabled: interactivity?.events.onClick.enable ?? false,
-    clickModes: Array.isArray(clickModes) ? clickModes : [clickModes],
-    hoverModes: Array.isArray(hoverModes) ? hoverModes : [hoverModes],
-    linkWarp: options.particles.links.warp,
-    moveDecay: options.particles.move.decay,
-    moveSpeed: options.particles.move.speed,
-    outMode: String(options.particles.move.outModes.default),
-    particleCount: activeContainer.particles.count,
-    refillCount: particleRefillCount,
-    repulse: interactivity?.modes.repulse,
-    targetParticles: targetParticleCount,
-    warp: options.particles.move.warp,
-  };
-
-  background.setAttribute("data-network-config", JSON.stringify(config));
-};
-
-const clearParticleRefill = () => {
-  window.clearTimeout(particleRefillId);
-  particleRefillId = 0;
-};
-
-const handleParticleRemoved = (event?: ParticleEngineEvent) => {
-  const activeContainer = container;
-
-  if (
-    !activeContainer ||
-    activeContainer.destroyed ||
-    event?.container !== activeContainer ||
-    !shouldAnimate()
-  ) {
-    return;
-  }
-
-  clearParticleRefill();
-  particleRefillId = window.setTimeout(() => {
-    particleRefillId = 0;
-
-    if (container !== activeContainer || activeContainer.destroyed || !shouldAnimate()) {
-      return;
-    }
-
-    activeContainer.particles.setDensity();
-    particleRefillCount += 1;
-    publishNetworkConfig(activeContainer as NetworkContainer);
-  }, particleRefillDelay);
-};
-
-const stopParticleRefill = () => {
-  clearParticleRefill();
-
-  if (engine && particleRefillListenerActive) {
-    engine.removeEventListener("particleRemoved", handleParticleRemoved);
-    particleRefillListenerActive = false;
-  }
-
-  particleRefillCount = 0;
-  targetParticleCount = 0;
-};
-
-const startParticleRefill = (activeContainer: NetworkContainer) => {
-  stopParticleRefill();
-  activeContainer.particles.setDensity();
-  targetParticleCount = activeContainer.particles.count;
-  engine?.addEventListener("particleRemoved", handleParticleRemoved);
-  particleRefillListenerActive = Boolean(engine);
-};
-
-const destroyNetwork = () => {
-  stopParticleRefill();
-  container?.destroy();
-  container = undefined;
-  background?.removeAttribute("data-network-ready");
-  background?.removeAttribute("data-network-config");
-};
-
 const shouldAnimate = () =>
   Boolean(
     background &&
-    particleLayer &&
+    networkLayer &&
     !reducedMotionQuery.matches &&
     desktopWidthQuery.matches &&
     finePointerQuery.matches,
   );
 
+const publishNetworkConfig = () => {
+  if (!background) return;
+
+  const config: NetworkRuntimeConfig = {
+    backgroundAlpha: networkOptions.backgroundAlpha,
+    gyroControls: networkOptions.gyroControls,
+    maxDistance: networkOptions.maxDistance,
+    mouseControls: networkOptions.mouseControls,
+    points: networkOptions.points,
+    provider: "vanta-net",
+    spacing: networkOptions.spacing,
+    touchControls: networkOptions.touchControls,
+  };
+
+  background.setAttribute("data-network-config", JSON.stringify(config));
+  background.setAttribute("data-network-provider", config.provider);
+};
+
+const destroyNetwork = () => {
+  network?.destroy();
+  network = undefined;
+  networkLayer?.replaceChildren();
+  background?.removeAttribute("data-network-ready");
+  background?.removeAttribute("data-network-config");
+  background?.removeAttribute("data-network-provider");
+};
+
 const setBackgroundTheme = (theme: BackgroundTheme) => {
+  const color = themeColors[theme];
   background?.setAttribute("data-background-theme", theme);
+  background?.setAttribute("data-network-color", `#${color.toString(16).padStart(6, "0")}`);
+  network?.setOptions({ color });
 };
 
 const syncBackgroundTheme = () => {
@@ -429,7 +234,7 @@ const stopInteractiveListeners = () => {
 const syncNetwork = async () => {
   const currentVersion = ++syncVersion;
 
-  if (!background || !particleLayer || !shouldAnimate()) {
+  if (!background || !networkLayer || !shouldAnimate()) {
     destroyNetwork();
     background?.setAttribute("data-network-mode", "static");
     return;
@@ -437,70 +242,40 @@ const syncNetwork = async () => {
 
   background.setAttribute("data-network-mode", "animated");
 
-  if (container && !container.destroyed) {
-    return;
-  }
+  if (network) return;
 
   destroyNetwork();
 
   try {
-    const [
-      { tsParticles },
-      { loadBasic },
-      { loadExternalBubbleInteraction },
-      { loadExternalRepulseInteraction },
-      { loadParticlesLinksInteraction },
-      { loadEasingQuadPlugin },
-      { loadInteractivityPlugin },
-    ] = await Promise.all([
-      import("@tsparticles/engine"),
-      import("@tsparticles/basic"),
-      import("@tsparticles/interaction-external-bubble"),
-      import("@tsparticles/interaction-external-repulse"),
-      import("@tsparticles/interaction-particles-links"),
-      import("@tsparticles/plugin-easing-quad"),
-      import("@tsparticles/plugin-interactivity"),
+    const [{ default: createVantaNet }, THREE] = await Promise.all([
+      import("vanta/src/vanta.net.js"),
+      import("./vanta-three"),
     ]);
 
-    if (currentVersion !== syncVersion || !shouldAnimate()) {
-      return;
-    }
+    if (currentVersion !== syncVersion || !shouldAnimate()) return;
 
-    engine = tsParticles;
-
-    if (!particlePluginsLoaded) {
-      await Promise.all([loadBasic(engine), loadEasingQuadPlugin(engine)]);
-      await loadInteractivityPlugin(engine);
-      await Promise.all([
-        loadExternalBubbleInteraction(engine),
-        loadExternalRepulseInteraction(engine),
-        loadParticlesLinksInteraction(engine),
-      ]);
-      particlePluginsLoaded = true;
-    }
-
-    if (currentVersion !== syncVersion || !shouldAnimate() || !background) {
-      return;
-    }
-
-    const loadedContainer = await engine.load({
-      element: particleLayer,
-      id: "network-background",
-      options: createOptions(),
+    const loadedNetwork = createVantaNet({
+      ...networkOptions,
+      THREE,
+      color: themeColors.hero,
+      el: networkLayer,
     });
 
-    if (!loadedContainer || currentVersion !== syncVersion || !shouldAnimate()) {
-      loadedContainer?.destroy();
+    if (
+      currentVersion !== syncVersion ||
+      !shouldAnimate() ||
+      !networkLayer.querySelector(".vanta-canvas")
+    ) {
+      loadedNetwork.destroy();
       return;
     }
 
-    container = loadedContainer;
-    startParticleRefill(loadedContainer as NetworkContainer);
+    network = loadedNetwork;
+    publishNetworkConfig();
+    syncBackgroundTheme();
 
     window.requestAnimationFrame(() => {
-      if (container === loadedContainer && !loadedContainer.destroyed) {
-        const networkContainer = loadedContainer as NetworkContainer;
-        publishNetworkConfig(networkContainer);
+      if (network === loadedNetwork && shouldAnimate()) {
         background.setAttribute("data-network-ready", "true");
       }
     });
@@ -525,14 +300,23 @@ const syncVisibility = () => {
   if (document.hidden) hideSpotlight();
 };
 
+const handlePageShow = (event: PageTransitionEvent) => {
+  if (event.persisted) scheduleSync();
+};
+
+const handlePageHide = () => {
+  syncVersion += 1;
+  stopInteractiveListeners();
+  destroyNetwork();
+  background?.setAttribute("data-network-mode", "static");
+};
+
+setBackgroundTheme("hero");
 scheduleSync();
 syncVisibility();
 reducedMotionQuery.addEventListener("change", scheduleSync);
 desktopWidthQuery.addEventListener("change", scheduleSync);
 finePointerQuery.addEventListener("change", scheduleSync);
 document.addEventListener("visibilitychange", syncVisibility);
-window.addEventListener("pagehide", () => {
-  syncVersion += 1;
-  stopInteractiveListeners();
-  destroyNetwork();
-});
+window.addEventListener("pageshow", handlePageShow);
+window.addEventListener("pagehide", handlePageHide);

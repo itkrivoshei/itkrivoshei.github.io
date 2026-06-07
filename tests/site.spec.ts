@@ -32,11 +32,16 @@ test("keeps all content visible without JavaScript", async ({ browser }) => {
     "deploy engineering-site --target github-pages",
   );
   await expect(page.locator("[data-terminal-typewriter]")).toContainText("ready");
+  await expect(page.locator("[data-network-background]")).toHaveAttribute(
+    "data-network-mode",
+    "static",
+  );
+  await expect(page.locator(".network-pattern")).toBeVisible();
 
   await context.close();
 });
 
-test("does not initialize particles on mobile", async ({ page }) => {
+test("does not initialize the WebGL network on mobile", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   await page.waitForLoadState("networkidle");
@@ -44,31 +49,43 @@ test("does not initialize particles on mobile", async ({ page }) => {
   const background = page.locator("[data-network-background]");
 
   await expect(background.locator("canvas")).toHaveCount(0);
+  await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(background).toHaveAttribute("data-background-theme", "hero");
   await expect(background).toHaveAttribute("data-spotlight-active", "false");
   await expect(page.locator(".ambient-glow-primary")).toHaveCSS("animation-name", "none");
 
-  const particleRequests = await page.evaluate(() =>
+  const networkRequests = await page.evaluate(() =>
     performance
       .getEntriesByType("resource")
       .map(({ name }) => name)
-      .filter((name) => /(Container|MovePlugin|InteractivityPlugin|LinkInstance)/.test(name)),
+      .filter((name) => /(?:vanta(?:\.net|-three)|three\.module)/i.test(name)),
   );
 
-  expect(particleRequests).toEqual([]);
+  expect(networkRequests).toEqual([]);
 });
 
-test("does not initialize particles when reduced motion is enabled", async ({ page }) => {
+test("does not initialize the WebGL network when reduced motion is enabled", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
+  await page.waitForLoadState("networkidle");
 
   const background = page.locator("[data-network-background]");
 
   await expect(background.locator("canvas")).toHaveCount(0);
+  await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(background).toHaveAttribute("data-background-theme", "hero");
   await expect(background).toHaveAttribute("data-spotlight-active", "false");
   await expect(page.locator(".ambient-glow-primary")).toHaveCSS("animation-name", "none");
   await expect(page.getByRole("heading", { level: 2, name: "Experience" })).toBeVisible();
+
+  const networkRequests = await page.evaluate(() =>
+    performance
+      .getEntriesByType("resource")
+      .map(({ name }) => name)
+      .filter((name) => /(?:vanta(?:\.net|-three)|three\.module)/i.test(name)),
+  );
+
+  expect(networkRequests).toEqual([]);
 });
 
 test("runs the desktop background system and destroys it on mobile", async ({ page }) => {
@@ -91,33 +108,16 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   );
 
   expect(networkConfig).toMatchObject({
-    clickEnabled: false,
-    clickModes: [],
-    hoverModes: ["repulse", "bubble"],
-    linkWarp: false,
-    moveDecay: 0,
-    moveSpeed: {
-      max: 0.18,
-      min: 0.06,
-    },
-    outMode: "destroy",
-    repulse: {
-      distance: 165,
-      factor: 6,
-      maxSpeed: 1.1,
-      restore: {
-        delay: 0,
-        enable: true,
-        follow: true,
-        speed: 0.03,
-      },
-      speed: 0.22,
-    },
-    warp: false,
+    backgroundAlpha: 0,
+    gyroControls: false,
+    maxDistance: 20,
+    mouseControls: true,
+    points: 9,
+    provider: "vanta-net",
+    spacing: 20,
+    touchControls: false,
   });
-  expect(networkConfig.hoverModes).not.toContain("grab");
-  expect(networkConfig.particleCount).toBeGreaterThan(0);
-  expect(networkConfig.targetParticles).toBe(networkConfig.particleCount);
+  await expect(background).toHaveAttribute("data-network-provider", "vanta-net");
 
   await page.mouse.move(160, 180);
   await expect(background).toHaveAttribute("data-spotlight-active", "true");
@@ -133,6 +133,10 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   });
   await expect(background).toHaveAttribute("data-spotlight-active", "false");
 
+  await background.locator(".vanta-canvas").evaluate((canvas) => {
+    canvas.setAttribute("data-smoke-canvas", "stable");
+  });
+
   for (const [x, y] of [
     [1, 120],
     [1, 500],
@@ -146,29 +150,12 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
     [1080, 999],
   ]) {
     await page.mouse.move(x, y);
-    await page.waitForTimeout(180);
+    await page.waitForTimeout(80);
   }
   await page.mouse.move(720, 500);
 
-  await expect
-    .poll(async () => {
-      const config = await background.evaluate((element) =>
-        JSON.parse(element.getAttribute("data-network-config") ?? "{}"),
-      );
-
-      return config.refillCount;
-    })
-    .toBeGreaterThan(0);
-
-  await expect
-    .poll(async () => {
-      const config = await background.evaluate((element) =>
-        JSON.parse(element.getAttribute("data-network-config") ?? "{}"),
-      );
-
-      return config.particleCount;
-    })
-    .toBeGreaterThanOrEqual(networkConfig.targetParticles);
+  await expect(background.locator(".vanta-canvas")).toHaveCount(1);
+  await expect(background.locator(".vanta-canvas")).toHaveAttribute("data-smoke-canvas", "stable");
 
   await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
 
@@ -178,13 +165,25 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
       .evaluate((element) => element.scrollIntoView({ block: "center" }));
     await expect(background).toHaveAttribute("data-background-theme", theme);
   }
+  await expect(background).toHaveAttribute("data-network-color", "#a6e3a1");
 
   await page.setViewportSize({ width: 800, height: 1000 });
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(background).not.toHaveAttribute("data-network-config");
+  await expect(background).not.toHaveAttribute("data-network-provider");
   await expect(background).toHaveAttribute("data-background-theme", "hero");
   await expect(background).toHaveAttribute("data-spotlight-active", "false");
+
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await expect(background.locator(".vanta-canvas")).toHaveCount(1);
+  await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pagehide")));
+  await expect(background.locator("canvas")).toHaveCount(0);
+  await expect(background).toHaveAttribute("data-network-mode", "static");
+  await page.evaluate(() =>
+    window.dispatchEvent(new PageTransitionEvent("pageshow", { persisted: true })),
+  );
+  await expect(background.locator(".vanta-canvas")).toHaveCount(1);
   expect(pageErrors).toEqual([]);
 });
 

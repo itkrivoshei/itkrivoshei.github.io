@@ -7,27 +7,33 @@
   <div class="ambient-glow"></div>
   <div class="background-grid"></div>
   <div class="network-effect" data-network-effect></div>
+  <div class="background-depth"></div>
   <div class="background-noise"></div>
   <div class="background-vignette"></div>
 </div>
 
 <style is:global>
+  :root {
+    --scroll-depth: 0;
+  }
+
   .background-grid {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
     background-image:
-      linear-gradient(rgba(137, 180, 250, 0.052) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(137, 180, 250, 0.052) 1px, transparent 1px),
-      linear-gradient(rgba(148, 163, 184, 0.024) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(148, 163, 184, 0.024) 1px, transparent 1px);
+      linear-gradient(rgba(137, 180, 250, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(137, 180, 250, 0.04) 1px, transparent 1px),
+      linear-gradient(rgba(148, 163, 184, 0.014) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.014) 1px, transparent 1px);
     background-size:
       56px 56px,
       56px 56px,
       14px 14px,
       14px 14px;
-    mask-image: radial-gradient(circle at 50% 42%, black 0%, black 58%, transparent 90%);
+    opacity: calc(0.92 - var(--scroll-depth) * 0.28);
+    mask-image: radial-gradient(circle at 50% 42%, black 0%, black 60%, transparent 90%);
   }
 
   .network-background .ambient-glow {
@@ -39,31 +45,40 @@
 
   .network-background .network-effect {
     z-index: 1;
-    pointer-events: auto;
+    pointer-events: none;
   }
 
-  .network-background .network-effect .vanta-canvas {
-    filter: saturate(0.82) brightness(0.86);
-    pointer-events: auto;
-    transition: opacity 1100ms var(--ease-reveal);
-  }
-
-  .network-background[data-network-ready="true"] .vanta-canvas {
-    opacity: 0.42;
+  .background-depth {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(2, 6, 23, 0),
+        rgba(2, 6, 23, calc(var(--scroll-depth) * 0.34))
+      ),
+      radial-gradient(
+        circle at 50% 42%,
+        transparent 34%,
+        rgba(1, 4, 13, calc(var(--scroll-depth) * 0.22)) 76%,
+        rgba(1, 4, 13, calc(0.08 + var(--scroll-depth) * 0.28))
+      );
   }
 
   .network-background .background-noise {
-    z-index: 2;
-    opacity: 0.018;
+    z-index: 3;
+    opacity: 0.016;
   }
 
   .network-background .background-vignette {
-    z-index: 3;
+    z-index: 4;
     background: radial-gradient(
       circle at 50% 42%,
-      transparent 28%,
-      rgba(1, 4, 13, 0.16) 68%,
-      rgba(1, 4, 13, 0.56)
+      transparent 30%,
+      rgba(1, 4, 13, calc(0.14 + var(--scroll-depth) * 0.12)) 68%,
+      rgba(1, 4, 13, calc(0.54 + var(--scroll-depth) * 0.18))
     );
   }
 
@@ -74,11 +89,7 @@
         64px 64px,
         16px 16px,
         16px 16px;
-      opacity: 0.7;
-    }
-
-    .network-background .network-effect {
-      pointer-events: none;
+      opacity: 0.64;
     }
   }
 </style>

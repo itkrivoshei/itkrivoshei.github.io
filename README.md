@@ -30,17 +30,17 @@ Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`
 
 ## Tech Stack
 
-| Area      | Tools                                                                                                                                                                                                 |
-| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Framework | [Astro 6](https://astro.build/)                                                                                                                                                                       |
-| Language  | [TypeScript](https://www.typescriptlang.org/)                                                                                                                                                         |
-| Styling   | [Tailwind CSS 4](https://tailwindcss.com/), custom glass surfaces                                                                                                                                     |
-| Effects   | [Custom canvas network background](src/scripts/network-background.ts), [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/), [Lenis](https://lenis.darkroom.engineering/)            |
-| Runtime   | [Node.js 22](https://nodejs.org/), [npm](https://www.npmjs.com/)                                                                                                                                      |
+| Area      | Tools                                                                                                                                                                                                |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework | [Astro 6](https://astro.build/)                                                                                                                                                                      |
+| Language  | [TypeScript](https://www.typescriptlang.org/)                                                                                                                                                        |
+| Styling   | [Tailwind CSS 4](https://tailwindcss.com/), custom glass surfaces                                                                                                                                    |
+| Effects   | [Custom canvas network background](src/scripts/network-background.ts), [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/), [Lenis](https://lenis.darkroom.engineering/)           |
+| Runtime   | [Node.js 22](https://nodejs.org/), [npm](https://www.npmjs.com/)                                                                                                                                     |
 | Checks    | [Prettier](https://prettier.io/), [ESLint](https://eslint.org/), Astro check, HTML validation, link checks, [Playwright](https://playwright.dev/), [axe-core](https://github.com/dequelabs/axe-core) |
-| Hosting   | [GitHub Pages](https://pages.github.com/)                                                                                                                                                             |
-| Container | [Docker](https://www.docker.com/), [nginx](https://nginx.org/)                                                                                                                                        |
-| Updates   | [Dependabot](.github/dependabot.yml)                                                                                                                                                                  |
+| Hosting   | [GitHub Pages](https://pages.github.com/)                                                                                                                                                            |
+| Container | [Docker](https://www.docker.com/), [nginx](https://nginx.org/)                                                                                                                                       |
+| Updates   | [Dependabot](.github/dependabot.yml)                                                                                                                                                                 |
 
 ## Local Workflow
 

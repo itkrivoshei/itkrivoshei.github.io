@@ -48,12 +48,22 @@ let targetX = 0;
 let targetY = 0;
 
 const canAnimate = () =>
-  Boolean(background && layer && !document.hidden && !reducedMotion.matches && desktop.matches && finePointer.matches);
+  Boolean(
+    background &&
+    layer &&
+    !document.hidden &&
+    !reducedMotion.matches &&
+    desktop.matches &&
+    finePointer.matches,
+  );
 
 const syncScrollDepth = () => {
   scrollFrame = 0;
   const maxScroll = Math.max(1, root.scrollHeight - window.innerHeight);
-  root.style.setProperty("--scroll-depth", Math.min(1, Math.max(0, window.scrollY / maxScroll)).toFixed(3));
+  root.style.setProperty(
+    "--scroll-depth",
+    Math.min(1, Math.max(0, window.scrollY / maxScroll)).toFixed(3),
+  );
 };
 
 const scheduleScrollDepth = () => {
@@ -132,7 +142,8 @@ const draw = () => {
     const dx = particle[0] - pointerX;
     const dy = particle[1] - pointerY;
     const distance = pointerActive ? Math.hypot(dx, dy) : Infinity;
-    const force = distance > 0 && distance < REPULSE_RADIUS ? (1 - distance / REPULSE_RADIUS) ** 2 : 0;
+    const force =
+      distance > 0 && distance < REPULSE_RADIUS ? (1 - distance / REPULSE_RADIUS) ** 2 : 0;
     const targetOffsetX = force ? (dx / distance) * force * REPULSE_STRENGTH : 0;
     const targetOffsetY = force ? (dy / distance) * force * REPULSE_STRENGTH : 0;
 
@@ -157,7 +168,8 @@ const draw = () => {
         ? Math.hypot((first[0] + second[0]) / 2 - pointerX, (first[1] + second[1]) / 2 - pointerY)
         : Infinity;
       const cursorBoost = Math.max(0, 1 - midpointDistance / (REPULSE_RADIUS * 1.55));
-      const opacity = (1 - distance / LINK_DISTANCE) * (LINE_BASE_OPACITY + cursorBoost * LINE_CURSOR_BOOST);
+      const opacity =
+        (1 - distance / LINK_DISTANCE) * (LINE_BASE_OPACITY + cursorBoost * LINE_CURSOR_BOOST);
 
       context.beginPath();
       context.moveTo(first[0], first[1]);
@@ -169,7 +181,9 @@ const draw = () => {
   }
 
   for (const point of points) {
-    const cursorDistance = pointerActive ? Math.hypot(point[0] - pointerX, point[1] - pointerY) : Infinity;
+    const cursorDistance = pointerActive
+      ? Math.hypot(point[0] - pointerX, point[1] - pointerY)
+      : Infinity;
     const cursorBoost = Math.max(0, 1 - cursorDistance / REPULSE_RADIUS);
 
     context.beginPath();

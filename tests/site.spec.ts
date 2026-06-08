@@ -39,6 +39,7 @@ test("keeps all content visible without JavaScript", async ({ browser }) => {
     "data-network-mode",
     "static",
   );
+  await expect(page.locator(".background-grid")).toHaveCount(1);
   await expect(page.locator(".network-pattern")).toHaveCount(0);
 
   await context.close();
@@ -55,6 +56,7 @@ test("does not initialize the WebGL network on mobile", async ({ page }) => {
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "static");
   await expect(page.locator(".ambient-glow")).toHaveCSS("animation-name", "none");
+  await expect(page.locator(".background-grid")).toHaveCount(1);
 
   const networkRequests = await page.evaluate(() =>
     performance
@@ -81,6 +83,7 @@ test("does not initialize the WebGL network when reduced motion is enabled", asy
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "static");
   await expect(page.locator(".ambient-glow")).toHaveCSS("animation-name", "none");
+  await expect(page.locator(".background-grid")).toHaveCount(1);
   await expect(page.getByRole("heading", { level: 2, name: "Experience" })).toBeVisible();
 
   const networkRequests = await page.evaluate(() =>
@@ -121,16 +124,17 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   expect(networkConfig).toMatchObject({
     backgroundAlpha: 0,
     gyroControls: false,
-    maxDistance: 17,
-    mouseControls: false,
-    points: 6,
+    maxDistance: 20,
+    mouseControls: true,
+    points: 7,
     provider: "vanta-net",
-    spacing: 26,
+    spacing: 24,
     touchControls: false,
   });
   await expect(background).toHaveAttribute("data-network-provider", "vanta-net");
 
   await expect(page.locator("[data-cursor-spotlight]")).toHaveCount(0);
+  await expect(page.locator(".background-grid")).toHaveCount(1);
   await expect(page.locator(".network-pattern")).toHaveCount(0);
   await expect(page.locator("[data-background-theme]")).toHaveCount(0);
 
@@ -206,7 +210,10 @@ test("keeps project card links clickable and section containers visible", async 
   ).toBe("none");
 
   for (const layer of await page.locator("[data-network-background] > div").all()) {
-    await expect(layer).toHaveCSS("pointer-events", "none");
+    const isNetworkEffect = await layer.evaluate((element) =>
+      element.classList.contains("network-effect"),
+    );
+    await expect(layer).toHaveCSS("pointer-events", isNetworkEffect ? "auto" : "none");
   }
 
   for (const link of [repositoryLink, livePreviewLink]) {

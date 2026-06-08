@@ -15,12 +15,24 @@ interface Particle {
   vx: number;
   vy: number;
   radius: number;
+  offsetX: number;
+  offsetY: number;
+  offsetVX: number;
+  offsetVY: number;
 }
 
 interface PointerState {
   active: boolean;
+  targetX: number;
+  targetY: number;
   x: number;
   y: number;
+}
+
+interface RenderedParticle {
+  x: number;
+  y: number;
+  radius: number;
 }
 
 interface NetworkRuntime {
@@ -30,13 +42,20 @@ interface NetworkRuntime {
 
 const networkOptions = {
   backgroundAlpha: 0,
+  damping: 0.88,
   gyroControls: false,
-  linkDistance: 150,
+  linkDistance: 230,
+  lineBaseOpacity: 0.22,
+  lineCursorBoost: 0.18,
   mouseControls: true,
-  pointCount: 82,
-  repulseRadius: 132,
-  repulseStrength: 58,
-  speed: 0.22,
+  nodeBaseOpacity: 0.54,
+  nodeCursorBoost: 0.18,
+  pointCount: 124,
+  pointerLerp: 0.14,
+  repulseRadius: 205,
+  repulseStrength: 26,
+  speed: 0.13,
+  spring: 0.035,
   touchControls: false,
 };
 
@@ -47,6 +66,8 @@ const desktopWidthQuery = window.matchMedia("(min-width: 1024px)");
 const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
 let network: NetworkRuntime | undefined;
 let syncVersion = 0;
+
+networkLayer?.style.setProperty("pointer-events", "none");
 
 const shouldAnimate = () =>
   Boolean(
@@ -77,42 +98,65 @@ const publishNetworkConfig = () => {
 };
 
 const createParticles = (width: number, height: number) => {
-  const areaFactor = Math.round((width * height) / 18_000);
-  const count = Math.min(networkOptions.pointCount, Math.max(58, areaFactor));
+  const areaFactor = Math.round((width * height) / 14_000);
+  const count = Math.min(networkOptions.pointCount, Math.max(88, areaFactor));
+  const columns = 14;
+  const rows = Math.ceil(count / columns);
 
   return Array.from({ length: count }, (_, index): Particle => {
-    const column = index % 12;
-    const row = Math.floor(index / 12);
-    const jitterX = Math.random() * 64 - 32;
-    const jitterY = Math.random() * 64 - 32;
+    const column = index % columns;
+    const row = Math.floor(index / columns);
+    const jitterX = Math.random() * 78 - 39;
+    const jitterY = Math.random() * 78 - 39;
 
     return {
-      x: ((column + 0.5) / 12) * width + jitterX,
-      y: ((row + 0.5) / Math.ceil(count / 12)) * height + jitterY,
+      x: ((column + 0.5) / columns) * width + jitterX,
+      y: ((row + 0.5) / rows) * height + jitterY,
       vx: (Math.random() - 0.5) * networkOptions.speed,
       vy: (Math.random() - 0.5) * networkOptions.speed,
-      radius: 0.9 + Math.random() * 1.2,
+      radius: 1.15 + Math.random() * 1.55,
+      offsetX: 0,
+      offsetY: 0,
+      offsetVX: 0,
+      offsetVY: 0,
     };
   });
 };
 
-const getRepulsedPoint = (particle: Particle, pointer: PointerState) => {
-  if (!pointer.active) return particle;
+const syncPointer = (pointer: PointerState) => {
+  if (!pointer.active) return;
+
+  pointer.x += (pointer.targetX - pointer.x) * networkOptions.pointerLerp;
+  pointer.y += (pointer.targetY - pointer.y) * networkOptions.pointerLerp;
+};
+
+const getTargetOffset = (particle: Particle, pointer: PointerState) => {
+  if (!pointer.active) return { x: 0, y: 0 };
 
   const dx = particle.x - pointer.x;
   const dy = particle.y - pointer.y;
   const distance = Math.hypot(dx, dy);
 
-  if (distance <= 0 || distance >= networkOptions.repulseRadius) return particle;
+  if (distance <= 0 || distance >= networkOptions.repulseRadius) return { x: 0, y: 0 };
 
   const force = (1 - distance / networkOptions.repulseRadius) ** 2;
   const offset = force * networkOptions.repulseStrength;
 
   return {
-    ...particle,
-    x: particle.x + (dx / distance) * offset,
-    y: particle.y + (dy / distance) * offset,
+    x: (dx / distance) * offset,
+    y: (dy / distance) * offset,
   };
+};
+
+const updateParticleOffset = (particle: Particle, pointer: PointerState) => {
+  const targetOffset = getTargetOffset(particle, pointer);
+
+  particle.offsetVX += (targetOffset.x - particle.offsetX) * networkOptions.spring;
+  particle.offsetVY += (targetOffset.y - particle.offsetY) * networkOptions.spring;
+  particle.offsetVX *= networkOptions.damping;
+  particle.offsetVY *= networkOptions.damping;
+  particle.offsetX += particle.offsetVX;
+  particle.offsetY += particle.offsetVY;
 };
 
 const createNetwork = (): NetworkRuntime | undefined => {
@@ -131,7 +175,7 @@ const createNetwork = (): NetworkRuntime | undefined => {
     inset: "0",
     width: "100%",
     height: "100%",
-    filter: "saturate(0.9) brightness(0.92)",
+    filter: "saturate(0.92) brightness(0.94)",
     opacity: "0",
     pointerEvents: "none",
     transition: "opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1)",
@@ -140,6 +184,8 @@ const createNetwork = (): NetworkRuntime | undefined => {
 
   const pointer: PointerState = {
     active: false,
+    targetX: 0,
+    targetY: 0,
     x: 0,
     y: 0,
   };
@@ -166,9 +212,14 @@ const createNetwork = (): NetworkRuntime | undefined => {
   };
 
   const setPointer = (event: PointerEvent) => {
+    if (!pointer.active) {
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+    }
+
     pointer.active = true;
-    pointer.x = event.clientX;
-    pointer.y = event.clientY;
+    pointer.targetX = event.clientX;
+    pointer.targetY = event.clientY;
   };
 
   const clearPointer = () => {
@@ -176,9 +227,10 @@ const createNetwork = (): NetworkRuntime | undefined => {
   };
 
   const draw = () => {
+    syncPointer(pointer);
     context.clearRect(0, 0, width, height);
 
-    const renderedParticles = particles.map((particle) => {
+    const renderedParticles: RenderedParticle[] = particles.map((particle) => {
       particle.x += particle.vx;
       particle.y += particle.vy;
 
@@ -187,7 +239,13 @@ const createNetwork = (): NetworkRuntime | undefined => {
       if (particle.y < -20) particle.y = height + 20;
       if (particle.y > height + 20) particle.y = -20;
 
-      return getRepulsedPoint(particle, pointer);
+      updateParticleOffset(particle, pointer);
+
+      return {
+        x: particle.x + particle.offsetX,
+        y: particle.y + particle.offsetY,
+        radius: particle.radius,
+      };
     });
 
     for (let i = 0; i < renderedParticles.length; i += 1) {
@@ -201,8 +259,10 @@ const createNetwork = (): NetworkRuntime | undefined => {
         const midpointDistance = pointer.active
           ? Math.hypot((first.x + second.x) / 2 - pointer.x, (first.y + second.y) / 2 - pointer.y)
           : Infinity;
-        const cursorBoost = Math.max(0, 1 - midpointDistance / (networkOptions.repulseRadius * 1.6));
-        const opacity = (1 - distance / networkOptions.linkDistance) * (0.16 + cursorBoost * 0.12);
+        const cursorBoost = Math.max(0, 1 - midpointDistance / (networkOptions.repulseRadius * 1.55));
+        const opacity =
+          (1 - distance / networkOptions.linkDistance) *
+          (networkOptions.lineBaseOpacity + cursorBoost * networkOptions.lineCursorBoost);
 
         context.beginPath();
         context.moveTo(first.x, first.y);
@@ -219,7 +279,10 @@ const createNetwork = (): NetworkRuntime | undefined => {
 
       context.beginPath();
       context.arc(particle.x, particle.y, particle.radius + cursorBoost * 0.55, 0, Math.PI * 2);
-      context.fillStyle = `rgba(203, 213, 225, ${(0.42 + cursorBoost * 0.24).toFixed(3)})`;
+      context.fillStyle = `rgba(226, 232, 240, ${(
+        networkOptions.nodeBaseOpacity +
+        cursorBoost * networkOptions.nodeCursorBoost
+      ).toFixed(3)})`;
       context.fill();
     }
 
@@ -286,7 +349,7 @@ const syncNetwork = () => {
   window.requestAnimationFrame(() => {
     if (network === loadedNetwork && shouldAnimate()) {
       background.setAttribute("data-network-ready", "true");
-      loadedNetwork.canvas.style.opacity = "0.46";
+      loadedNetwork.canvas.style.opacity = "0.58";
     }
   });
 };

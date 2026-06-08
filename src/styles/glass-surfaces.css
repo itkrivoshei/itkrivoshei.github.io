@@ -1,0 +1,113 @@
+:root {
+  --panel: rgba(2, 6, 23, 0.16);
+  --panel-strong: rgba(15, 23, 42, 0.14);
+  --line: rgba(148, 163, 184, 0.14);
+}
+
+.hero-card,
+.section-block,
+.footer-block,
+.terminal-card,
+.content-card,
+.timeline-card {
+  border-color: var(--line);
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.18), rgba(2, 6, 23, 0.06)),
+    rgba(2, 6, 23, 0.12);
+  box-shadow:
+    0 24px 80px rgba(1, 4, 13, 0.34),
+    0 0 0 1px rgba(137, 180, 250, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.hero-card,
+.section-block,
+.footer-block,
+.terminal-card {
+  backdrop-filter: blur(10px) saturate(125%);
+  -webkit-backdrop-filter: blur(10px) saturate(125%);
+}
+
+.hero-card {
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.2), rgba(2, 6, 23, 0.06)),
+    rgba(2, 6, 23, 0.12);
+}
+
+.section-about,
+.section-skills,
+.section-experience,
+.section-projects {
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.12), rgba(2, 6, 23, 0.04)),
+    rgba(2, 6, 23, 0.08);
+}
+
+.section-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 30%),
+    radial-gradient(circle at 12% 0%, rgba(137, 180, 250, 0.045), transparent 34rem);
+  opacity: 0.34;
+}
+
+.content-card,
+.timeline-card {
+  background:
+    linear-gradient(145deg, rgba(15, 23, 42, 0.2), rgba(2, 6, 23, 0.08)),
+    rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+
+.terminal-card {
+  background:
+    linear-gradient(145deg, rgba(3, 7, 18, 0.36), rgba(0, 0, 0, 0.22)),
+    rgba(0, 0, 0, 0.16);
+}
+
+.skill-card:hover,
+.project-card:hover,
+.timeline-card:hover {
+  border-color: rgba(var(--surface-glow-rgb), 0.4);
+  background:
+    linear-gradient(145deg, rgba(15, 23, 42, 0.24), rgba(2, 6, 23, 0.1)),
+    rgba(15, 23, 42, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(var(--surface-glow-rgb), 0.12),
+    0 24px 70px rgba(2, 6, 23, 0.38),
+    0 0 34px rgba(var(--surface-glow-rgb), 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.section-block:hover {
+  border-color: rgba(var(--link-rgb), 0.32);
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.16), rgba(2, 6, 23, 0.06)),
+    rgba(2, 6, 23, 0.12);
+  box-shadow:
+    0 30px 92px rgba(1, 4, 13, 0.42),
+    0 0 42px rgba(var(--link-rgb), 0.08),
+    0 0 0 1px rgba(var(--link-rgb), 0.075),
+    inset 0 1px 0 rgba(255, 255, 255, 0.075);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .section-block:hover {
+    background:
+      linear-gradient(135deg, rgba(15, 23, 42, 0.12), rgba(2, 6, 23, 0.04)),
+      rgba(2, 6, 23, 0.08);
+  }
+
+  .skill-card:hover,
+  .project-card:hover,
+  .timeline-card:hover {
+    background:
+      linear-gradient(145deg, rgba(15, 23, 42, 0.2), rgba(2, 6, 23, 0.08)),
+      rgba(15, 23, 42, 0.12);
+  }
+}

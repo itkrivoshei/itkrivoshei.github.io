@@ -114,26 +114,13 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   });
   await expect(background.locator(".repulse-network-canvas")).toHaveCount(1);
   await expect(background).toHaveAttribute("data-network-ready", "true");
+  await expect(background).toHaveAttribute("data-network-mode", "animated");
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "desktop");
   await expect(page.locator("body")).toHaveAttribute("data-lenis-ready", "true");
   await expect(page.locator("body")).toHaveAttribute("data-scrolltrigger-ready", "true");
 
-  const networkConfig = await background.evaluate((element) =>
-    JSON.parse(element.getAttribute("data-network-config") ?? "{}"),
-  );
-
-  expect(networkConfig).toMatchObject({
-    backgroundAlpha: 0,
-    gyroControls: false,
-    linkDistance: 230,
-    mouseControls: true,
-    pointCount: 124,
-    provider: "canvas-repulse-network",
-    repulseRadius: 205,
-    touchControls: false,
-  });
-  await expect(background).toHaveAttribute("data-network-provider", "canvas-repulse-network");
-
+  await expect(background).not.toHaveAttribute("data-network-config");
+  await expect(background).not.toHaveAttribute("data-network-provider");
   await expect(page.locator("[data-cursor-spotlight]")).toHaveCount(0);
   await expect(page.locator(".background-grid")).toHaveCount(1);
   await expect(page.locator(".network-pattern")).toHaveCount(0);
@@ -169,8 +156,7 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await page.setViewportSize({ width: 800, height: 1000 });
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
-  await expect(background).not.toHaveAttribute("data-network-config");
-  await expect(background).not.toHaveAttribute("data-network-provider");
+  await expect(background).not.toHaveAttribute("data-network-ready");
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "static");
   await expect(page.locator("body")).not.toHaveAttribute("data-lenis-ready");
 
@@ -181,9 +167,7 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(page.locator("body")).not.toHaveAttribute("data-lenis-ready");
-  await page.evaluate(() =>
-    window.dispatchEvent(new PageTransitionEvent("pageshow", { persisted: true })),
-  );
+  await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pageshow")));
   await expect(background.locator(".repulse-network-canvas")).toHaveCount(1);
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "desktop");
   expect(pageErrors).toEqual([]);

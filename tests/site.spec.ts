@@ -40,8 +40,6 @@ test("keeps all content visible without JavaScript", async ({ browser }) => {
     "static",
   );
   await expect(page.locator(".network-pattern")).toHaveCount(0);
-  await expect(page.locator("[data-atropos-terminal]")).toBeVisible();
-  await expect(page.locator(".atropos-shadow")).toHaveCount(0);
 
   await context.close();
 });
@@ -56,8 +54,6 @@ test("does not initialize the WebGL network on mobile", async ({ page }) => {
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "static");
-  await expect(page.locator("[data-atropos-terminal]")).not.toHaveAttribute("data-atropos-ready");
-  await expect(page.locator(".atropos-shadow")).toHaveCount(0);
   await expect(page.locator(".ambient-glow")).toHaveCSS("animation-name", "none");
 
   const networkRequests = await page.evaluate(() =>
@@ -65,7 +61,7 @@ test("does not initialize the WebGL network on mobile", async ({ page }) => {
       .getEntriesByType("resource")
       .map(({ name }) => name)
       .filter((name) =>
-        /(?:vanta(?:\.net|-three)|three\.module|ScrollTrigger|lenis|atropos|\/index\.[^/]+\.js$)/i.test(
+        /(?:vanta(?:\.net|-three)|three\.module|ScrollTrigger|lenis|\/index\.[^/]+\.js$)/i.test(
           name,
         ),
       ),
@@ -84,8 +80,6 @@ test("does not initialize the WebGL network when reduced motion is enabled", asy
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "static");
-  await expect(page.locator("[data-atropos-terminal]")).not.toHaveAttribute("data-atropos-ready");
-  await expect(page.locator(".atropos-shadow")).toHaveCount(0);
   await expect(page.locator(".ambient-glow")).toHaveCSS("animation-name", "none");
   await expect(page.getByRole("heading", { level: 2, name: "Experience" })).toBeVisible();
 
@@ -94,9 +88,7 @@ test("does not initialize the WebGL network when reduced motion is enabled", asy
       .getEntriesByType("resource")
       .map(({ name }) => name)
       .filter((name) =>
-        /(?:vanta(?:\.net|-three)|three\.module|ScrollTrigger|lenis|atropos|\/index\.[^/]+\.js$)/i.test(
-          name,
-        ),
+        /(?:vanta(?:\.net|-three)|three\.module|ScrollTrigger|leni
       ),
   );
 
@@ -139,11 +131,6 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await expect(page.locator("[data-cursor-spotlight]")).toHaveCount(0);
   await expect(page.locator(".network-pattern")).toHaveCount(0);
   await expect(page.locator("[data-background-theme]")).toHaveCount(0);
-  await expect(page.locator("[data-atropos-card]")).toHaveCount(0);
-  const terminalCard = page.locator("[data-atropos-terminal]");
-  await expect(terminalCard).toHaveCount(1);
-  await expect(terminalCard).toHaveAttribute("data-atropos-ready", "true");
-  await expect(terminalCard.locator(".atropos-shadow")).toHaveCount(0);
 
   await background.locator(".vanta-canvas").evaluate((canvas) => {
     canvas.setAttribute("data-smoke-canvas", "stable");
@@ -169,20 +156,6 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await expect(background.locator(".vanta-canvas")).toHaveCount(1);
   await expect(background.locator(".vanta-canvas")).toHaveAttribute("data-smoke-canvas", "stable");
 
-  const atroposRotate = terminalCard.locator(".atropos-rotate");
-  const firstAtroposTransform = await atroposRotate.evaluate(
-    (element) => getComputedStyle(element).transform,
-  );
-  const terminalCardBox = await terminalCard.boundingBox();
-  expect(terminalCardBox).not.toBeNull();
-  await page.mouse.move(
-    terminalCardBox!.x + terminalCardBox!.width * 0.72,
-    terminalCardBox!.y + terminalCardBox!.height * 0.28,
-  );
-  await expect
-    .poll(() => atroposRotate.evaluate((element) => getComputedStyle(element).transform))
-    .not.toBe(firstAtroposTransform);
-
   await page.setViewportSize({ width: 800, height: 1000 });
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
@@ -190,24 +163,19 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await expect(background).not.toHaveAttribute("data-network-provider");
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "static");
   await expect(page.locator("body")).not.toHaveAttribute("data-lenis-ready");
-  await expect(terminalCard).not.toHaveAttribute("data-atropos-ready");
-  await expect(terminalCard.locator(".atropos-shadow")).toHaveCount(0);
 
   await page.setViewportSize({ width: 1440, height: 1000 });
   await expect(background.locator(".vanta-canvas")).toHaveCount(1);
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "desktop");
-  await expect(terminalCard).toHaveAttribute("data-atropos-ready", "true");
   await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pagehide")));
   await expect(background.locator("canvas")).toHaveCount(0);
   await expect(background).toHaveAttribute("data-network-mode", "static");
   await expect(page.locator("body")).not.toHaveAttribute("data-lenis-ready");
-  await expect(terminalCard).not.toHaveAttribute("data-atropos-ready");
   await page.evaluate(() =>
     window.dispatchEvent(new PageTransitionEvent("pageshow", { persisted: true })),
   );
   await expect(background.locator(".vanta-canvas")).toHaveCount(1);
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "desktop");
-  await expect(terminalCard).toHaveAttribute("data-atropos-ready", "true");
   expect(pageErrors).toEqual([]);
 });
 
@@ -229,7 +197,6 @@ test("keeps project card links clickable and section containers visible", async 
   await expect(featuredProject).toHaveCSS("pointer-events", "auto");
   await expect(repositoryLink).toBeVisible();
   await expect(livePreviewLink).toBeVisible();
-  await expect(featuredProject.locator(".atropos-rotate")).toHaveCount(0);
   expect(
     await featuredProject
       .locator(".project-copy")

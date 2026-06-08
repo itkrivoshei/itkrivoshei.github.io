@@ -37,11 +37,6 @@ const budgets = [
     limit: 22 * 1024,
     pattern: /^lenis\..+\.js$/,
   },
-  {
-    label: "lazy Atropos runtime",
-    limit: 10 * 1024,
-    pattern: /^atropos\..+\.js$/,
-  },
 ];
 const assets = await readdir(assetDirectory);
 

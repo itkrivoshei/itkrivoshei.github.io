@@ -24,7 +24,7 @@ The site presents work history, technical background, selected projects, availab
 
 [`src/data/profile.ts`](src/data/profile.ts)
 
-[Astro](https://astro.build/) components render the content into reusable sections. [Tailwind CSS v4](https://tailwindcss.com/) provides design tokens, utilities, and component layers, while focused custom CSS handles the dark network background and visual depth. The desktop-only runtime lazily loads [Vanta.NET](https://www.vantajs.com/) and [Three.js](https://threejs.org/) as a calm non-interactive network scene, [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) for small content reveals, [Lenis](https://lenis.darkroom.engineering/) for natural smooth scrolling, and [Atropos](https://atroposjs.com/) only for the decorative terminal panel. Mobile, coarse-pointer, reduced-motion, and no-JavaScript environments keep the same static CSS presentation without loading the animation runtimes.
+[Astro](https://astro.build/) components render the content into reusable sections. [Tailwind CSS v4](https://tailwindcss.com/) provides design tokens, utilities, and component layers, while focused custom CSS handles the dark network background and visual depth. The desktop-only runtime lazily loads [Vanta.NET](https://www.vantajs.com/) and [Three.js](https://threejs.org/) as a calm non-interactive network scene, [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) for small content reveals, and [Lenis](https://lenis.darkroom.engineering/) for natural smooth scrolling. Mobile, coarse-pointer, reduced-motion, and no-JavaScript environments keep the same static CSS presentation without loading the animation runtimes.
 
 Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`](.node-version), the npm version declared in [`package.json`](package.json), [GitHub Actions](https://github.com/itkrivoshei/itkrivoshei.github.io/actions), and the [Docker](https://www.docker.com/) build image from [`Dockerfile`](Dockerfile).
 
@@ -35,7 +35,7 @@ Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`
 | Framework | [Astro 6](https://astro.build/)                                                   |
 | Language  | [TypeScript](https://www.typescriptlang.org/)                                     |
 | Styling   | [Tailwind CSS 4](https://tailwindcss.com/)                                        |
-| Effects   | Vanta.NET, Three.js, GSAP ScrollTrigger, Lenis, Atropos                           |
+| Effects   | Vanta.NET, Three.js, GSAP ScrollTrigger, Lenis                                    |
 | Runtime   | [Node.js 22](https://nodejs.org/), [npm](https://www.npmjs.com/)                  |
 | Checks    | Prettier, ESLint, Astro check, HTML validation, link checks, Playwright, axe-core |
 | Hosting   | [GitHub Pages](https://pages.github.com/)                                         |

@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "lenis/dist/lenis.css";
-@import "atropos/css";
 
 @theme {
   --color-terminal-green: #a6e3a1;
@@ -38,6 +37,10 @@
     --terminal-teal: var(--color-terminal-teal);
     --terminal-red: var(--color-terminal-red);
     --terminal-yellow: var(--color-terminal-yellow);
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1.25rem;
+    --spacing-lg: 2rem;
     --accent-rgb: 166, 227, 161;
     --link-rgb: 137, 180, 250;
     --surface-glow-rgb: var(--accent-rgb);

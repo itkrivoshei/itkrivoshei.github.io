@@ -1,51 +1,121 @@
 ---
+import { profile } from "../data/profile";
 import SocialLink from "./SocialLink.astro";
 import TerminalTypewriter from "./TerminalTypewriter.astro";
-import { profile } from "../data/profile";
 ---
 
 <section class="hero-card">
-  <div>
-    <p class="eyebrow">~/profile on main</p>
-    <h1>{profile.name}</h1>
-    <p class="role">{profile.role}</p>
-    <p class="summary">{profile.summary}</p>
-    <div class="link-row">
-      {
-        profile.links.map((link) => (
-          <SocialLink label={link.label} href={link.href} icon={link.icon} />
-        ))
-      }
+  <p class="eyebrow">~/profile on main</p>
+  <h1>{profile.name}</h1>
+  <div class="hero-content">
+    <div class="hero-left">
+      <p class="role">{profile.role}</p>
+      <p class="summary">{profile.summary}</p>
+      <div class="link-row">
+        {
+          profile.links.map((link) => (
+            <SocialLink label={link.label} href={link.href} icon={link.icon} />
+          ))
+        }
+      </div>
     </div>
-  </div>
-  <div class="terminal-card-shell atropos" data-atropos-terminal>
-    <div class="atropos-scale">
-      <div class="atropos-rotate">
-        <div class="atropos-inner">
-          <aside class="terminal-card" aria-label="Profile metadata">
-            <div class="terminal-dots" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <TerminalTypewriter />
-          </aside>
-        </div>
+    <div class="hero-right">
+      <div class="terminal-card-shell">
+        <aside class="terminal-card" aria-label="Profile metadata">
+          <div class="terminal-dots" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <TerminalTypewriter />
+        </aside>
       </div>
     </div>
   </div>
 </section>
 
 <style>
+  .hero-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    row-gap: 0px;
+  }
+
+  .hero-card .eyebrow {
+    grid-column: 1 / -1;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .hero-card h1 {
+    grid-column: 1 / -1;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .hero-content {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    align-items: center;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+  }
+
   .terminal-card-shell,
-  .terminal-card-shell .atropos-scale,
-  .terminal-card-shell .atropos-rotate,
-  .terminal-card-shell .atropos-inner,
   .terminal-card-shell .terminal-card {
-    min-height: 100%;
+    width: 100%;
+    max-width: 100%;
   }
 
   .terminal-card-shell {
     border-radius: var(--radius-card);
+  }
+
+  @media (max-width: 1023px) {
+    .hero-card {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+      row-gap: 0px;
+    }
+
+    .hero-card .eyebrow {
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .hero-card h1 {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .hero-content {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-md);
+    }
+
+    .hero-right {
+      padding: var(--spacing-md);
+    }
+
+    .hero-card h1 {
+      grid-column: 1;
+    }
+
+    .hero-card .eyebrow {
+      grid-column: 1;
+    }
+
+    .hero-content {
+      grid-column: 1;
+    }
   }
 </style>

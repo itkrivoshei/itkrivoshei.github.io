@@ -137,7 +137,7 @@ const handlePageHide = () => {
 };
 
 const handlePageShow = (event: PageTransitionEvent) => {
-  if (event.persisted) {
+  if (event.persisted || !body.hasAttribute("data-motion-mode")) {
     documentLoaded = true;
     scheduleMotion();
   }

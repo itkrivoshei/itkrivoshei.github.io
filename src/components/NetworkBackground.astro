@@ -11,6 +11,78 @@
   <div class="background-vignette"></div>
 </div>
 
+<style is:global>
+  .background-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(137, 180, 250, 0.052) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(137, 180, 250, 0.052) 1px, transparent 1px),
+      linear-gradient(rgba(148, 163, 184, 0.024) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.024) 1px, transparent 1px);
+    background-size:
+      56px 56px,
+      56px 56px,
+      14px 14px,
+      14px 14px;
+    mask-image: radial-gradient(circle at 50% 42%, black 0%, black 58%, transparent 90%);
+  }
+
+  .network-background .ambient-glow {
+    background:
+      radial-gradient(ellipse at 50% 18%, rgba(116, 199, 236, 0.095), transparent 58%),
+      radial-gradient(ellipse at 18% 72%, rgba(166, 227, 161, 0.045), transparent 52%),
+      radial-gradient(ellipse at 82% 64%, rgba(137, 180, 250, 0.052), transparent 50%);
+  }
+
+  .network-background .network-effect {
+    z-index: 1;
+    pointer-events: auto;
+  }
+
+  .network-background .network-effect .vanta-canvas {
+    filter: saturate(0.82) brightness(0.86);
+    pointer-events: auto;
+    transition: opacity 1100ms var(--ease-reveal);
+  }
+
+  .network-background[data-network-ready="true"] .vanta-canvas {
+    opacity: 0.42;
+  }
+
+  .network-background .background-noise {
+    z-index: 2;
+    opacity: 0.018;
+  }
+
+  .network-background .background-vignette {
+    z-index: 3;
+    background: radial-gradient(
+      circle at 50% 42%,
+      transparent 28%,
+      rgba(1, 4, 13, 0.16) 68%,
+      rgba(1, 4, 13, 0.56)
+    );
+  }
+
+  @media (max-width: 1023px), (hover: none), (pointer: coarse) {
+    .background-grid {
+      background-size:
+        64px 64px,
+        64px 64px,
+        16px 16px,
+        16px 16px;
+      opacity: 0.7;
+    }
+
+    .network-background .network-effect {
+      pointer-events: none;
+    }
+  }
+</style>
+
 <script>
   import "../scripts/network-background";
 </script>

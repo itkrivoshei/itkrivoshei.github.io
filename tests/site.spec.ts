@@ -88,7 +88,9 @@ test("does not initialize the WebGL network when reduced motion is enabled", asy
       .getEntriesByType("resource")
       .map(({ name }) => name)
       .filter((name) =>
-        /(?:vanta(?:\.net|-three)|three\.module|ScrollTrigger|leni
+        /(?:vanta(?:\.net|-three)|three\.module|ScrollTrigger|lenis|\/index\.[^/]+\.js$)/i.test(
+          name,
+        ),
       ),
   );
 

@@ -14,7 +14,7 @@ const footerTextParts = splitHighlightedText(availability.text, availability.hig
       )
     }
   </p>
-  <div class="link-row">
+  <div class="link-row footer-link-row">
     {
       profile.links.map((link) => (
         <SocialLink label={link.label} href={link.href} icon={link.icon} />
@@ -22,3 +22,44 @@ const footerTextParts = splitHighlightedText(availability.text, availability.hig
     }
   </div>
 </footer>
+
+<style>
+  .footer-link-row {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    flex-wrap: nowrap;
+    gap: clamp(0.35rem, 0.8vw, 0.65rem);
+  }
+
+  :global(.footer-link-row a) {
+    min-width: 0;
+    flex: 1 1 0;
+    gap: clamp(0.3rem, 0.7vw, 0.5rem);
+    padding: 0.62rem clamp(0.48rem, 1vw, 0.82rem);
+    white-space: nowrap;
+  }
+
+  :global(.footer-link-row .link-icon),
+  :global(.footer-link-row .link-icon svg) {
+    width: clamp(0.86rem, 1.3vw, 1.05rem);
+    height: clamp(0.86rem, 1.3vw, 1.05rem);
+  }
+
+  @media (max-width: 560px) {
+    .footer-link-row {
+      gap: 0.35rem;
+    }
+
+    :global(.footer-link-row a) {
+      padding: 0.58rem 0.46rem;
+      font-size: 0.82rem;
+    }
+  }
+
+  @media (max-width: 390px) {
+    :global(.footer-link-row a) {
+      font-size: 0.76rem;
+    }
+  }
+</style>

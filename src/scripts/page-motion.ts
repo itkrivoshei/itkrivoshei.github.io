@@ -1,13 +1,11 @@
-import type { AtroposInstance } from "atropos";
 import type Lenis from "lenis";
 
 const body = document.body;
 const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-const terminalCards = Array.from(document.querySelectorAll<HTMLElement>("[data-atropos-terminal]"));
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 const desktopWidthQuery = window.matchMedia("(min-width: 1024px)");
 const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
-const hasMotionTargets = revealTargets.length > 0 || terminalCards.length > 0;
+const hasMotionTargets = revealTargets.length > 0;
 let motionVersion = 0;
 let documentLoaded = document.readyState === "complete";
 let cleanupMotion: (() => void) | undefined;
@@ -24,7 +22,6 @@ const clearRuntimeAttributes = () => {
   body.removeAttribute("data-motion-mode");
   body.removeAttribute("data-lenis-ready");
   body.removeAttribute("data-scrolltrigger-ready");
-  terminalCards.forEach((card) => card.removeAttribute("data-atropos-ready"));
 };
 
 const destroyMotion = () => {
@@ -78,19 +75,8 @@ const initializeMotion = async () => {
     lenis.on("scroll", syncScrollTrigger);
     gsap.ticker.add(updateLenis);
 
-    const atroposInstances: AtroposInstance[] = [];
     const runtime: { context?: ReturnType<typeof gsap.context> } = {};
     cleanupInitializedMotion = () => {
-      atroposInstances.forEach((instance) => {
-        instance.destroy();
-        instance.el.classList.remove("atropos-active");
-        instance.el
-          .querySelectorAll<HTMLElement>(".atropos-shadow, .atropos-highlight")
-          .forEach((element) => element.remove());
-        instance.el
-          .querySelectorAll<HTMLElement>(".atropos-scale, .atropos-rotate, .atropos-inner")
-          .forEach((element) => element.removeAttribute("style"));
-      });
       runtime.context?.revert();
       lenis.off("scroll", syncScrollTrigger);
       gsap.ticker.remove(updateLenis);
@@ -124,32 +110,6 @@ const initializeMotion = async () => {
       });
     });
 
-    if (terminalCards.length > 0) {
-      const { default: Atropos } = await import("atropos");
-
-      if (currentVersion !== motionVersion || !shouldEnableMotion()) {
-        cleanupInitializedMotion();
-        return;
-      }
-
-      terminalCards.forEach((card) => {
-        atroposInstances.push(
-          Atropos({
-            activeOffset: 0.5,
-            commonOrigin: true,
-            duration: 700,
-            el: card,
-            highlight: false,
-            rotateTouch: false,
-            rotateXMax: 0.65,
-            rotateYMax: 0.85,
-            shadow: false,
-          }),
-        );
-        card.setAttribute("data-atropos-ready", "true");
-      });
-    }
-
     ScrollTrigger.refresh();
     body.setAttribute("data-motion-mode", "desktop");
     body.setAttribute("data-lenis-ready", "true");
@@ -177,7 +137,7 @@ const handlePageHide = () => {
 };
 
 const handlePageShow = (event: PageTransitionEvent) => {
-  if (event.persisted) {
+  if (event.persisted || !body.hasAttribute("data-motion-mode")) {
     documentLoaded = true;
     scheduleMotion();
   }

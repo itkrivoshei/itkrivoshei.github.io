@@ -5,10 +5,105 @@
   aria-hidden="true"
 >
   <div class="ambient-glow"></div>
+  <div class="background-grid"></div>
   <div class="network-effect" data-network-effect></div>
+  <div class="background-depth"></div>
   <div class="background-noise"></div>
   <div class="background-vignette"></div>
 </div>
+
+<style is:global>
+  :root {
+    --scroll-depth: 0;
+  }
+
+  .background-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(137, 180, 250, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(137, 180, 250, 0.04) 1px, transparent 1px),
+      linear-gradient(rgba(148, 163, 184, 0.014) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.014) 1px, transparent 1px);
+    background-size:
+      56px 56px,
+      56px 56px,
+      14px 14px,
+      14px 14px;
+    opacity: calc(0.92 - var(--scroll-depth) * 0.28);
+    mask-image: radial-gradient(circle at 50% 42%, black 0%, black 60%, transparent 90%);
+  }
+
+  .network-background .ambient-glow {
+    background:
+      radial-gradient(ellipse at 50% 18%, rgba(116, 199, 236, 0.095), transparent 58%),
+      radial-gradient(ellipse at 18% 72%, rgba(166, 227, 161, 0.045), transparent 52%),
+      radial-gradient(ellipse at 82% 64%, rgba(137, 180, 250, 0.052), transparent 50%);
+  }
+
+  .network-background .network-effect {
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .network-background .repulse-network-canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1100ms var(--ease-reveal);
+  }
+
+  .network-background[data-network-ready="true"] .repulse-network-canvas {
+    opacity: 0.58;
+  }
+
+  .background-depth {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(2, 6, 23, 0), rgba(2, 6, 23, calc(var(--scroll-depth) * 0.34))),
+      radial-gradient(
+        circle at 50% 42%,
+        transparent 34%,
+        rgba(1, 4, 13, calc(var(--scroll-depth) * 0.22)) 76%,
+        rgba(1, 4, 13, calc(0.08 + var(--scroll-depth) * 0.28))
+      );
+  }
+
+  .network-background .background-noise {
+    z-index: 3;
+    opacity: 0.016;
+  }
+
+  .network-background .background-vignette {
+    z-index: 4;
+    background: radial-gradient(
+      circle at 50% 42%,
+      transparent 30%,
+      rgba(1, 4, 13, calc(0.14 + var(--scroll-depth) * 0.12)) 68%,
+      rgba(1, 4, 13, calc(0.54 + var(--scroll-depth) * 0.18))
+    );
+  }
+
+  @media (max-width: 1023px), (hover: none), (pointer: coarse) {
+    .background-grid {
+      background-size:
+        64px 64px,
+        64px 64px,
+        16px 16px,
+        16px 16px;
+      opacity: 0.64;
+    }
+  }
+</style>
 
 <script>
   import "../scripts/network-background";

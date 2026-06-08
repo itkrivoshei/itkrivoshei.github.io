@@ -88,11 +88,11 @@ const scheduleScrollDepth = () => {
 const shouldAnimate = () =>
   Boolean(
     background &&
-      networkLayer &&
-      !document.hidden &&
-      !reducedMotionQuery.matches &&
-      desktopWidthQuery.matches &&
-      finePointerQuery.matches,
+    networkLayer &&
+    !document.hidden &&
+    !reducedMotionQuery.matches &&
+    desktopWidthQuery.matches &&
+    finePointerQuery.matches,
   );
 
 const publishNetworkConfig = () => {
@@ -275,7 +275,10 @@ const createNetwork = (): NetworkRuntime | undefined => {
         const midpointDistance = pointer.active
           ? Math.hypot((first.x + second.x) / 2 - pointer.x, (first.y + second.y) / 2 - pointer.y)
           : Infinity;
-        const cursorBoost = Math.max(0, 1 - midpointDistance / (networkOptions.repulseRadius * 1.55));
+        const cursorBoost = Math.max(
+          0,
+          1 - midpointDistance / (networkOptions.repulseRadius * 1.55),
+        );
         const opacity =
           (1 - distance / networkOptions.linkDistance) *
           (networkOptions.lineBaseOpacity + cursorBoost * networkOptions.lineCursorBoost);
@@ -290,7 +293,9 @@ const createNetwork = (): NetworkRuntime | undefined => {
     }
 
     for (const particle of renderedParticles) {
-      const cursorDistance = pointer.active ? Math.hypot(particle.x - pointer.x, particle.y - pointer.y) : Infinity;
+      const cursorDistance = pointer.active
+        ? Math.hypot(particle.x - pointer.x, particle.y - pointer.y)
+        : Infinity;
       const cursorBoost = Math.max(0, 1 - cursorDistance / networkOptions.repulseRadius);
 
       context.beginPath();

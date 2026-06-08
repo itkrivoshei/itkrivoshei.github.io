@@ -16,7 +16,7 @@
   --radius-hero: 1.25rem;
   --radius-panel: 1rem;
   --radius-pill: 999px;
-  --shadow-panel: 0 24px 90px rgba(1, 4, 13, 0.48);
+  --shadow-panel: 0 28px 96px rgba(1, 4, 13, 0.42);
   --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
   --default-transition-duration: 160ms;
   --default-transition-timing-function: ease;
@@ -26,9 +26,9 @@
   :root {
     color-scheme: dark;
     --bg: #020617;
-    --panel: rgba(2, 6, 23, 0.72);
-    --panel-strong: rgba(15, 23, 42, 0.86);
-    --line: rgba(148, 163, 184, 0.22);
+    --panel: rgba(2, 6, 23, 0.34);
+    --panel-strong: rgba(15, 23, 42, 0.3);
+    --line: rgba(148, 163, 184, 0.16);
     --text: #e5e7eb;
     --muted: #cbd5e1;
     --soft: #94a3b8;
@@ -86,7 +86,9 @@
 .ambient-glow,
 .network-effect,
 .background-noise,
-.background-vignette {
+.background-vignette,
+.background-depth,
+.background-grid {
   position: absolute;
   pointer-events: none;
 }
@@ -100,22 +102,6 @@
 .network-effect {
   inset: 0;
   z-index: 1;
-}
-
-.network-effect .vanta-canvas {
-  display: block;
-  position: absolute !important;
-  inset: 0;
-  width: 100% !important;
-  height: 100% !important;
-  filter: saturate(0.58) brightness(0.68);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 600ms ease;
-}
-
-.network-background[data-network-ready="true"] .vanta-canvas {
-  opacity: 0.3;
 }
 
 .network-background[data-network-mode="static"] canvas {
@@ -158,18 +144,21 @@
     @apply relative overflow-hidden border;
 
     border: 1px solid var(--line);
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.74), rgba(2, 6, 23, 0.58)), var(--panel);
+    background:
+      linear-gradient(135deg, rgba(15, 23, 42, 0.42), rgba(2, 6, 23, 0.18)),
+      var(--panel);
     box-shadow:
-      0 24px 90px rgba(1, 4, 13, 0.48),
-      inset 0 1px 0 rgba(255, 255, 255, 0.025);
+      var(--shadow-panel),
+      0 0 0 1px rgba(137, 180, 250, 0.035),
+      inset 0 1px 0 rgba(255, 255, 255, 0.055);
   }
 
   .hero-card,
   .section-block,
   .footer-block,
   .terminal-card {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(20px) saturate(145%);
+    -webkit-backdrop-filter: blur(20px) saturate(145%);
   }
 
   .hero-card > *,
@@ -188,7 +177,9 @@
 
     gap: clamp(1.5rem, 4vw, 3rem);
     border-radius: var(--radius-hero);
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.66), rgba(2, 6, 23, 0.48)), var(--panel);
+    background:
+      linear-gradient(135deg, rgba(15, 23, 42, 0.42), rgba(2, 6, 23, 0.16)),
+      rgba(2, 6, 23, 0.3);
     padding: clamp(1.5rem, 5vw, 3.25rem);
   }
 
@@ -423,7 +414,9 @@
 
   .terminal-card {
     border-radius: var(--radius-card);
-    background: rgba(0, 0, 0, 0.38);
+    background:
+      linear-gradient(145deg, rgba(3, 7, 18, 0.58), rgba(0, 0, 0, 0.34)),
+      rgba(0, 0, 0, 0.28);
     padding: 1.25rem;
     font-family: var(--mono);
     color: var(--muted);
@@ -469,25 +462,37 @@
       box-shadow 180ms ease;
   }
 
-  .section-about {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.68), rgba(2, 6, 23, 0.5)), var(--panel);
-  }
-
-  .section-skills {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.76), rgba(2, 6, 23, 0.62)), var(--panel);
-  }
-
+  .section-about,
+  .section-skills,
   .section-experience,
   .section-projects {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.84), rgba(2, 6, 23, 0.72)), var(--panel);
+    background:
+      linear-gradient(135deg, rgba(15, 23, 42, 0.36), rgba(2, 6, 23, 0.14)),
+      rgba(2, 6, 23, 0.26);
+  }
+
+  .section-block::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 34%),
+      radial-gradient(circle at 12% 0%, rgba(137, 180, 250, 0.08), transparent 34rem);
+    opacity: 0.72;
   }
 
   .section-block:hover {
     border-color: rgba(var(--link-rgb), 0.28);
+    background:
+      linear-gradient(135deg, rgba(15, 23, 42, 0.42), rgba(2, 6, 23, 0.18)),
+      rgba(2, 6, 23, 0.3);
     box-shadow:
-      0 24px 90px rgba(1, 4, 13, 0.5),
-      0 0 34px rgba(var(--link-rgb), 0.055),
-      inset 0 1px 0 rgba(255, 255, 255, 0.03);
+      0 30px 100px rgba(1, 4, 13, 0.52),
+      0 0 42px rgba(var(--link-rgb), 0.085),
+      0 0 0 1px rgba(var(--link-rgb), 0.075),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   .section-title {
@@ -533,8 +538,11 @@
   .timeline-card {
     border-radius: var(--radius-card);
     background:
-      linear-gradient(145deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.84)), var(--panel-strong);
+      linear-gradient(145deg, rgba(15, 23, 42, 0.46), rgba(2, 6, 23, 0.22)),
+      rgba(15, 23, 42, 0.28);
     padding: 1.25rem;
+    backdrop-filter: blur(16px) saturate(135%);
+    -webkit-backdrop-filter: blur(16px) saturate(135%);
     transition:
       transform 180ms ease,
       background 180ms ease,
@@ -551,11 +559,13 @@
   .timeline-card:hover {
     border-color: rgba(var(--surface-glow-rgb), 0.38);
     background:
-      linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.62)), rgba(15, 23, 42, 0.88);
+      linear-gradient(145deg, rgba(15, 23, 42, 0.52), rgba(2, 6, 23, 0.24)),
+      rgba(15, 23, 42, 0.32);
     box-shadow:
-      0 0 0 1px rgba(var(--surface-glow-rgb), 0.08),
-      0 20px 58px rgba(2, 6, 23, 0.38),
-      0 0 28px rgba(var(--surface-glow-rgb), 0.085);
+      0 0 0 1px rgba(var(--surface-glow-rgb), 0.12),
+      0 24px 70px rgba(2, 6, 23, 0.46),
+      0 0 34px rgba(var(--surface-glow-rgb), 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.055);
     transform: translateY(-2px);
   }
 
@@ -789,14 +799,19 @@
 
   .section-block:hover {
     border-color: rgba(148, 163, 184, 0.18);
-    box-shadow: none;
+    background:
+      linear-gradient(135deg, rgba(15, 23, 42, 0.36), rgba(2, 6, 23, 0.14)),
+      rgba(2, 6, 23, 0.26);
+    box-shadow: var(--shadow-panel);
   }
 
   .skill-card:hover,
   .project-card:hover,
   .timeline-card:hover {
     border-color: rgba(148, 163, 184, 0.18);
-    background: var(--panel-strong);
+    background:
+      linear-gradient(145deg, rgba(15, 23, 42, 0.46), rgba(2, 6, 23, 0.22)),
+      rgba(15, 23, 42, 0.28);
     box-shadow: none;
     transform: none;
   }

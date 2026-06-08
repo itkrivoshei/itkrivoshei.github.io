@@ -82,74 +82,91 @@
     );
   }
 
-  .hero-card,
-  .section-block,
-  .footer-block,
-  .terminal-card,
-  .content-card,
-  .timeline-card {
+  body .hero-card,
+  body .section-block,
+  body .footer-block,
+  body .terminal-card,
+  body .content-card,
+  body .timeline-card {
     background:
-      linear-gradient(135deg, rgba(15, 23, 42, 0.56), rgba(2, 6, 23, 0.34)),
-      rgba(2, 6, 23, 0.48);
-    border-color: rgba(148, 163, 184, 0.18);
+      linear-gradient(135deg, rgba(15, 23, 42, 0.45), rgba(2, 6, 23, 0.2)),
+      rgba(2, 6, 23, 0.34) !important;
+    border-color: rgba(148, 163, 184, 0.16) !important;
     box-shadow:
-      0 24px 90px rgba(1, 4, 13, 0.42),
+      0 28px 96px rgba(1, 4, 13, 0.42),
       0 0 0 1px rgba(137, 180, 250, 0.035),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(18px) saturate(138%);
-    -webkit-backdrop-filter: blur(18px) saturate(138%);
+      inset 0 1px 0 rgba(255, 255, 255, 0.055) !important;
+    backdrop-filter: blur(20px) saturate(145%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(145%) !important;
   }
 
-  .hero-card {
+  body .hero-card {
     background:
-      linear-gradient(135deg, rgba(15, 23, 42, 0.54), rgba(2, 6, 23, 0.3)),
-      rgba(2, 6, 23, 0.44);
+      linear-gradient(135deg, rgba(15, 23, 42, 0.44), rgba(2, 6, 23, 0.18)),
+      rgba(2, 6, 23, 0.32) !important;
   }
 
-  .section-about,
-  .section-skills,
-  .section-experience,
-  .section-projects {
+  body .section-block,
+  body .section-about,
+  body .section-skills,
+  body .section-experience,
+  body .section-projects {
     background:
-      linear-gradient(135deg, rgba(15, 23, 42, 0.52), rgba(2, 6, 23, 0.32)),
-      rgba(2, 6, 23, 0.44);
+      linear-gradient(135deg, rgba(15, 23, 42, 0.4), rgba(2, 6, 23, 0.16)),
+      rgba(2, 6, 23, 0.3) !important;
   }
 
-  .content-card,
-  .timeline-card {
+  body .section-block::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
     background:
-      linear-gradient(145deg, rgba(15, 23, 42, 0.58), rgba(2, 6, 23, 0.38)),
-      rgba(15, 23, 42, 0.42);
-    backdrop-filter: blur(14px) saturate(128%);
-    -webkit-backdrop-filter: blur(14px) saturate(128%);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 34%),
+      radial-gradient(circle at 12% 0%, rgba(137, 180, 250, 0.08), transparent 34rem);
+    opacity: 0.72;
   }
 
-  .terminal-card {
+  body .content-card,
+  body .timeline-card {
     background:
-      linear-gradient(145deg, rgba(3, 7, 18, 0.66), rgba(0, 0, 0, 0.44)),
-      rgba(0, 0, 0, 0.34);
+      linear-gradient(145deg, rgba(15, 23, 42, 0.5), rgba(2, 6, 23, 0.24)),
+      rgba(15, 23, 42, 0.3) !important;
+    backdrop-filter: blur(16px) saturate(135%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(135%) !important;
   }
 
-  .skill-card:hover,
-  .project-card:hover,
-  .timeline-card:hover {
+  body .terminal-card {
     background:
-      linear-gradient(145deg, rgba(15, 23, 42, 0.62), rgba(2, 6, 23, 0.34)),
-      rgba(15, 23, 42, 0.42);
-    border-color: rgba(var(--surface-glow-rgb), 0.46);
+      linear-gradient(145deg, rgba(3, 7, 18, 0.58), rgba(0, 0, 0, 0.34)),
+      rgba(0, 0, 0, 0.28) !important;
+  }
+
+  body .skill-card:hover,
+  body .project-card:hover,
+  body .timeline-card:hover {
+    background:
+      linear-gradient(145deg, rgba(15, 23, 42, 0.56), rgba(2, 6, 23, 0.25)),
+      rgba(15, 23, 42, 0.34) !important;
+    border-color: rgba(var(--surface-glow-rgb), 0.46) !important;
     box-shadow:
-      0 0 0 1px rgba(var(--surface-glow-rgb), 0.11),
-      0 24px 68px rgba(2, 6, 23, 0.42),
+      0 0 0 1px rgba(var(--surface-glow-rgb), 0.12),
+      0 24px 70px rgba(2, 6, 23, 0.46),
       0 0 34px rgba(var(--surface-glow-rgb), 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      inset 0 1px 0 rgba(255, 255, 255, 0.055) !important;
   }
 
-  .section-block:hover {
-    border-color: rgba(var(--link-rgb), 0.34);
+  body .section-block:hover {
+    border-color: rgba(var(--link-rgb), 0.38) !important;
+    background:
+      linear-gradient(135deg, rgba(15, 23, 42, 0.48), rgba(2, 6, 23, 0.22)),
+      rgba(2, 6, 23, 0.34) !important;
     box-shadow:
-      0 28px 96px rgba(1, 4, 13, 0.48),
-      0 0 40px rgba(var(--link-rgb), 0.075),
-      inset 0 1px 0 rgba(255, 255, 255, 0.045);
+      0 30px 100px rgba(1, 4, 13, 0.52),
+      0 0 42px rgba(var(--link-rgb), 0.085),
+      0 0 0 1px rgba(var(--link-rgb), 0.075),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
   }
 
   @media (max-width: 1023px), (hover: none), (pointer: coarse) {

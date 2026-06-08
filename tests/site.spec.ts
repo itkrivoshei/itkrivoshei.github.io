@@ -112,6 +112,7 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await expect(background.locator("canvas")).toHaveCount(1, {
     timeout: 10_000,
   });
+  await expect(background.locator(".repulse-network-canvas")).toHaveCount(1);
   await expect(background).toHaveAttribute("data-network-ready", "true");
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "desktop");
   await expect(page.locator("body")).toHaveAttribute("data-lenis-ready", "true");
@@ -124,21 +125,21 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   expect(networkConfig).toMatchObject({
     backgroundAlpha: 0,
     gyroControls: false,
-    maxDistance: 20,
+    linkDistance: 150,
     mouseControls: true,
-    points: 7,
-    provider: "vanta-net",
-    spacing: 24,
+    pointCount: 82,
+    provider: "canvas-repulse-network",
+    repulseRadius: 132,
     touchControls: false,
   });
-  await expect(background).toHaveAttribute("data-network-provider", "vanta-net");
+  await expect(background).toHaveAttribute("data-network-provider", "canvas-repulse-network");
 
   await expect(page.locator("[data-cursor-spotlight]")).toHaveCount(0);
   await expect(page.locator(".background-grid")).toHaveCount(1);
   await expect(page.locator(".network-pattern")).toHaveCount(0);
   await expect(page.locator("[data-background-theme]")).toHaveCount(0);
 
-  await background.locator(".vanta-canvas").evaluate((canvas) => {
+  await background.locator(".repulse-network-canvas").evaluate((canvas) => {
     canvas.setAttribute("data-smoke-canvas", "stable");
   });
 
@@ -159,8 +160,11 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   }
   await page.mouse.move(720, 500);
 
-  await expect(background.locator(".vanta-canvas")).toHaveCount(1);
-  await expect(background.locator(".vanta-canvas")).toHaveAttribute("data-smoke-canvas", "stable");
+  await expect(background.locator(".repulse-network-canvas")).toHaveCount(1);
+  await expect(background.locator(".repulse-network-canvas")).toHaveAttribute(
+    "data-smoke-canvas",
+    "stable",
+  );
 
   await page.setViewportSize({ width: 800, height: 1000 });
   await expect(background.locator("canvas")).toHaveCount(0);
@@ -171,7 +175,7 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await expect(page.locator("body")).not.toHaveAttribute("data-lenis-ready");
 
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await expect(background.locator(".vanta-canvas")).toHaveCount(1);
+  await expect(background.locator(".repulse-network-canvas")).toHaveCount(1);
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "desktop");
   await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pagehide")));
   await expect(background.locator("canvas")).toHaveCount(0);
@@ -180,7 +184,7 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   await page.evaluate(() =>
     window.dispatchEvent(new PageTransitionEvent("pageshow", { persisted: true })),
   );
-  await expect(background.locator(".vanta-canvas")).toHaveCount(1);
+  await expect(background.locator(".repulse-network-canvas")).toHaveCount(1);
   await expect(page.locator("body")).toHaveAttribute("data-motion-mode", "desktop");
   expect(pageErrors).toEqual([]);
 });
@@ -210,10 +214,7 @@ test("keeps project card links clickable and section containers visible", async 
   ).toBe("none");
 
   for (const layer of await page.locator("[data-network-background] > div").all()) {
-    const isNetworkEffect = await layer.evaluate((element) =>
-      element.classList.contains("network-effect"),
-    );
-    await expect(layer).toHaveCSS("pointer-events", isNetworkEffect ? "auto" : "none");
+    await expect(layer).toHaveCSS("pointer-events", "none");
   }
 
   for (const link of [repositoryLink, livePreviewLink]) {

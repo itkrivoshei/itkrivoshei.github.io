@@ -61,13 +61,16 @@ const scheduleScrollDepth = () => {
 };
 
 const resize = () => {
-  if (!canvas) return;
+  if (!canvas || !layer) return;
 
   const ratio = Math.min(window.devicePixelRatio || 1, 1.75);
-  width = window.innerWidth;
-  height = window.innerHeight;
+  const rect = layer.getBoundingClientRect();
+  width = Math.max(1, Math.round(rect.width));
+  height = Math.max(1, Math.round(rect.height));
   canvas.width = Math.round(width * ratio);
   canvas.height = Math.round(height * ratio);
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
   context?.setTransform(ratio, 0, 0, ratio, 0, 0);
 
   const count = Math.min(POINTS, Math.max(MIN_POINTS, Math.round((width * height) / 14_000)));

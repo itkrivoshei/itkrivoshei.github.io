@@ -1,411 +1,246 @@
-interface NetworkRuntimeConfig {
-  backgroundAlpha: number;
-  gyroControls: boolean;
-  linkDistance: number;
-  mouseControls: boolean;
-  pointCount: number;
-  provider: "canvas-repulse-network";
-  repulseRadius: number;
-  touchControls: boolean;
-}
+type Particle = [
+  x: number,
+  y: number,
+  vx: number,
+  vy: number,
+  radius: number,
+  offsetX: number,
+  offsetY: number,
+  offsetVX: number,
+  offsetVY: number,
+];
 
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  offsetX: number;
-  offsetY: number;
-  offsetVX: number;
-  offsetVY: number;
-}
+type RenderPoint = [x: number, y: number, radius: number];
 
-interface PointerState {
-  active: boolean;
-  targetX: number;
-  targetY: number;
-  x: number;
-  y: number;
-}
-
-interface RenderedParticle {
-  x: number;
-  y: number;
-  radius: number;
-}
-
-interface NetworkRuntime {
-  canvas: HTMLCanvasElement;
-  destroy: () => void;
-}
-
-const networkOptions = {
-  backgroundAlpha: 0,
-  damping: 0.92,
-  gyroControls: false,
-  linkDistance: 230,
-  lineBaseOpacity: 0.38,
-  lineCursorBoost: 0.55,
-  mouseControls: true,
-  nodeBaseOpacity: 0.38,
-  nodeCursorBoost: 0.55,
-  pointCount: 124,
-  pointerLerp: 0.15,
-  repulseRadius: 205,
-  repulseStrength: 5,
-  speed: 0.35,
-  spring: 0.035,
-  touchControls: false,
-};
+const POINTS = 124;
+const MIN_POINTS = 88;
+const COLUMNS = 14;
+const LINK_DISTANCE = 230;
+const REPULSE_RADIUS = 205;
+const REPULSE_STRENGTH = 5;
+const SPEED = 0.35;
+const POINTER_LERP = 0.15;
+const SPRING = 0.035;
+const DAMPING = 0.92;
+const LINE_BASE_OPACITY = 0.38;
+const LINE_CURSOR_BOOST = 0.55;
+const NODE_BASE_OPACITY = 0.38;
+const NODE_CURSOR_BOOST = 0.55;
 
 const root = document.documentElement;
 const background = document.querySelector<HTMLElement>("[data-network-background]");
-const networkLayer = background?.querySelector<HTMLElement>("[data-network-effect]");
-const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-const desktopWidthQuery = window.matchMedia("(min-width: 1024px)");
-const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
-let network: NetworkRuntime | undefined;
-let syncVersion = 0;
-let scrollFrame = 0;
+const layer = background?.querySelector<HTMLElement>("[data-network-effect]");
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const desktop = window.matchMedia("(min-width: 1024px)");
+const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 
-networkLayer?.style.setProperty("pointer-events", "none");
+let canvas: HTMLCanvasElement | undefined;
+let context: CanvasRenderingContext2D | null = null;
+let particles: Particle[] = [];
+let frame = 0;
+let scrollFrame = 0;
+let width = 0;
+let height = 0;
+let pointerActive = false;
+let pointerX = 0;
+let pointerY = 0;
+let targetX = 0;
+let targetY = 0;
+
+const canAnimate = () =>
+  Boolean(background && layer && !document.hidden && !reducedMotion.matches && desktop.matches && finePointer.matches);
 
 const syncScrollDepth = () => {
   scrollFrame = 0;
-
-  const scrollMax = Math.max(1, root.scrollHeight - window.innerHeight);
-  const depth = Math.min(1, Math.max(0, window.scrollY / scrollMax));
-
-  root.style.setProperty("--scroll-depth", depth.toFixed(3));
+  const maxScroll = Math.max(1, root.scrollHeight - window.innerHeight);
+  root.style.setProperty("--scroll-depth", Math.min(1, Math.max(0, window.scrollY / maxScroll)).toFixed(3));
 };
 
 const scheduleScrollDepth = () => {
-  if (scrollFrame) return;
-  scrollFrame = window.requestAnimationFrame(syncScrollDepth);
+  if (!scrollFrame) scrollFrame = window.requestAnimationFrame(syncScrollDepth);
 };
 
-const shouldAnimate = () =>
-  Boolean(
-    background &&
-    networkLayer &&
-    !document.hidden &&
-    !reducedMotionQuery.matches &&
-    desktopWidthQuery.matches &&
-    finePointerQuery.matches,
-  );
+const resize = () => {
+  if (!canvas) return;
 
-const publishNetworkConfig = () => {
-  if (!background) return;
+  const ratio = Math.min(window.devicePixelRatio || 1, 1.75);
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = Math.round(width * ratio);
+  canvas.height = Math.round(height * ratio);
+  context?.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-  const config: NetworkRuntimeConfig = {
-    backgroundAlpha: networkOptions.backgroundAlpha,
-    gyroControls: networkOptions.gyroControls,
-    linkDistance: networkOptions.linkDistance,
-    mouseControls: networkOptions.mouseControls,
-    pointCount: networkOptions.pointCount,
-    provider: "canvas-repulse-network",
-    repulseRadius: networkOptions.repulseRadius,
-    touchControls: networkOptions.touchControls,
-  };
+  const count = Math.min(POINTS, Math.max(MIN_POINTS, Math.round((width * height) / 14_000)));
+  const rows = Math.ceil(count / COLUMNS);
+  particles = [];
 
-  background.setAttribute("data-network-config", JSON.stringify(config));
-  background.setAttribute("data-network-provider", config.provider);
+  for (let index = 0; index < count; index += 1) {
+    const column = index % COLUMNS;
+    const row = Math.floor(index / COLUMNS);
+
+    particles.push([
+      ((column + 0.5) / COLUMNS) * width + Math.random() * 78 - 39,
+      ((row + 0.5) / rows) * height + Math.random() * 78 - 39,
+      (Math.random() - 0.5) * SPEED,
+      (Math.random() - 0.5) * SPEED,
+      1.15 + Math.random() * 1.55,
+      0,
+      0,
+      0,
+      0,
+    ]);
+  }
 };
 
-const createParticles = (width: number, height: number) => {
-  const areaFactor = Math.round((width * height) / 14_000);
-  const count = Math.min(networkOptions.pointCount, Math.max(88, areaFactor));
-  const columns = 14;
-  const rows = Math.ceil(count / columns);
+const movePointer = (event: PointerEvent) => {
+  if (!pointerActive) {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+  }
 
-  return Array.from({ length: count }, (_, index): Particle => {
-    const column = index % columns;
-    const row = Math.floor(index / columns);
-    const jitterX = Math.random() * 78 - 39;
-    const jitterY = Math.random() * 78 - 39;
+  pointerActive = true;
+  targetX = event.clientX;
+  targetY = event.clientY;
+};
 
-    return {
-      x: ((column + 0.5) / columns) * width + jitterX,
-      y: ((row + 0.5) / rows) * height + jitterY,
-      vx: (Math.random() - 0.5) * networkOptions.speed,
-      vy: (Math.random() - 0.5) * networkOptions.speed,
-      radius: 1.15 + Math.random() * 1.55,
-      offsetX: 0,
-      offsetY: 0,
-      offsetVX: 0,
-      offsetVY: 0,
-    };
+const clearPointer = () => {
+  pointerActive = false;
+};
+
+const draw = () => {
+  if (!context) return;
+
+  if (pointerActive) {
+    pointerX += (targetX - pointerX) * POINTER_LERP;
+    pointerY += (targetY - pointerY) * POINTER_LERP;
+  }
+
+  context.clearRect(0, 0, width, height);
+
+  const points: RenderPoint[] = particles.map((particle) => {
+    particle[0] += particle[2];
+    particle[1] += particle[3];
+
+    if (particle[0] < -20) particle[0] = width + 20;
+    if (particle[0] > width + 20) particle[0] = -20;
+    if (particle[1] < -20) particle[1] = height + 20;
+    if (particle[1] > height + 20) particle[1] = -20;
+
+    const dx = particle[0] - pointerX;
+    const dy = particle[1] - pointerY;
+    const distance = pointerActive ? Math.hypot(dx, dy) : Infinity;
+    const force = distance > 0 && distance < REPULSE_RADIUS ? (1 - distance / REPULSE_RADIUS) ** 2 : 0;
+    const targetOffsetX = force ? (dx / distance) * force * REPULSE_STRENGTH : 0;
+    const targetOffsetY = force ? (dy / distance) * force * REPULSE_STRENGTH : 0;
+
+    particle[7] = (particle[7] + (targetOffsetX - particle[5]) * SPRING) * DAMPING;
+    particle[8] = (particle[8] + (targetOffsetY - particle[6]) * SPRING) * DAMPING;
+    particle[5] += particle[7];
+    particle[6] += particle[8];
+
+    return [particle[0] + particle[5], particle[1] + particle[6], particle[4]];
   });
-};
 
-const syncPointer = (pointer: PointerState) => {
-  if (!pointer.active) return;
+  for (let firstIndex = 0; firstIndex < points.length; firstIndex += 1) {
+    const first = points[firstIndex];
 
-  pointer.x += (pointer.targetX - pointer.x) * networkOptions.pointerLerp;
-  pointer.y += (pointer.targetY - pointer.y) * networkOptions.pointerLerp;
-};
+    for (let secondIndex = firstIndex + 1; secondIndex < points.length; secondIndex += 1) {
+      const second = points[secondIndex];
+      const distance = Math.hypot(first[0] - second[0], first[1] - second[1]);
 
-const getTargetOffset = (particle: Particle, pointer: PointerState) => {
-  if (!pointer.active) return { x: 0, y: 0 };
+      if (distance > LINK_DISTANCE) continue;
 
-  const dx = particle.x - pointer.x;
-  const dy = particle.y - pointer.y;
-  const distance = Math.hypot(dx, dy);
-
-  if (distance <= 0 || distance >= networkOptions.repulseRadius) return { x: 0, y: 0 };
-
-  const force = (1 - distance / networkOptions.repulseRadius) ** 2;
-  const offset = force * networkOptions.repulseStrength;
-
-  return {
-    x: (dx / distance) * offset,
-    y: (dy / distance) * offset,
-  };
-};
-
-const updateParticleOffset = (particle: Particle, pointer: PointerState) => {
-  const targetOffset = getTargetOffset(particle, pointer);
-
-  particle.offsetVX += (targetOffset.x - particle.offsetX) * networkOptions.spring;
-  particle.offsetVY += (targetOffset.y - particle.offsetY) * networkOptions.spring;
-  particle.offsetVX *= networkOptions.damping;
-  particle.offsetVY *= networkOptions.damping;
-  particle.offsetX += particle.offsetVX;
-  particle.offsetY += particle.offsetVY;
-};
-
-const createNetwork = (): NetworkRuntime | undefined => {
-  if (!networkLayer) return undefined;
-
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d", { alpha: true });
-
-  if (!context) return undefined;
-
-  canvas.className = "repulse-network-canvas";
-  canvas.setAttribute("aria-hidden", "true");
-  Object.assign(canvas.style, {
-    display: "block",
-    position: "absolute",
-    inset: "0",
-    width: "100%",
-    height: "100%",
-    filter: "saturate(0.92) brightness(0.94)",
-    opacity: "0",
-    pointerEvents: "none",
-    transition: "opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1)",
-  });
-  networkLayer.replaceChildren(canvas);
-
-  const pointer: PointerState = {
-    active: false,
-    targetX: 0,
-    targetY: 0,
-    x: 0,
-    y: 0,
-  };
-
-  let animationFrame = 0;
-  let width = 0;
-  let height = 0;
-  let particles: Particle[] = [];
-
-  const resize = () => {
-    const rect = networkLayer.getBoundingClientRect();
-    const nextWidth = Math.max(1, Math.round(rect.width));
-    const nextHeight = Math.max(1, Math.round(rect.height));
-    const ratio = Math.min(window.devicePixelRatio || 1, 1.75);
-
-    width = nextWidth;
-    height = nextHeight;
-    canvas.width = Math.round(width * ratio);
-    canvas.height = Math.round(height * ratio);
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
-    particles = createParticles(width, height);
-  };
-
-  const setPointer = (event: PointerEvent) => {
-    if (!pointer.active) {
-      pointer.x = event.clientX;
-      pointer.y = event.clientY;
-    }
-
-    pointer.active = true;
-    pointer.targetX = event.clientX;
-    pointer.targetY = event.clientY;
-  };
-
-  const clearPointer = () => {
-    pointer.active = false;
-  };
-
-  const draw = () => {
-    syncPointer(pointer);
-    context.clearRect(0, 0, width, height);
-
-    const renderedParticles: RenderedParticle[] = particles.map((particle) => {
-      particle.x += particle.vx;
-      particle.y += particle.vy;
-
-      if (particle.x < -20) particle.x = width + 20;
-      if (particle.x > width + 20) particle.x = -20;
-      if (particle.y < -20) particle.y = height + 20;
-      if (particle.y > height + 20) particle.y = -20;
-
-      updateParticleOffset(particle, pointer);
-
-      return {
-        x: particle.x + particle.offsetX,
-        y: particle.y + particle.offsetY,
-        radius: particle.radius,
-      };
-    });
-
-    for (let i = 0; i < renderedParticles.length; i += 1) {
-      for (let j = i + 1; j < renderedParticles.length; j += 1) {
-        const first = renderedParticles[i];
-        const second = renderedParticles[j];
-        const distance = Math.hypot(first.x - second.x, first.y - second.y);
-
-        if (distance > networkOptions.linkDistance) continue;
-
-        const midpointDistance = pointer.active
-          ? Math.hypot((first.x + second.x) / 2 - pointer.x, (first.y + second.y) / 2 - pointer.y)
-          : Infinity;
-        const cursorBoost = Math.max(
-          0,
-          1 - midpointDistance / (networkOptions.repulseRadius * 1.55),
-        );
-        const opacity =
-          (1 - distance / networkOptions.linkDistance) *
-          (networkOptions.lineBaseOpacity + cursorBoost * networkOptions.lineCursorBoost);
-
-        context.beginPath();
-        context.moveTo(first.x, first.y);
-        context.lineTo(second.x, second.y);
-        context.strokeStyle = `rgba(137, 180, 250, ${opacity.toFixed(3)})`;
-        context.lineWidth = 1;
-        context.stroke();
-      }
-    }
-
-    for (const particle of renderedParticles) {
-      const cursorDistance = pointer.active
-        ? Math.hypot(particle.x - pointer.x, particle.y - pointer.y)
+      const midpointDistance = pointerActive
+        ? Math.hypot((first[0] + second[0]) / 2 - pointerX, (first[1] + second[1]) / 2 - pointerY)
         : Infinity;
-      const cursorBoost = Math.max(0, 1 - cursorDistance / networkOptions.repulseRadius);
+      const cursorBoost = Math.max(0, 1 - midpointDistance / (REPULSE_RADIUS * 1.55));
+      const opacity = (1 - distance / LINK_DISTANCE) * (LINE_BASE_OPACITY + cursorBoost * LINE_CURSOR_BOOST);
 
       context.beginPath();
-      context.arc(particle.x, particle.y, particle.radius + cursorBoost * 0.55, 0, Math.PI * 2);
-      context.fillStyle = `rgba(226, 232, 240, ${(
-        networkOptions.nodeBaseOpacity +
-        cursorBoost * networkOptions.nodeCursorBoost
-      ).toFixed(3)})`;
-      context.fill();
+      context.moveTo(first[0], first[1]);
+      context.lineTo(second[0], second[1]);
+      context.strokeStyle = `rgba(137, 180, 250, ${opacity.toFixed(3)})`;
+      context.lineWidth = 1;
+      context.stroke();
     }
+  }
 
-    animationFrame = window.requestAnimationFrame(draw);
-  };
+  for (const point of points) {
+    const cursorDistance = pointerActive ? Math.hypot(point[0] - pointerX, point[1] - pointerY) : Infinity;
+    const cursorBoost = Math.max(0, 1 - cursorDistance / REPULSE_RADIUS);
 
-  const resizeObserver = new ResizeObserver(resize);
+    context.beginPath();
+    context.arc(point[0], point[1], point[2] + cursorBoost * 0.55, 0, Math.PI * 2);
+    context.fillStyle = `rgba(226, 232, 240, ${(NODE_BASE_OPACITY + cursorBoost * NODE_CURSOR_BOOST).toFixed(3)})`;
+    context.fill();
+  }
 
-  resize();
-  resizeObserver.observe(networkLayer);
-  window.addEventListener("pointermove", setPointer, { passive: true });
-  window.addEventListener("pointerleave", clearPointer);
-  window.addEventListener("blur", clearPointer);
-  animationFrame = window.requestAnimationFrame(draw);
-
-  return {
-    canvas,
-    destroy: () => {
-      window.cancelAnimationFrame(animationFrame);
-      resizeObserver.disconnect();
-      window.removeEventListener("pointermove", setPointer);
-      window.removeEventListener("pointerleave", clearPointer);
-      window.removeEventListener("blur", clearPointer);
-      canvas.remove();
-    },
-  };
+  frame = window.requestAnimationFrame(draw);
 };
 
 const destroyNetwork = () => {
-  network?.destroy();
-  network = undefined;
-  networkLayer?.replaceChildren();
+  if (frame) window.cancelAnimationFrame(frame);
+  frame = 0;
+  window.removeEventListener("pointermove", movePointer);
+  window.removeEventListener("pointerleave", clearPointer);
+  window.removeEventListener("blur", clearPointer);
+  canvas?.remove();
+  canvas = undefined;
+  context = null;
+  particles = [];
   background?.removeAttribute("data-network-ready");
-  background?.removeAttribute("data-network-config");
-  background?.removeAttribute("data-network-provider");
-};
-
-const syncNetwork = () => {
-  const currentVersion = ++syncVersion;
-
-  if (!background || !networkLayer || !shouldAnimate()) {
-    destroyNetwork();
-    background?.setAttribute("data-network-mode", "static");
-    return;
-  }
-
-  background.setAttribute("data-network-mode", "animated");
-
-  if (network) return;
-
-  destroyNetwork();
-
-  const loadedNetwork = createNetwork();
-
-  if (currentVersion !== syncVersion || !loadedNetwork || !shouldAnimate()) {
-    loadedNetwork?.destroy();
-    background?.setAttribute("data-network-mode", "static");
-    return;
-  }
-
-  network = loadedNetwork;
-  publishNetworkConfig();
-
-  window.requestAnimationFrame(() => {
-    if (network === loadedNetwork && shouldAnimate()) {
-      background.setAttribute("data-network-ready", "true");
-      loadedNetwork.canvas.style.opacity = "0.58";
-    }
-  });
-};
-
-const scheduleSync = () => {
-  syncNetwork();
-};
-
-const syncVisibility = () => {
-  if (document.hidden) {
-    syncVersion += 1;
-    destroyNetwork();
-    background?.setAttribute("data-network-mode", "static");
-  } else {
-    scheduleSync();
-  }
-};
-
-const handlePageShow = (event: PageTransitionEvent) => {
-  if (event.persisted) scheduleSync();
-};
-
-const handlePageHide = () => {
-  syncVersion += 1;
-  destroyNetwork();
   background?.setAttribute("data-network-mode", "static");
 };
 
+const createNetwork = () => {
+  if (!layer || canvas) return;
+
+  canvas = document.createElement("canvas");
+  context = canvas.getContext("2d", { alpha: true });
+
+  if (!context) {
+    canvas = undefined;
+    return;
+  }
+
+  canvas.className = "repulse-network-canvas";
+  canvas.setAttribute("aria-hidden", "true");
+  layer.replaceChildren(canvas);
+  resize();
+  window.addEventListener("pointermove", movePointer, { passive: true });
+  window.addEventListener("pointerleave", clearPointer);
+  window.addEventListener("blur", clearPointer);
+  frame = window.requestAnimationFrame(draw);
+};
+
+const syncNetwork = () => {
+  if (!canAnimate()) {
+    destroyNetwork();
+    return;
+  }
+
+  background?.setAttribute("data-network-mode", "animated");
+  createNetwork();
+
+  window.requestAnimationFrame(() => {
+    if (canvas && canAnimate()) background?.setAttribute("data-network-ready", "true");
+  });
+};
+
+const hideNetwork = () => {
+  destroyNetwork();
+};
+
 syncScrollDepth();
-syncVisibility();
-reducedMotionQuery.addEventListener("change", scheduleSync);
-desktopWidthQuery.addEventListener("change", scheduleSync);
-finePointerQuery.addEventListener("change", scheduleSync);
-document.addEventListener("visibilitychange", syncVisibility);
+syncNetwork();
+reducedMotion.addEventListener("change", syncNetwork);
+desktop.addEventListener("change", syncNetwork);
+finePointer.addEventListener("change", syncNetwork);
+document.addEventListener("visibilitychange", syncNetwork);
 window.addEventListener("scroll", scheduleScrollDepth, { passive: true });
-window.addEventListener("resize", scheduleScrollDepth, { passive: true });
-window.addEventListener("pageshow", handlePageShow);
-window.addEventListener("pagehide", handlePageHide);
+window.addEventListener("resize", () => {
+  scheduleScrollDepth();
+  resize();
+});
+window.addEventListener("pagehide", hideNetwork);
+window.addEventListener("pageshow", syncNetwork);

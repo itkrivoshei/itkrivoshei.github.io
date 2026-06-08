@@ -37,39 +37,56 @@ import TerminalTypewriter from "./TerminalTypewriter.astro";
 <style>
   .hero-card {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-lg);
-    row-gap: 0px;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .hero-card .eyebrow,
+  .hero-card h1 {
+    grid-column: 1 / -1;
   }
 
   .hero-card .eyebrow {
-    grid-column: 1 / -1;
-    margin-bottom: var(--spacing-sm);
+    margin: 0;
   }
 
   .hero-card h1 {
-    grid-column: 1 / -1;
-    margin-bottom: var(--spacing-md);
+    margin: 0;
   }
 
   .hero-content {
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.92fr);
     align-items: center;
+    gap: clamp(1rem, 2vw, 1.5rem);
   }
 
   .hero-left {
     display: flex;
+    min-width: 0;
     flex-direction: column;
+  }
+
+  .hero-left .summary {
+    max-width: 54ch;
+  }
+
+  .hero-left .link-row {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    flex-wrap: nowrap;
+    gap: clamp(0.38rem, 0.8vw, 0.65rem);
+    margin-top: 1.25rem;
   }
 
   .hero-right {
     display: flex;
+    min-width: 0;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-md);
   }
 
   .terminal-card-shell,
@@ -82,40 +99,44 @@ import TerminalTypewriter from "./TerminalTypewriter.astro";
     border-radius: var(--radius-card);
   }
 
+  :global(.hero-card .link-row a) {
+    min-width: 0;
+    flex: 1 1 0;
+    gap: clamp(0.32rem, 0.75vw, 0.5rem);
+    padding: 0.62rem clamp(0.5rem, 1vw, 0.82rem);
+    white-space: nowrap;
+  }
+
+  :global(.hero-card .link-row .link-icon),
+  :global(.hero-card .link-row .link-icon svg) {
+    width: clamp(0.88rem, 1.3vw, 1.05rem);
+    height: clamp(0.88rem, 1.3vw, 1.05rem);
+  }
+
   @media (max-width: 1023px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
     .hero-card {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-md);
-      row-gap: 0px;
+      padding: 1.25rem;
     }
 
-    .hero-card .eyebrow {
-      margin-bottom: var(--spacing-sm);
+    .hero-left .link-row {
+      gap: 0.35rem;
     }
 
-    .hero-card h1 {
-      margin-bottom: var(--spacing-md);
+    :global(.hero-card .link-row a) {
+      padding: 0.58rem 0.46rem;
+      font-size: 0.82rem;
     }
+  }
 
-    .hero-content {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-md);
-    }
-
-    .hero-right {
-      padding: var(--spacing-md);
-    }
-
-    .hero-card h1 {
-      grid-column: 1;
-    }
-
-    .hero-card .eyebrow {
-      grid-column: 1;
-    }
-
-    .hero-content {
-      grid-column: 1;
+  @media (max-width: 390px) {
+    :global(.hero-card .link-row a) {
+      font-size: 0.76rem;
     }
   }
 </style>

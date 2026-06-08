@@ -125,11 +125,11 @@ test("runs the desktop background system and destroys it on mobile", async ({ pa
   expect(networkConfig).toMatchObject({
     backgroundAlpha: 0,
     gyroControls: false,
-    linkDistance: 150,
+    linkDistance: 230,
     mouseControls: true,
-    pointCount: 82,
+    pointCount: 124,
     provider: "canvas-repulse-network",
-    repulseRadius: 132,
+    repulseRadius: 205,
     touchControls: false,
   });
   await expect(background).toHaveAttribute("data-network-provider", "canvas-repulse-network");

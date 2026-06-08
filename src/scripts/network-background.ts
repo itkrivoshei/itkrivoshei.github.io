@@ -125,6 +125,17 @@ const createNetwork = (): NetworkRuntime | undefined => {
 
   canvas.className = "repulse-network-canvas";
   canvas.setAttribute("aria-hidden", "true");
+  Object.assign(canvas.style, {
+    display: "block",
+    position: "absolute",
+    inset: "0",
+    width: "100%",
+    height: "100%",
+    filter: "saturate(0.9) brightness(0.92)",
+    opacity: "0",
+    pointerEvents: "none",
+    transition: "opacity 1100ms cubic-bezier(0.16, 1, 0.3, 1)",
+  });
   networkLayer.replaceChildren(canvas);
 
   const pointer: PointerState = {
@@ -275,6 +286,7 @@ const syncNetwork = () => {
   window.requestAnimationFrame(() => {
     if (network === loadedNetwork && shouldAnimate()) {
       background.setAttribute("data-network-ready", "true");
+      loadedNetwork.canvas.style.opacity = "0.46";
     }
   });
 };

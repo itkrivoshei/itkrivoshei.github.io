@@ -53,7 +53,7 @@ const networkOptions = {
   pointCount: 124,
   pointerLerp: 0.15,
   repulseRadius: 205,
-  repulseStrength: 20,
+  repulseStrength: 5,
   speed: 0.35,
   spring: 0.035,
   touchControls: false,

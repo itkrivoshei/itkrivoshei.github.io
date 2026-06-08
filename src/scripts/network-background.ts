@@ -42,23 +42,24 @@ interface NetworkRuntime {
 
 const networkOptions = {
   backgroundAlpha: 0,
-  damping: 0.88,
+  damping: 0.92,
   gyroControls: false,
   linkDistance: 230,
-  lineBaseOpacity: 0.22,
-  lineCursorBoost: 0.18,
+  lineBaseOpacity: 0.38,
+  lineCursorBoost: 0.55,
   mouseControls: true,
-  nodeBaseOpacity: 0.54,
-  nodeCursorBoost: 0.18,
+  nodeBaseOpacity: 0.38,
+  nodeCursorBoost: 0.55,
   pointCount: 124,
-  pointerLerp: 0.14,
+  pointerLerp: 0.15,
   repulseRadius: 205,
-  repulseStrength: 26,
-  speed: 0.13,
+  repulseStrength: 20,
+  speed: 0.35,
   spring: 0.035,
   touchControls: false,
 };
 
+const root = document.documentElement;
 const background = document.querySelector<HTMLElement>("[data-network-background]");
 const networkLayer = background?.querySelector<HTMLElement>("[data-network-effect]");
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -66,8 +67,23 @@ const desktopWidthQuery = window.matchMedia("(min-width: 1024px)");
 const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
 let network: NetworkRuntime | undefined;
 let syncVersion = 0;
+let scrollFrame = 0;
 
 networkLayer?.style.setProperty("pointer-events", "none");
+
+const syncScrollDepth = () => {
+  scrollFrame = 0;
+
+  const scrollMax = Math.max(1, root.scrollHeight - window.innerHeight);
+  const depth = Math.min(1, Math.max(0, window.scrollY / scrollMax));
+
+  root.style.setProperty("--scroll-depth", depth.toFixed(3));
+};
+
+const scheduleScrollDepth = () => {
+  if (scrollFrame) return;
+  scrollFrame = window.requestAnimationFrame(syncScrollDepth);
+};
 
 const shouldAnimate = () =>
   Boolean(
@@ -378,10 +394,13 @@ const handlePageHide = () => {
   background?.setAttribute("data-network-mode", "static");
 };
 
+syncScrollDepth();
 syncVisibility();
 reducedMotionQuery.addEventListener("change", scheduleSync);
 desktopWidthQuery.addEventListener("change", scheduleSync);
 finePointerQuery.addEventListener("change", scheduleSync);
 document.addEventListener("visibilitychange", syncVisibility);
+window.addEventListener("scroll", scheduleScrollDepth, { passive: true });
+window.addEventListener("resize", scheduleScrollDepth, { passive: true });
 window.addEventListener("pageshow", handlePageShow);
 window.addEventListener("pagehide", handlePageHide);

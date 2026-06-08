@@ -15,16 +15,16 @@ const networkOptions = {
   backgroundAlpha: 0,
   backgroundColor: 0x020617,
   gyroControls: false,
-  maxDistance: 17,
-  mouseControls: false,
-  points: 6,
+  maxDistance: 20,
+  mouseControls: true,
+  points: 7,
   scale: 1,
   showDots: true,
-  spacing: 26,
+  spacing: 24,
   touchControls: false,
 } satisfies Omit<VantaNetOptions, "THREE" | "color" | "el">;
 
-const networkColor = 0x74c7ec;
+const networkColor = 0x89b4fa;
 
 const background = document.querySelector<HTMLElement>("[data-network-background]");
 const networkLayer = background?.querySelector<HTMLElement>("[data-network-effect]");
@@ -37,11 +37,11 @@ let syncVersion = 0;
 const shouldAnimate = () =>
   Boolean(
     background &&
-    networkLayer &&
-    !document.hidden &&
-    !reducedMotionQuery.matches &&
-    desktopWidthQuery.matches &&
-    finePointerQuery.matches,
+      networkLayer &&
+      !document.hidden &&
+      !reducedMotionQuery.matches &&
+      desktopWidthQuery.matches &&
+      finePointerQuery.matches,
   );
 
 const publishNetworkConfig = () => {

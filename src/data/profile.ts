@@ -45,25 +45,25 @@ export interface SkillGroup {
 
 export const profile = {
   name: "Nikita Krivoshei",
-  role: "DevOps-focused Software Engineer",
+  role: "Infrastructure-Focused Software Engineer",
   location: "Berlin, Germany",
   summary:
-    "Software engineer with 4+ years across TypeScript web platforms, release workflows, staging environments, and production troubleshooting.",
+    "Software engineer with 4+ years across production web platforms, release workflows, staging environments, API-driven systems, and production-oriented troubleshooting.",
   about: [
     {
       prompt: "prod",
-      text: "Software engineer with 4+ years across TypeScript web platforms, release workflows, staging environments, and production troubleshooting.",
+      text: "Software engineer with 4+ years across media platforms, public-sector systems, release workflows, staging environments, and production-oriented troubleshooting.",
       highlight: "release workflows",
     },
     {
       prompt: "infra",
-      text: "Working with Linux, Docker, Kubernetes, Terraform, AWS, CI/CD, monitoring, and deployment automation.",
-      highlight: "Linux, Docker, Kubernetes, Terraform, AWS",
+      text: "Focused on Linux, Docker, CI/CD, cloud infrastructure, observability, deployment automation, and reliability-focused engineering.",
+      highlight: "Linux, Docker, CI/CD, cloud infrastructure",
     },
     {
       prompt: "ship",
-      text: "Small changes, clear checks, documented delivery, and stable releases.",
-      highlight: "clear checks",
+      text: "Clear checks, documented delivery, stable releases, and practical infrastructure projects.",
+      highlight: "documented delivery",
     },
   ],
   links: [
@@ -78,17 +78,17 @@ export const skillGroups = [
   {
     title: "CI/CD",
     icon: "pipeline",
-    items: ["GitHub Actions", "GitLab CI/CD", "Jenkins", "release workflows"],
+    items: ["GitHub Actions", "GitLab workflows", "Jenkins workflows", "release validation"],
   },
   {
     title: "Infrastructure",
     icon: "server",
-    items: ["Linux", "Docker", "Kubernetes", "Terraform", "AWS", "Bash"],
+    items: ["Linux", "Docker", "Docker Compose", "Terraform", "AWS", "Bash"],
   },
   {
     title: "Reliability",
     icon: "pulse",
-    items: ["troubleshooting", "monitoring", "production support"],
+    items: ["troubleshooting", "monitoring", "log analysis", "production support"],
   },
   {
     title: "Engineering",
@@ -102,16 +102,16 @@ export const experience = [
     company: "SPRYLAB",
     href: "https://sprylab.com/en/",
     note: "digital publishing software / Purple platform ecosystem",
-    role: "Frontend Software Engineer | CI/CD & Production Delivery",
+    role: "Frontend Software Engineer | Client Platform Delivery",
     period: "09/2023 – 12/2024",
-    skills: ["TypeScript", "Jenkins", "CI/CD", "Staging", "Production support"],
+    skills: ["TypeScript", "Jenkins", "release workflows", "staging", "troubleshooting"],
     points: [
       {
-        text: "Built production web platforms for German media and publishing clients, including MOPO and BikeRadar-related delivery work.",
+        text: "Delivered client-facing websites and apps for German media and publishing clients, including MOPO and BikeRadar-related platform delivery work.",
       },
       {
-        text: "Supported Jenkins-based release workflows, staging environments, build validation, deployment checks, debugging, and performance optimization.",
-        highlight: "Jenkins-based release workflows",
+        text: "Used Jenkins-based workflows, build logs, preview/test environments, configuration checks, REST API checks, and QA handoff to support stable client releases.",
+        highlight: "Jenkins-based workflows",
       },
     ],
     links: [
@@ -122,18 +122,18 @@ export const experience = [
   {
     company: "RTLabs / Gosuslugi.ru",
     href: "https://www.gosuslugi.ru/",
-    note: "national citizen-service portal category",
-    role: "Software Engineer | Frontend, Release & Integration Support",
+    note: "national public-service platform category",
+    role: "Software Engineer | Frontend Integration & Release Delivery",
     period: "10/2020 – 04/2022",
-    skills: ["Angular", "TypeScript", "REST APIs", "Docker", "Kubernetes", "GitLab CI"],
+    skills: ["Angular", "TypeScript", "REST APIs", "GitLab", "release validation", "debugging"],
     points: [
       {
-        text: "Contributed to Gosuslugi.ru public-service systems, including citizen-facing flows and high-traffic certificate functionality.",
-        highlight: "high-traffic certificate functionality",
+        text: "Contributed to Gosuslugi.ru public-service systems, including citizen-facing flows and certificate / QR-code functionality.",
+        highlight: "certificate / QR-code functionality",
       },
       {
-        text: "Worked with Angular, TypeScript, REST APIs, GitLab/Jenkins workflows, Docker/Kubernetes-based environments, release preparation, and production debugging.",
-        highlight: "Docker/Kubernetes-based environments",
+        text: "Worked with Angular, TypeScript, REST APIs, GitLab workflows, unit tests, test-environment validation, release preparation, analytics debugging, and production-oriented troubleshooting.",
+        highlight: "test-environment validation",
       },
     ],
     links: [{ label: "Website", href: "https://www.gosuslugi.ru/" }],
@@ -141,16 +141,16 @@ export const experience = [
   {
     company: "First Bit",
     href: "https://en.1solution.ru/",
-    note: "business automation and enterprise software implementation",
-    role: "Database Developer | Business Systems",
+    note: "business software and workflow systems",
+    role: "Database Developer Intern | SQL & Workflow Support",
     period: "02/2019 – 01/2020",
-    skills: ["PHP", "SQL", "Jira", "Debugging", "Documentation"],
+    skills: ["SQL", "Jira", "documentation", "workflow support"],
     points: [
       {
-        text: "Built database-driven internal tools and business systems for company and client workflows.",
+        text: "Worked with SQL, data modeling, documentation, and database-driven workflows for business software systems.",
       },
       {
-        text: "Worked with PHP, SQL, data models, debugging, documentation, Jira, Agile workflows, and business process automation.",
+        text: "Supported client coordination, Jira task tracking, Agile/Scrum routines, documentation handling, and basic troubleshooting.",
       },
     ],
     links: [],
@@ -162,9 +162,9 @@ export const projects = [
     name: "Production App Infrastructure",
     repo: "production-app-infrastructure",
     description:
-      "DevOps control center with Dockerized services, observability, CI/CD, security scans, load testing, and rollback.",
+      "Production-style DevOps control center with Dockerized services, observability, CI/CD, security scans, load testing, rollback workflows, and Terraform validation.",
     featured: true,
-    tags: ["Docker", "Prometheus", "Grafana", "CI/CD", "Terraform"],
+    tags: ["Docker", "Prometheus", "Grafana", "CI/CD", "Terraform", "GitHub Actions"],
     links: [
       {
         label: "Repository",
@@ -232,8 +232,8 @@ export const projects = [
     name: "Media publishing platforms",
     repo: "client work",
     description:
-      "Production web delivery for publisher platforms, including MOPO and BikeRadar-related release support, staging validation, and troubleshooting.",
-    highlight: "release support, staging validation, and troubleshooting",
+      "Production web delivery for publisher platforms, including MOPO and BikeRadar-related release support, staging validation, configuration checks, and troubleshooting.",
+    highlight: "release support, staging validation, configuration checks, and troubleshooting",
     tags: ["TypeScript", "Jenkins", "staging", "release checks", "troubleshooting"],
     links: [
       { label: "MOPO", href: "https://www.mopo.de/", kind: "site" },
@@ -244,14 +244,20 @@ export const projects = [
     name: "Public services portal work",
     repo: "gosuslugi.ru",
     description:
-      "Large-scale public-service platform work covering citizen-facing flows, integration support, release validation, and production debugging.",
-    highlight: "release validation, and production debugging",
-    tags: ["Angular", "GitLab", "Jenkins", "Docker", "Kubernetes"],
+      "Large-scale public-service platform work covering citizen-facing flows, API-driven UI states, integration support, release validation, and production-oriented troubleshooting.",
+    highlight: "release validation and production-oriented troubleshooting",
+    tags: ["Angular", "TypeScript", "REST APIs", "GitLab", "release validation"],
     links: [{ label: "Website", href: "https://www.gosuslugi.ru/", kind: "site" }],
   },
 ] satisfies ProjectItem[];
 
 export const availability = {
-  text: "Available for DevOps, Cloud, Platform, Build & Release, and Software Engineering roles.",
-  highlights: ["DevOps", "Cloud", "Platform", "Build & Release", "Software Engineering"],
+  text: "Available for infrastructure-focused software engineering, CI/CD, cloud operations, build/release, and junior DevOps roles.",
+  highlights: [
+    "infrastructure-focused software engineering",
+    "CI/CD",
+    "cloud operations",
+    "build/release",
+    "junior DevOps",
+  ],
 };

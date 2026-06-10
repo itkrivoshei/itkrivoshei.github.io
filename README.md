@@ -13,7 +13,7 @@ Personal engineering website presenting work history, technical background, sele
 <br />
 
 [![GitHub](https://img.shields.io/badge/GitHub-itkrivoshei-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nikita%20Krivoshei-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0f172a)](https://linkedin.com/in/itkivoshei)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nikita%20Krivoshei-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0f172a)](https://linkedin.com/in/itkrivoshei)
 [![Email](https://img.shields.io/badge/Email-nikitakrivoshei%40gmail.com-d14836?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0f172a)](mailto:nikitakrivoshei@gmail.com)
 
 </div>

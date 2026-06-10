@@ -62,8 +62,8 @@ export const profile = {
     },
     {
       prompt: "ship",
-      text: "Clear checks, documented delivery, stable releases, and practical infrastructure projects.",
-      highlight: "documented delivery",
+      text: "Clear checks, automated workflows, documented delivery, and stable releases.",
+      highlight: "automated workflows",
     },
   ],
   links: [
@@ -110,8 +110,8 @@ export const experience = [
         text: "Delivered client-facing websites and apps for German media and publishing clients, including MOPO and BikeRadar-related platform delivery work.",
       },
       {
-        text: "Used Jenkins-based workflows, build logs, preview/test environments, configuration checks, REST API checks, and QA handoff to support stable client releases.",
-        highlight: "Jenkins-based workflows",
+        text: "Used Jenkins workflows, build logs, preview/test environments, configuration checks, REST API checks, and QA handoff to support stable client releases.",
+        highlight: "Jenkins workflows",
       },
     ],
     links: [
@@ -122,7 +122,7 @@ export const experience = [
   {
     company: "RTLabs / Gosuslugi.ru",
     href: "https://www.gosuslugi.ru/",
-    note: "national public-service platform category",
+    note: "large-scale public-service platform / Gosuslugi ecosystem",
     role: "Software Engineer | Frontend Integration & Release Delivery",
     period: "10/2020 – 04/2022",
     skills: ["Angular", "TypeScript", "REST APIs", "GitLab", "release validation", "debugging"],
@@ -162,17 +162,17 @@ export const projects = [
     name: "Production App Infrastructure",
     repo: "production-app-infrastructure",
     description:
-      "Production-style DevOps control center with Dockerized services, observability, CI/CD, security scans, load testing, rollback workflows, and Terraform validation.",
+      "Production-style infrastructure project with Dockerized services, observability, CI/CD, security scans, load testing, rollback workflows, and Terraform validation.",
     featured: true,
     tags: ["Docker", "Prometheus", "Grafana", "CI/CD", "Terraform", "GitHub Actions"],
     links: [
       {
-        label: "Repository",
+        label: "GitHub",
         href: "https://github.com/itkrivoshei/production-app-infrastructure",
         kind: "repository",
       },
       {
-        label: "Live preview",
+        label: "Live UI preview",
         href: "https://itkrivoshei.github.io/production-app-infrastructure/",
         kind: "site",
       },
@@ -187,7 +187,7 @@ export const projects = [
     tags: ["Linux", "Bash", "zsh", "ShellCheck", "GitHub Actions"],
     links: [
       {
-        label: "Repository",
+        label: "GitHub",
         href: "https://github.com/itkrivoshei/dotfiles",
         kind: "repository",
       },
@@ -202,7 +202,7 @@ export const projects = [
     tags: ["Angular", "NgRx", "AWS Lambda", "API Gateway", "CI/CD"],
     links: [
       {
-        label: "Repository",
+        label: "GitHub",
         href: "https://github.com/itkrivoshei/angular-serverless-commerce-dashboard",
         kind: "repository",
       },
@@ -222,7 +222,7 @@ export const projects = [
     tags: ["Python", "Docker", "Streamlit", "pytest", "GitHub Actions"],
     links: [
       {
-        label: "Repository",
+        label: "GitHub",
         href: "https://github.com/itkrivoshei/salary-prediction-linear-regression",
         kind: "repository",
       },
@@ -252,12 +252,12 @@ export const projects = [
 ] satisfies ProjectItem[];
 
 export const availability = {
-  text: "Available for infrastructure-focused software engineering, CI/CD, cloud operations, build/release, and junior DevOps roles.",
+  text: "Available for infrastructure-focused software engineering, cloud operations, CI/CD, build/release, and DevOps-adjacent roles.",
   highlights: [
     "infrastructure-focused software engineering",
-    "CI/CD",
     "cloud operations",
+    "CI/CD",
     "build/release",
-    "junior DevOps",
+    "DevOps-adjacent",
   ],
 };

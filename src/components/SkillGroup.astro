@@ -54,8 +54,8 @@ const { group } = Astro.props as Props;
   </ul>
 </article>
 
-<style is:global>
-  .skills-grid {
+<style>
+  :global(.skills-list) {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.75rem;
@@ -69,23 +69,17 @@ const { group } = Astro.props as Props;
     padding: 1rem 1.1rem;
   }
 
-  .skill-row .skill-row-heading {
+  .skill-row-heading {
     min-width: 0;
   }
 
-  .skill-row .skill-row-tags {
+  .skill-row-tags {
     margin-top: 0;
   }
 
   @media (min-width: 760px) {
     .skill-row {
-      grid-template-columns: minmax(13rem, 0.32fr) minmax(0, 1fr);
-    }
-  }
-
-  @media (min-width: 980px) {
-    .skills-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(14rem, 0.3fr) minmax(0, 1fr);
     }
   }
 </style>

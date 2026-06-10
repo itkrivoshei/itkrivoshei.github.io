@@ -76,24 +76,24 @@ export const profile = {
 
 export const skillGroups = [
   {
-    title: "CI/CD",
+    title: "Delivery",
     icon: "pipeline",
-    items: ["GitHub Actions", "GitLab workflows", "Jenkins workflows", "release validation", "GHCR"],
+    items: ["GitHub Actions", "GitLab CI/CD", "Jenkins builds", "GHCR images", "security scans", "release checks"],
   },
   {
     title: "Infrastructure",
     icon: "server",
-    items: ["Linux", "Docker", "Docker Compose", "Terraform", "AWS", "Bash"],
+    items: ["Linux systems", "Docker Compose", "Nginx proxy", "Terraform IaC", "AWS basics", "Bash scripting"],
   },
   {
-    title: "Reliability",
+    title: "Observability",
     icon: "pulse",
-    items: ["Prometheus", "Grafana", "log analysis", "health checks", "rollback workflows"],
+    items: ["Prometheus", "Grafana", "structured logs", "health checks", "rollback flows", "troubleshooting"],
   },
   {
     title: "Engineering",
     icon: "code",
-    items: ["TypeScript", "Node.js", "REST APIs", "Fastify", "Angular", "React"],
+    items: ["Python", "TypeScript", "Node.js", "REST APIs", "API debugging", "technical docs"],
   },
 ] satisfies SkillGroup[];
 
@@ -120,7 +120,7 @@ export const experience = [
     ],
   },
   {
-    company: "RTLabs / Gosuslugi.ru",
+    company: "RT Labs / Gosuslugi.ru",
     href: "https://www.gosuslugi.ru/",
     note: "large-scale public-service platform / Gosuslugi ecosystem",
     role: "Software Engineer | Frontend Integration & Release Delivery",
@@ -230,7 +230,7 @@ export const projects = [
   },
   {
     name: "Media publishing platforms",
-    repo: "client work",
+    repo: "Media platform delivery",
     description:
       "Production web delivery for publisher platforms, including MOPO and BikeRadar-related release support, staging validation, configuration checks, and troubleshooting.",
     highlight: "release support, staging validation, configuration checks, and troubleshooting",
@@ -252,12 +252,12 @@ export const projects = [
 ] satisfies ProjectItem[];
 
 export const availability = {
-  text: "Available for infrastructure-focused software engineering, cloud operations, CI/CD, build/release, and DevOps roles.",
+  text: "Available for infrastructure-focused software engineering, cloud operations, DevOps, CI/CD, and build/release roles.",
   highlights: [
     "infrastructure-focused software engineering",
     "cloud operations",
+    "DevOps",
     "CI/CD",
     "build/release",
-    "DevOps",
   ],
 };

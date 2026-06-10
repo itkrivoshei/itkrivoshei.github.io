@@ -39,7 +39,7 @@ export interface ProjectItem {
 
 export interface SkillGroup {
   title: string;
-  icon: "pipeline" | "server" | "pulse" | "code";
+  icon: "cloud" | "container" | "pipeline" | "pulse" | "code" | "git";
   items: string[];
 }
 
@@ -77,12 +77,12 @@ export const profile = {
 export const skillGroups = [
   {
     title: "Infrastructure & Cloud",
-    icon: "server",
+    icon: "cloud",
     items: ["Linux", "AWS", "Terraform", "Infrastructure as Code", "Nginx", "cloud infrastructure"],
   },
   {
     title: "Containers & Deployment",
-    icon: "server",
+    icon: "container",
     items: ["Docker", "Docker Compose", "containerization", "image builds", "deployment automation", "reverse proxy"],
   },
   {
@@ -102,7 +102,7 @@ export const skillGroups = [
   },
   {
     title: "Engineering Practices",
-    icon: "code",
+    icon: "git",
     items: ["Git", "code review", "technical documentation", "Jira", "Agile workflows", "collaborative problem solving"],
   },
 ] satisfies SkillGroup[];

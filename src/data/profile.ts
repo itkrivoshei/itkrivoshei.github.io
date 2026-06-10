@@ -76,24 +76,34 @@ export const profile = {
 
 export const skillGroups = [
   {
-    title: "Delivery",
-    icon: "pipeline",
-    items: ["GitHub Actions", "GitLab CI/CD", "Jenkins builds", "GHCR images", "security scans", "release checks"],
-  },
-  {
-    title: "Infrastructure",
+    title: "Infrastructure & Cloud",
     icon: "server",
-    items: ["Linux systems", "Docker Compose", "Nginx proxy", "Terraform IaC", "AWS basics", "Bash scripting"],
+    items: ["Linux", "AWS", "Terraform", "Infrastructure as Code", "Nginx", "cloud infrastructure"],
   },
   {
-    title: "Observability",
+    title: "Containers & Deployment",
+    icon: "server",
+    items: ["Docker", "Docker Compose", "containerization", "image builds", "deployment automation", "reverse proxy"],
+  },
+  {
+    title: "CI/CD & Release Engineering",
+    icon: "pipeline",
+    items: ["GitHub Actions", "GitLab CI/CD", "Jenkins", "build automation", "release checks", "release validation"],
+  },
+  {
+    title: "Observability & Reliability",
     icon: "pulse",
-    items: ["Prometheus", "Grafana", "structured logs", "health checks", "rollback flows", "troubleshooting"],
+    items: ["Prometheus", "Grafana", "monitoring", "log analysis", "health checks", "troubleshooting", "rollback workflows"],
   },
   {
-    title: "Engineering",
+    title: "Software Engineering",
     icon: "code",
-    items: ["Python", "TypeScript", "Node.js", "REST APIs", "API debugging", "technical docs"],
+    items: ["TypeScript", "JavaScript", "Node.js", "REST APIs", "Angular", "React", "Python"],
+  },
+  {
+    title: "Engineering Practices",
+    icon: "code",
+    items: ["Git", "code review", "technical documentation", "Jira", "Agile workflows", "collaborative problem solving"],
   },
 ] satisfies SkillGroup[];
 

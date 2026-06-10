@@ -1,0 +1,65 @@
+:root {
+  --panel: rgba(2, 6, 23, 0.72);
+  --panel-strong: rgba(15, 23, 42, 0.78);
+  --panel-glass: rgba(7, 13, 28, 0.76);
+  --panel-glass-strong: rgba(10, 18, 34, 0.82);
+  --card-glass: rgba(11, 19, 36, 0.8);
+  --card-glass-hover: rgba(13, 23, 43, 0.86);
+}
+
+.hero-card,
+.section-block,
+.footer-block {
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.68)),
+    var(--panel-glass);
+  border-color: rgba(148, 163, 184, 0.24);
+  backdrop-filter: blur(8px) saturate(112%);
+  -webkit-backdrop-filter: blur(8px) saturate(112%);
+}
+
+.section-about,
+.section-skills,
+.section-experience,
+.section-projects {
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.78), rgba(2, 6, 23, 0.68)),
+    rgba(4, 10, 24, 0.76);
+}
+
+.content-card,
+.timeline-card {
+  background:
+    linear-gradient(145deg, rgba(15, 23, 42, 0.78), rgba(2, 6, 23, 0.62)),
+    var(--card-glass);
+  border-color: rgba(148, 163, 184, 0.22);
+  backdrop-filter: blur(7px) saturate(110%);
+  -webkit-backdrop-filter: blur(7px) saturate(110%);
+}
+
+.terminal-card {
+  background:
+    linear-gradient(145deg, rgba(3, 7, 18, 0.78), rgba(0, 0, 0, 0.62)),
+    rgba(0, 0, 0, 0.5);
+  border-color: rgba(148, 163, 184, 0.2);
+}
+
+.section-block::before {
+  opacity: 0.26;
+}
+
+.section-block:hover {
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.84), rgba(2, 6, 23, 0.72)),
+    rgba(4, 10, 24, 0.8);
+  border-color: rgba(var(--link-rgb), 0.38);
+}
+
+.skill-card:hover,
+.project-card:hover,
+.timeline-card:hover {
+  background:
+    linear-gradient(145deg, rgba(15, 23, 42, 0.84), rgba(2, 6, 23, 0.7)),
+    var(--card-glass-hover);
+  border-color: rgba(var(--surface-glow-rgb), 0.44);
+}

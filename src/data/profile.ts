@@ -78,32 +78,32 @@ export const skillGroups = [
   {
     title: "Infrastructure & Cloud",
     icon: "cloud",
-    items: ["Linux", "AWS", "Terraform", "Infrastructure as Code", "Nginx", "cloud infrastructure"],
+    items: ["Linux", "AWS", "Terraform", "IaC", "Nginx", "Cloud infra"],
   },
   {
     title: "Containers & Deployment",
     icon: "container",
-    items: ["Docker", "Docker Compose", "containerization", "image builds", "deployment automation", "reverse proxy"],
+    items: ["Docker", "Docker Compose", "Container images", "Image builds", "Deploy automation", "Reverse proxy"],
   },
   {
     title: "CI/CD & Release Engineering",
     icon: "pipeline",
-    items: ["GitHub Actions", "GitLab CI/CD", "Jenkins", "build automation", "release checks", "release validation"],
+    items: ["GitHub Actions", "GitLab CI/CD", "Jenkins", "Build automation", "Release checks", "Release validation"],
   },
   {
     title: "Observability & Reliability",
     icon: "pulse",
-    items: ["Prometheus", "Grafana", "monitoring", "log analysis", "health checks", "troubleshooting", "rollback workflows"],
+    items: ["Prometheus", "Grafana", "Monitoring", "Structured logs", "Health checks", "Rollback workflows"],
   },
   {
     title: "Software Engineering",
     icon: "code",
-    items: ["TypeScript", "JavaScript", "Node.js", "REST APIs", "Angular", "React", "Python"],
+    items: ["TypeScript", "JavaScript", "Node.js", "REST APIs", "Python", "API debugging"],
   },
   {
     title: "Engineering Practices",
     icon: "git",
-    items: ["Git", "code review", "technical documentation", "Jira", "Agile workflows", "collaborative problem solving"],
+    items: ["Git", "Code review", "Tech docs", "Jira", "Agile workflows", "Collaboration"],
   },
 ] satisfies SkillGroup[];
 

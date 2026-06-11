@@ -3,79 +3,15 @@ const command = "deploy engineering-site --target github-pages";
 const result = "ready";
 ---
 
-<div
-  class="terminal-typewriter"
-  data-terminal-typewriter
-  data-command={command}
-  data-result={result}
->
+<div class="terminal-typewriter" aria-label={`$ ${command}. ${result}.`}>
   <p class="typewriter-line typewriter-command-line">
     <span class="terminal-prompt" aria-hidden="true">$</span>
-    <span data-typewriter-command>{command}</span>
+    <span>{command}</span>
   </p>
   <p class="typewriter-line typewriter-result-line">
-    <span data-typewriter-result>{result}</span><span class="typewriter-cursor" aria-hidden="true"
-    ></span>
+    <span>{result}</span><span class="typewriter-cursor" aria-hidden="true"></span>
   </p>
 </div>
-
-<script>
-  const typewriterBlocks = document.querySelectorAll<HTMLElement>("[data-terminal-typewriter]");
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  typewriterBlocks.forEach((block) => {
-    const commandLine = block.querySelector<HTMLElement>(".typewriter-command-line");
-    const resultLine = block.querySelector<HTMLElement>(".typewriter-result-line");
-    const commandTarget = block.querySelector<HTMLElement>("[data-typewriter-command]");
-    const resultTarget = block.querySelector<HTMLElement>("[data-typewriter-result]");
-    const cursor = block.querySelector<HTMLElement>(".typewriter-cursor");
-    const command = block.getAttribute("data-command") ?? "";
-    const result = block.getAttribute("data-result") ?? "";
-
-    if (!commandLine || !resultLine || !commandTarget || !resultTarget || !cursor) {
-      return;
-    }
-
-    if (prefersReducedMotion) {
-      block.classList.add("typewriter-complete");
-      return;
-    }
-
-    commandTarget.textContent = "";
-    resultTarget.textContent = "";
-    commandLine.append(cursor);
-
-    let commandIndex = 0;
-    let resultIndex = 0;
-
-    const typeResult = () => {
-      resultTarget.textContent = result.slice(0, resultIndex);
-      resultLine.append(cursor);
-
-      if (resultIndex < result.length) {
-        resultIndex += 1;
-        window.setTimeout(typeResult, 36);
-        return;
-      }
-
-      block.classList.add("typewriter-complete");
-    };
-
-    const typeCommand = () => {
-      commandTarget.textContent = command.slice(0, commandIndex);
-
-      if (commandIndex < command.length) {
-        commandIndex += 1;
-        window.setTimeout(typeCommand, 28 + Math.random() * 14);
-        return;
-      }
-
-      window.setTimeout(typeResult, 260);
-    };
-
-    window.setTimeout(typeCommand, 380);
-  });
-</script>
 
 <style>
   .terminal-typewriter {

@@ -88,23 +88,19 @@ const initializeMotion = async () => {
         if (target.getBoundingClientRect().top <= window.innerHeight * 0.78) return;
 
         const isCard = target.dataset.reveal === "card";
-        gsap.fromTo(
-          target,
-          {
-            y: isCard ? 8 : 10,
+        gsap.from(target, {
+          clearProps: "opacity,transform",
+          duration: isCard ? 0.48 : 0.56,
+          ease: "power2.out",
+          immediateRender: false,
+          opacity: 0,
+          scrollTrigger: {
+            once: true,
+            start: "top 92%",
+            trigger: target,
           },
-          {
-            clearProps: "transform",
-            duration: isCard ? 0.48 : 0.56,
-            ease: "power2.out",
-            scrollTrigger: {
-              once: true,
-              start: "top 90%",
-              trigger: target,
-            },
-            y: 0,
-          },
-        );
+          y: isCard ? 8 : 10,
+        });
       });
     });
 

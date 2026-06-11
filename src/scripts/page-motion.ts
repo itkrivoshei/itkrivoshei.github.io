@@ -1,14 +1,17 @@
 import type Lenis from "lenis";
 
+type Cleanup = () => void;
+
 const body = document.body;
 const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
 const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 const desktopWidthQuery = window.matchMedia("(min-width: 1024px)");
 const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
 const hasMotionTargets = revealTargets.length > 0;
+const revealStart = "top 92%";
 let motionVersion = 0;
 let documentLoaded = document.readyState === "complete";
-let cleanupMotion: (() => void) | undefined;
+let cleanupMotion: Cleanup | undefined;
 
 const shouldEnableMotion = () =>
   hasMotionTargets &&
@@ -24,22 +27,50 @@ const clearRuntimeAttributes = () => {
   body.removeAttribute("data-scrolltrigger-ready");
 };
 
+const clearRevealStyles = (target: HTMLElement) => {
+  target.style.removeProperty("opacity");
+  target.style.removeProperty("visibility");
+  target.style.removeProperty("transform");
+};
+
+const markTargetVisible = (target: HTMLElement) => {
+  clearRevealStyles(target);
+  target.dataset.revealState = "visible";
+  target.dataset.revealed = "true";
+};
+
+const resetTransientRevealState = () => {
+  revealTargets.forEach((target) => {
+    if (target.dataset.revealState === "hidden" || target.dataset.revealState === "revealing") {
+      clearRevealStyles(target);
+      target.dataset.revealState = "visible";
+    }
+  });
+};
+
+const revealAll = () => {
+  revealTargets.forEach(markTargetVisible);
+};
+
 const destroyMotion = () => {
   motionVersion += 1;
   cleanupMotion?.();
   cleanupMotion = undefined;
+  revealAll();
   clearRuntimeAttributes();
 };
 
 const initializeMotion = async () => {
   const currentVersion = ++motionVersion;
-  let cleanupInitializedMotion: (() => void) | undefined;
+  let cleanupInitializedMotion: Cleanup | undefined;
 
   cleanupMotion?.();
   cleanupMotion = undefined;
+  resetTransientRevealState();
   clearRuntimeAttributes();
 
   if (!shouldEnableMotion()) {
+    revealAll();
     body.setAttribute("data-motion-mode", "static");
     return;
   }
@@ -74,35 +105,59 @@ const initializeMotion = async () => {
     const updateLenis = (time: number) => lenis.raf(time * 1000);
     lenis.on("scroll", syncScrollTrigger);
     gsap.ticker.add(updateLenis);
+    gsap.ticker.lagSmoothing(0);
 
-    const runtime: { context?: ReturnType<typeof gsap.context> } = {};
+    const revealTriggers: ReturnType<typeof ScrollTrigger.create>[] = [];
+
+    revealTargets.forEach((target) => {
+      if (target.dataset.revealed === "true") return;
+
+      const isCard = target.dataset.reveal === "card";
+      const initialY = isCard ? 10 : 12;
+
+      if (target.getBoundingClientRect().top <= window.innerHeight) {
+        markTargetVisible(target);
+        return;
+      }
+
+      target.dataset.revealState = "hidden";
+      gsap.set(target, {
+        autoAlpha: 0,
+        force3D: true,
+        y: initialY,
+      });
+
+      const trigger = ScrollTrigger.create({
+        once: true,
+        start: revealStart,
+        trigger: target,
+        onEnter: () => {
+          target.dataset.revealState = "revealing";
+
+          gsap.to(target, {
+            autoAlpha: 1,
+            clearProps: "opacity,visibility,transform",
+            duration: isCard ? 0.48 : 0.56,
+            ease: "power2.out",
+            overwrite: "auto",
+            y: 0,
+            onComplete: () => {
+              markTargetVisible(target);
+            },
+          });
+        },
+      });
+
+      revealTriggers.push(trigger);
+    });
+
     cleanupInitializedMotion = () => {
-      runtime.context?.revert();
+      revealTriggers.forEach((trigger) => trigger.kill());
+      gsap.killTweensOf(revealTargets);
       lenis.off("scroll", syncScrollTrigger);
       gsap.ticker.remove(updateLenis);
       lenis.destroy();
     };
-
-    runtime.context = gsap.context(() => {
-      revealTargets.forEach((target) => {
-        if (target.getBoundingClientRect().top <= window.innerHeight * 0.78) return;
-
-        const isCard = target.dataset.reveal === "card";
-        gsap.from(target, {
-          clearProps: "opacity,transform",
-          duration: isCard ? 0.48 : 0.56,
-          ease: "power2.out",
-          immediateRender: false,
-          opacity: 0,
-          scrollTrigger: {
-            once: true,
-            start: "top 92%",
-            trigger: target,
-          },
-          y: isCard ? 8 : 10,
-        });
-      });
-    });
 
     ScrollTrigger.refresh();
     body.setAttribute("data-motion-mode", "desktop");
@@ -112,6 +167,7 @@ const initializeMotion = async () => {
     cleanupMotion = cleanupInitializedMotion;
   } catch {
     cleanupInitializedMotion?.();
+    revealAll();
     clearRuntimeAttributes();
     body.setAttribute("data-motion-mode", "static");
   }

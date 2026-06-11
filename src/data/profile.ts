@@ -83,17 +83,38 @@ export const skillGroups = [
   {
     title: "Containers & Deployment",
     icon: "container",
-    items: ["Docker", "Docker Compose", "Container images", "Image builds", "Deploy automation", "Reverse proxy"],
+    items: [
+      "Docker",
+      "Docker Compose",
+      "Container images",
+      "Image builds",
+      "Deploy automation",
+      "Reverse proxy",
+    ],
   },
   {
     title: "CI/CD & Release Engineering",
     icon: "pipeline",
-    items: ["GitHub Actions", "GitLab CI/CD", "Jenkins", "Build automation", "Release checks", "Release validation"],
+    items: [
+      "GitHub Actions",
+      "GitLab CI/CD",
+      "Jenkins",
+      "Build automation",
+      "Release checks",
+      "Release validation",
+    ],
   },
   {
     title: "Observability & Reliability",
     icon: "pulse",
-    items: ["Prometheus", "Grafana", "Monitoring", "Structured logs", "Health checks", "Rollback workflows"],
+    items: [
+      "Prometheus",
+      "Grafana",
+      "Monitoring",
+      "Structured logs",
+      "Health checks",
+      "Rollback workflows",
+    ],
   },
   {
     title: "Software Engineering",

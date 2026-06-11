@@ -122,8 +122,8 @@ const initializeMotion = async () => {
 
       target.dataset.revealState = "hidden";
       gsap.set(target, {
-        autoAlpha: 0,
         force3D: true,
+        opacity: 0,
         y: initialY,
       });
 
@@ -135,10 +135,10 @@ const initializeMotion = async () => {
           target.dataset.revealState = "revealing";
 
           gsap.to(target, {
-            autoAlpha: 1,
-            clearProps: "opacity,visibility,transform",
+            clearProps: "opacity,transform",
             duration: isCard ? 0.48 : 0.56,
             ease: "power2.out",
+            opacity: 1,
             overwrite: "auto",
             y: 0,
             onComplete: () => {

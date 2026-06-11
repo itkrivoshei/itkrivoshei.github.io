@@ -26,8 +26,17 @@
   :root {
     color-scheme: dark;
     --bg: #020617;
-    --panel: rgba(2, 6, 23, 0.26);
-    --panel-strong: rgba(15, 23, 42, 0.26);
+    --panel: rgba(6, 12, 27, 0.52);
+    --panel-strong: rgba(10, 18, 34, 0.58);
+    --surface-section: rgba(6, 12, 27, 0.56);
+    --surface-section-hover: rgba(8, 16, 34, 0.62);
+    --surface-card: rgba(9, 17, 35, 0.54);
+    --surface-card-hover: rgba(12, 22, 42, 0.62);
+    --surface-terminal: rgba(0, 0, 0, 0.34);
+    --surface-border: rgba(148, 163, 184, 0.22);
+    --surface-border-hover: rgba(137, 180, 250, 0.34);
+    --glass-blur-section: 10px;
+    --glass-blur-card: 8px;
     --line: rgba(148, 163, 184, 0.18);
     --text: #e5e7eb;
     --muted: #cbd5e1;
@@ -139,8 +148,8 @@
   .timeline-card {
     position: relative;
     overflow: hidden;
-    border: 1px solid var(--line);
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.3), rgba(2, 6, 23, 0.12)), var(--panel);
+    border: 1px solid var(--surface-border);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.28), rgba(2, 6, 23, 0.16)), var(--panel);
     box-shadow:
       var(--shadow-panel),
       0 0 0 1px rgba(137, 180, 250, 0.045),
@@ -151,14 +160,14 @@
   .section-block,
   .footer-block,
   .terminal-card {
-    backdrop-filter: blur(12px) saturate(130%);
-    -webkit-backdrop-filter: blur(12px) saturate(130%);
+    backdrop-filter: blur(var(--glass-blur-section)) saturate(118%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-section)) saturate(118%);
   }
 
   .content-card,
   .timeline-card {
-    backdrop-filter: blur(10px) saturate(124%);
-    -webkit-backdrop-filter: blur(10px) saturate(124%);
+    backdrop-filter: blur(var(--glass-blur-card)) saturate(114%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-card)) saturate(114%);
   }
 
   .hero-card > *,
@@ -177,7 +186,7 @@
     gap: clamp(1.5rem, 4vw, 3rem);
     border-radius: var(--radius-hero);
     background:
-      linear-gradient(135deg, rgba(15, 23, 42, 0.32), rgba(2, 6, 23, 0.12)), rgba(2, 6, 23, 0.24);
+      linear-gradient(135deg, rgba(15, 23, 42, 0.34), rgba(2, 6, 23, 0.2)), var(--surface-section);
     padding: clamp(1.5rem, 5vw, 3.25rem);
   }
 
@@ -197,7 +206,7 @@
   .section-experience,
   .section-projects {
     background:
-      linear-gradient(135deg, rgba(15, 23, 42, 0.24), rgba(2, 6, 23, 0.1)), rgba(2, 6, 23, 0.2);
+      linear-gradient(135deg, rgba(15, 23, 42, 0.3), rgba(2, 6, 23, 0.18)), var(--surface-section);
   }
 
   .section-block::before {
@@ -207,16 +216,16 @@
     z-index: 0;
     pointer-events: none;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 30%),
-      radial-gradient(circle at 12% 0%, rgba(137, 180, 250, 0.055), transparent 34rem);
-    opacity: 0.42;
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 30%),
+      radial-gradient(circle at 12% 0%, rgba(137, 180, 250, 0.05), transparent 34rem);
+    opacity: 0.32;
   }
 
   .content-card,
   .timeline-card {
     border-radius: var(--radius-card);
     background:
-      linear-gradient(145deg, rgba(15, 23, 42, 0.34), rgba(2, 6, 23, 0.16)), var(--panel-strong);
+      linear-gradient(145deg, rgba(15, 23, 42, 0.28), rgba(2, 6, 23, 0.18)), var(--surface-card);
     padding: 1.25rem;
     transition:
       transform 180ms ease,
@@ -228,7 +237,7 @@
   .terminal-card {
     border-radius: var(--radius-card);
     background:
-      linear-gradient(145deg, rgba(3, 7, 18, 0.46), rgba(0, 0, 0, 0.28)), rgba(0, 0, 0, 0.24);
+      linear-gradient(145deg, rgba(3, 7, 18, 0.46), rgba(0, 0, 0, 0.28)), var(--surface-terminal);
     padding: 1.25rem;
     font-family: var(--mono);
     color: var(--muted);
@@ -241,9 +250,10 @@
   }
 
   .section-block:hover {
-    border-color: rgba(var(--link-rgb), 0.34);
+    border-color: var(--surface-border-hover);
     background:
-      linear-gradient(135deg, rgba(15, 23, 42, 0.28), rgba(2, 6, 23, 0.12)), rgba(2, 6, 23, 0.24);
+      linear-gradient(135deg, rgba(15, 23, 42, 0.34), rgba(2, 6, 23, 0.22)),
+      var(--surface-section-hover);
     box-shadow:
       0 30px 92px rgba(1, 4, 13, 0.46),
       0 0 42px rgba(var(--link-rgb), 0.08),
@@ -256,7 +266,8 @@
   .timeline-card:hover {
     border-color: rgba(var(--surface-glow-rgb), 0.42);
     background:
-      linear-gradient(145deg, rgba(15, 23, 42, 0.38), rgba(2, 6, 23, 0.18)), rgba(15, 23, 42, 0.28);
+      linear-gradient(145deg, rgba(15, 23, 42, 0.34), rgba(2, 6, 23, 0.24)),
+      var(--surface-card-hover);
     box-shadow:
       0 0 0 1px rgba(var(--surface-glow-rgb), 0.12),
       0 24px 70px rgba(2, 6, 23, 0.42),
@@ -579,7 +590,6 @@
     gap: 1rem;
   }
 
-  .skills-grid,
   .projects-grid {
     grid-template-columns: 1fr;
   }
@@ -783,7 +793,7 @@
   .section-block:hover {
     border-color: rgba(148, 163, 184, 0.18);
     background:
-      linear-gradient(135deg, rgba(15, 23, 42, 0.24), rgba(2, 6, 23, 0.1)), rgba(2, 6, 23, 0.2);
+      linear-gradient(135deg, rgba(15, 23, 42, 0.3), rgba(2, 6, 23, 0.18)), var(--surface-section);
     box-shadow: var(--shadow-panel);
   }
 
@@ -792,7 +802,7 @@
   .timeline-card:hover {
     border-color: rgba(148, 163, 184, 0.18);
     background:
-      linear-gradient(145deg, rgba(15, 23, 42, 0.34), rgba(2, 6, 23, 0.16)), rgba(15, 23, 42, 0.26);
+      linear-gradient(145deg, rgba(15, 23, 42, 0.28), rgba(2, 6, 23, 0.18)), var(--surface-card);
     box-shadow: none;
     transform: none;
   }
@@ -833,16 +843,6 @@
 
   .role {
     font-size: 1.62rem;
-  }
-
-  .skills-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 560px) {
-  .skills-grid {
-    grid-template-columns: 1fr;
   }
 }
 

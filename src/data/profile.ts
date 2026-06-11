@@ -39,7 +39,7 @@ export interface ProjectItem {
 
 export interface SkillGroup {
   title: string;
-  icon: "pipeline" | "server" | "pulse" | "code";
+  icon: "cloud" | "container" | "pipeline" | "pulse" | "code" | "git";
   items: string[];
 }
 
@@ -68,32 +68,63 @@ export const profile = {
   ],
   links: [
     { label: "GitHub", href: "https://github.com/itkrivoshei", icon: "github" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/itkivoshei", icon: "linkedin" },
-    { label: "Email", href: "mailto:NikitaKrivoshei@gmail.com", icon: "email" },
+    { label: "LinkedIn", href: "https://linkedin.com/in/itkrivoshei", icon: "linkedin" },
+    { label: "Email", href: "mailto:nikitakrivoshei@gmail.com", icon: "email" },
     { label: "Telegram", href: "https://t.me/itkrivoshei", icon: "telegram" },
   ] satisfies SocialLink[],
 };
 
 export const skillGroups = [
   {
-    title: "CI/CD",
+    title: "Infrastructure & Cloud",
+    icon: "cloud",
+    items: ["Linux", "AWS", "Terraform", "IaC", "Nginx", "Cloud infra"],
+  },
+  {
+    title: "Containers & Deployment",
+    icon: "container",
+    items: [
+      "Docker",
+      "Docker Compose",
+      "Container images",
+      "Image builds",
+      "Deploy automation",
+      "Reverse proxy",
+    ],
+  },
+  {
+    title: "CI/CD & Release Engineering",
     icon: "pipeline",
-    items: ["GitHub Actions", "GitLab workflows", "Jenkins workflows", "release validation"],
+    items: [
+      "GitHub Actions",
+      "GitLab CI/CD",
+      "Jenkins",
+      "Build automation",
+      "Release checks",
+      "Release validation",
+    ],
   },
   {
-    title: "Infrastructure",
-    icon: "server",
-    items: ["Linux", "Docker", "Docker Compose", "Terraform", "AWS", "Bash"],
-  },
-  {
-    title: "Reliability",
+    title: "Observability & Reliability",
     icon: "pulse",
-    items: ["troubleshooting", "monitoring", "log analysis", "production support"],
+    items: [
+      "Prometheus",
+      "Grafana",
+      "Monitoring",
+      "Structured logs",
+      "Health checks",
+      "Rollback workflows",
+    ],
   },
   {
-    title: "Engineering",
+    title: "Software Engineering",
     icon: "code",
-    items: ["TypeScript", "Angular", "React", "Node.js", "REST APIs"],
+    items: ["TypeScript", "JavaScript", "Node.js", "REST APIs", "Python", "API debugging"],
+  },
+  {
+    title: "Engineering Practices",
+    icon: "git",
+    items: ["Git", "Code review", "Tech docs", "Jira", "Agile workflows", "Collaboration"],
   },
 ] satisfies SkillGroup[];
 
@@ -110,8 +141,8 @@ export const experience = [
         text: "Delivered client-facing websites and apps for German media and publishing clients, including MOPO and BikeRadar-related platform delivery work.",
       },
       {
-        text: "Used Jenkins workflows, build logs, preview/test environments, configuration checks, REST API checks, and QA handoff to support stable client releases.",
-        highlight: "Jenkins workflows",
+        text: "Supported Jenkins-based workflows by triggering rebuilds, reviewing build logs, validating preview/test environments, and resolving configuration or frontend issues blocking stable client releases.",
+        highlight: "Jenkins-based workflows",
       },
     ],
     links: [
@@ -120,7 +151,7 @@ export const experience = [
     ],
   },
   {
-    company: "RTLabs / Gosuslugi.ru",
+    company: "RT Labs / Gosuslugi.ru",
     href: "https://www.gosuslugi.ru/",
     note: "large-scale public-service platform / Gosuslugi ecosystem",
     role: "Software Engineer | Frontend Integration & Release Delivery",
@@ -128,7 +159,7 @@ export const experience = [
     skills: ["Angular", "TypeScript", "REST APIs", "GitLab", "release validation", "debugging"],
     points: [
       {
-        text: "Contributed to Gosuslugi.ru public-service systems, including citizen-facing flows and certificate / QR-code functionality.",
+        text: "Contributed to Gosuslugi.ru public-service systems, including citizen-facing flows and COVID-19 certificate / QR-code functionality.",
         highlight: "certificate / QR-code functionality",
       },
       {
@@ -162,9 +193,9 @@ export const projects = [
     name: "Production App Infrastructure",
     repo: "production-app-infrastructure",
     description:
-      "Production-style infrastructure project with Dockerized services, observability, CI/CD, security scans, load testing, rollback workflows, and Terraform validation.",
+      "Production-style infrastructure project with Dockerized services, observability, CI/CD, security scans, load testing, rollback workflows, Terraform validation, and Kubernetes readiness checks.",
     featured: true,
-    tags: ["Docker", "Prometheus", "Grafana", "CI/CD", "Terraform", "GitHub Actions"],
+    tags: ["Docker", "Prometheus", "Grafana", "CI/CD", "Terraform", "Kubernetes readiness"],
     links: [
       {
         label: "GitHub",
@@ -230,7 +261,7 @@ export const projects = [
   },
   {
     name: "Media publishing platforms",
-    repo: "client work",
+    repo: "Media platform delivery",
     description:
       "Production web delivery for publisher platforms, including MOPO and BikeRadar-related release support, staging validation, configuration checks, and troubleshooting.",
     highlight: "release support, staging validation, configuration checks, and troubleshooting",
@@ -252,12 +283,12 @@ export const projects = [
 ] satisfies ProjectItem[];
 
 export const availability = {
-  text: "Available for infrastructure-focused software engineering, cloud operations, CI/CD, build/release, and DevOps-adjacent roles.",
+  text: "Available for infrastructure-focused software engineering, cloud operations, DevOps, CI/CD, and build/release roles.",
   highlights: [
     "infrastructure-focused software engineering",
     "cloud operations",
+    "DevOps",
     "CI/CD",
     "build/release",
-    "DevOps-adjacent",
   ],
 };

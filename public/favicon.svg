@@ -1,10 +1,50 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="10" fill="#020617" />
-  <path
-    d="M15 22h34M15 32h24M15 42h34"
-    stroke="#89b4fa"
-    stroke-width="4"
-    stroke-linecap="round"
-  />
-  <circle cx="48" cy="32" r="4" fill="#a6e3a1" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Nikita Krivoshei favicon</title>
+  <defs>
+    <linearGradient id="bg" x1="8" x2="56" y1="6" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f172a" />
+      <stop offset="0.55" stop-color="#020617" />
+      <stop offset="1" stop-color="#06121f" />
+    </linearGradient>
+    <linearGradient id="mark" x1="17" x2="48" y1="18" y2="47" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e2e8f0" />
+      <stop offset="0.55" stop-color="#89b4fa" />
+      <stop offset="1" stop-color="#a6e3a1" />
+    </linearGradient>
+    <style>
+      .pulse {
+        animation: pulse 2.8s ease-in-out infinite;
+      }
+
+      .pulse-delay {
+        animation-delay: 0.55s;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 0.62;
+        }
+
+        50% {
+          opacity: 1;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .pulse,
+        .pulse-delay {
+          animation: none;
+        }
+      }
+    </style>
+  </defs>
+
+  <rect width="64" height="64" rx="14" fill="url(#bg)" />
+  <path d="M8 18h48M8 32h48M8 46h48M18 8v48M32 8v48M46 8v48" stroke="#89b4fa" stroke-opacity="0.08" stroke-width="1" />
+  <path d="M16 46V18l32 28V18" fill="none" stroke="#0ea5e9" stroke-opacity="0.26" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M16 46V18l32 28V18" fill="none" stroke="url(#mark)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M16 18h11M37 46h11" stroke="#94e2d5" stroke-opacity="0.9" stroke-width="3" stroke-linecap="round" />
+  <circle class="pulse" cx="16" cy="18" r="3.4" fill="#89b4fa" />
+  <circle class="pulse pulse-delay" cx="48" cy="46" r="3.4" fill="#a6e3a1" />
+  <circle cx="48" cy="18" r="2.3" fill="#e2e8f0" opacity="0.72" />
 </svg>

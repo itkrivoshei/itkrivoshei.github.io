@@ -91,14 +91,12 @@ const initializeMotion = async () => {
         gsap.fromTo(
           target,
           {
-            opacity: 0,
             y: isCard ? 8 : 10,
           },
           {
-            clearProps: "opacity,transform",
+            clearProps: "transform",
             duration: isCard ? 0.48 : 0.56,
             ease: "power2.out",
-            opacity: 1,
             scrollTrigger: {
               once: true,
               start: "top 90%",

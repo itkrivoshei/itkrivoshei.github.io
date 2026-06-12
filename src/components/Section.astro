@@ -1,16 +1,14 @@
 ---
 interface Props {
   title: string;
-  variant: "about" | "skills" | "experience" | "projects";
 }
 
-const { title, variant } = Astro.props;
-const sectionClass = `section-${variant}`;
+const { title } = Astro.props;
 ---
 
-<section class:list={["section-block", sectionClass]}>
+<section class="section-block">
   <div class="section-title" data-reveal="heading">
-    <span></span>
+    <span aria-hidden="true"></span>
     <h2>{title}</h2>
   </div>
   <slot />

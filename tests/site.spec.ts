@@ -1,5 +1,13 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+const getLazyMotionRequests = (page: Page) =>
+  page.evaluate(() =>
+    performance
+      .getEntriesByType("resource")
+      .map(({ name }) => name)
+      .filter((name) => /(?:ScrollTrigger|lenis|\/index\.[^/]+\.js$)/i.test(name)),
+  );
 
 test("renders the primary content and passes the accessibility smoke test", async ({ page }) => {
   await page.goto("/");
@@ -58,18 +66,9 @@ test("does not initialize the WebGL network on mobile", async ({ page }) => {
   await expect(page.locator(".ambient-glow")).toHaveCSS("animation-name", "none");
   await expect(page.locator(".background-grid")).toHaveCount(1);
 
-  const networkRequests = await page.evaluate(() =>
-    performance
-      .getEntriesByType("resource")
-      .map(({ name }) => name)
-      .filter((name) =>
-        /(?:vanta(?:\.net|-three)|three\.module|ScrollTrigger|lenis|\/index\.[^/]+\.js$)/i.test(
-          name,
-        ),
-      ),
-  );
+  const lazyMotionRequests = await getLazyMotionRequests(page);
 
-  expect(networkRequests).toEqual([]);
+  expect(lazyMotionRequests).toEqual([]);
 });
 
 test("does not initialize the WebGL network when reduced motion is enabled", async ({ page }) => {
@@ -86,18 +85,9 @@ test("does not initialize the WebGL network when reduced motion is enabled", asy
   await expect(page.locator(".background-grid")).toHaveCount(1);
   await expect(page.getByRole("heading", { level: 2, name: "Experience" })).toBeVisible();
 
-  const networkRequests = await page.evaluate(() =>
-    performance
-      .getEntriesByType("resource")
-      .map(({ name }) => name)
-      .filter((name) =>
-        /(?:vanta(?:\.net|-three)|three\.module|ScrollTrigger|lenis|\/index\.[^/]+\.js$)/i.test(
-          name,
-        ),
-      ),
-  );
+  const lazyMotionRequests = await getLazyMotionRequests(page);
 
-  expect(networkRequests).toEqual([]);
+  expect(lazyMotionRequests).toEqual([]);
 });
 
 test("runs the desktop background system and destroys it on mobile", async ({ page }) => {

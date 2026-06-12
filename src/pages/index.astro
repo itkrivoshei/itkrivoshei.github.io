@@ -13,7 +13,7 @@ import { splitHighlightedText } from "../utils/text";
 <BaseLayout title={profile.name} description={profile.summary}>
   <main class="site-shell">
     <Hero />
-    <Section title="About" variant="about">
+    <Section title="About">
       <div class="copy-grid">
         {
           profile.about.map((paragraph) => (
@@ -27,15 +27,15 @@ import { splitHighlightedText } from "../utils/text";
         }
       </div>
     </Section>
-    <Section title="Skills" variant="skills">
+    <Section title="Skills">
       <div class="skills-list">
         {skillGroups.map((group) => <SkillGroup group={group} />)}
       </div>
     </Section>
-    <Section title="Experience" variant="experience">
+    <Section title="Experience">
       <div class="timeline-list">{experience.map((item) => <ExperienceCard item={item} />)}</div>
     </Section>
-    <Section title="Selected Engineering Work" variant="projects">
+    <Section title="Selected Engineering Work">
       <div class="card-grid projects-grid">
         {projects.map((project) => <ProjectCard project={project} />)}
       </div>

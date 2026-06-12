@@ -8,21 +8,9 @@ const budgets = [
     pattern: /^BaseLayout\..+\.css$/,
   },
   {
-    label: "background bootstrap",
-    limit: 4 * 1024,
-    optional: true,
-    pattern: /^(?:NetworkBackground|network-background)\..+\.js$/,
-  },
-  {
     label: "motion bootstrap",
     limit: 4 * 1024,
     pattern: /^BaseLayout\..+\.js$/,
-  },
-  {
-    label: "lazy WebGL runtime",
-    limit: 510 * 1024,
-    optional: true,
-    pattern: /^vanta-three\..+\.js$/,
   },
   {
     label: "lazy GSAP runtime",
@@ -46,11 +34,6 @@ for (const budget of budgets) {
   const asset = assets.find((name) => budget.pattern.test(name));
 
   if (!asset) {
-    if (budget.optional) {
-      console.log(`${budget.label}: skipped optional asset`);
-      continue;
-    }
-
     throw new Error(`Could not find ${budget.label} asset.`);
   }
 

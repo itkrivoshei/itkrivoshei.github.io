@@ -15,18 +15,19 @@ Personal engineering website presenting work history, technical background, sele
 [![GitHub](https://img.shields.io/badge/GitHub-itkrivoshei-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Nikita%20Krivoshei-0a66c2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0f172a)](https://linkedin.com/in/itkrivoshei)
 [![Email](https://img.shields.io/badge/Email-nikitakrivoshei%40gmail.com-d14836?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0f172a)](mailto:nikitakrivoshei@gmail.com)
+[![Telegram](https://img.shields.io/badge/Telegram-%40itkrivoshei-26a5e4?style=for-the-badge&logo=telegram&logoColor=white&labelColor=0f172a)](https://t.me/itkrivoshei)
+
+<br />
+
+[![Nikita Krivoshei engineering website preview](public/og-image.png)](https://itkrivoshei.github.io)
 
 </div>
 
-## Content Model
+## Architecture
 
-The site presents work history, technical background, selected projects, availability, and contact links from a typed content source:
+Work history, skills, selected projects, availability, and contact links live in the typed [`src/data/profile.ts`](src/data/profile.ts) source. [Astro](https://astro.build/) components render that content, while [Tailwind CSS v4](https://tailwindcss.com/) tokens and focused custom CSS provide the glass surfaces, grid/network background, visual depth, and scroll-depth darkening.
 
-[`src/data/profile.ts`](src/data/profile.ts)
-
-[Astro](https://astro.build/) components render the content into reusable sections. [Tailwind CSS v4](https://tailwindcss.com/) provides design tokens, utilities, and component layers, while focused custom CSS handles glass-like cards, the dark grid/network background, visual depth, and scroll-depth darkening. The desktop-only runtime uses a [custom canvas network background](src/scripts/network-background.ts) with soft cursor repulse, [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) for small content reveals, and [Lenis](https://lenis.darkroom.engineering/) for natural smooth scrolling. Mobile, coarse-pointer, reduced-motion, and no-JavaScript environments keep the same static CSS presentation without loading the animation runtimes.
-
-Tooling is aligned around [Node.js 22](https://nodejs.org/) via [`.node-version`](.node-version), the npm version declared in [`package.json`](package.json), [GitHub Actions](https://github.com/itkrivoshei/itkrivoshei.github.io/actions), and the [Docker](https://www.docker.com/) build image from [`Dockerfile`](Dockerfile).
+Suitable desktop devices load the [custom canvas network](src/scripts/network-background.ts) and [page motion runtime](src/scripts/page-motion.ts), which use [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) and [Lenis](https://lenis.darkroom.engineering/). Mobile, coarse-pointer, reduced-motion, and no-JavaScript environments retain the static presentation without loading those optional runtimes.
 
 ## Tech Stack
 
@@ -52,6 +53,10 @@ cd itkrivoshei.github.io
 nvm use
 
 npm ci
+
+# Required once for browser smoke tests.
+npx playwright install chromium
+
 npm run dev
 ```
 
@@ -62,9 +67,15 @@ npm run build
 npm run preview
 ```
 
-## Scripts
+Full local validation:
 
-Scripts are defined in [`package.json`](package.json).
+```bash
+npm run verify
+npm run test:smoke
+npm run test:container
+```
+
+## Scripts
 
 | Command                       | Purpose                                            |
 | ----------------------------- | -------------------------------------------------- |
@@ -84,8 +95,7 @@ Scripts are defined in [`package.json`](package.json).
 | `npm run verify`              | Run the complete non-browser CI quality gate       |
 | `npm run ready`               | Format first, then run the verification gate       |
 | `npm run hooks:install`       | Enable local Git hooks                             |
-
-Astro file formatting is backed by [`prettier-plugin-astro`](https://github.com/withastro/prettier-plugin-astro), so targeted checks such as `npx prettier --check src/pages/index.astro` work outside the editor too.
+| `npm run hooks:remove`        | Disable local Git hooks                            |
 
 ## Docker
 
@@ -110,7 +120,7 @@ The container uses [`nginx/default.conf`](nginx/default.conf) to serve the brand
 
 ## SEO and Progressive Enhancement
 
-The site includes canonical, Open Graph, Twitter Card, and JSON-LD metadata, plus a generated sitemap, `robots.txt`, branded social preview, and custom 404 page. Primary content remains visible without JavaScript. On suitable desktop devices, optional enhancements add small heading/card reveals, natural smooth scrolling, a self-contained terminal card, and a custom interactive canvas network background. Project cards keep stable CSS hover and focus behavior so their links remain directly usable. Mobile, coarse-pointer, and reduced-motion environments remain mostly static and do not load the animation runtimes.
+[`BaseLayout.astro`](src/layouts/BaseLayout.astro) provides canonical, Open Graph, Twitter Card, and JSON-LD metadata. The build also publishes a sitemap, `robots.txt`, branded social preview, and custom 404 page. Primary content and project links remain usable without JavaScript, while supported desktop devices receive optional motion and background enhancements.
 
 ## License
 

@@ -71,6 +71,48 @@ test("does not initialize the WebGL network on mobile", async ({ page }) => {
   expect(lazyMotionRequests).toEqual([]);
 });
 
+test("keeps narrow social links readable and clickable", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/");
+
+  const socialRows = [
+    page.locator(".hero-card .profile-link-row"),
+    page.locator(".footer-block .profile-link-row"),
+  ];
+
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBe(
+    0,
+  );
+
+  for (const socialRow of socialRows) {
+    await socialRow.scrollIntoViewIfNeeded();
+    await expect(socialRow).toHaveCSS("display", "grid");
+    expect(
+      await socialRow.evaluate(
+        (element) => getComputedStyle(element).gridTemplateColumns.split(" ").length,
+      ),
+    ).toBe(2);
+
+    for (const link of await socialRow.locator("a").all()) {
+      await expect(link).toBeVisible();
+      expect((await link.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+      expect(await link.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(
+        true,
+      );
+      expect(
+        await link.evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+
+          return document
+            .elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2)
+            ?.closest("a")
+            ?.isSameNode(element);
+        }),
+      ).toBe(true);
+    }
+  }
+});
+
 test("does not initialize the WebGL network when reduced motion is enabled", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");

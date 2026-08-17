@@ -295,11 +295,11 @@ test("publishes SEO metadata and static discovery files", async ({ page, request
 
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
-    "https://itkrivoshei.github.io/",
+    "https://krivoshei.dev/",
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     "content",
-    "https://itkrivoshei.github.io/og-image.png",
+    "https://krivoshei.dev/og-image.png",
   );
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
     "content",

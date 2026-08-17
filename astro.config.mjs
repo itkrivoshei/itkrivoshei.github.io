@@ -3,7 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://itkrivoshei.github.io",
+  site: "https://krivoshei.dev",
   integrations: [sitemap()],
   vite: {
     build: {

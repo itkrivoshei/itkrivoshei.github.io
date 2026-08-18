@@ -80,32 +80,44 @@ export const heroLinks = profile.links.filter((link) => link.icon !== "telegram"
 
 export const skillGroups = [
   {
-    title: "Infrastructure & Cloud",
-    icon: "cloud",
-    items: ["Linux", "AWS", "Terraform", "IaC", "Nginx", "Cloud infra"],
+    title: "Support & Troubleshooting",
+    icon: "git",
+    items: [
+      "Application support",
+      "Issue reproduction",
+      "Root cause analysis",
+      "Incident triage",
+      "Jira",
+      "Technical documentation",
+    ],
   },
   {
-    title: "Containers & Deployment",
+    title: "APIs & Data",
+    icon: "pipeline",
+    items: [
+      "REST APIs",
+      "HTTP/JSON",
+      "OAuth/JWT",
+      "Postman/cURL",
+      "SQL/PostgreSQL",
+      "API debugging",
+    ],
+  },
+  {
+    title: "Infrastructure & Cloud",
+    icon: "cloud",
+    items: ["Linux", "Bash", "AWS", "Terraform", "Kubernetes", "Nginx"],
+  },
+  {
+    title: "CI/CD & Delivery",
     icon: "container",
     items: [
       "Docker",
       "Docker Compose",
-      "Container images",
-      "Image builds",
-      "Deploy automation",
-      "Reverse proxy",
-    ],
-  },
-  {
-    title: "CI/CD & Release Engineering",
-    icon: "pipeline",
-    items: [
       "GitHub Actions",
       "GitLab CI/CD",
       "Jenkins",
-      "Build automation",
-      "Release checks",
-      "Release validation",
+      "Deployment automation",
     ],
   },
   {
@@ -114,21 +126,16 @@ export const skillGroups = [
     items: [
       "Prometheus",
       "Grafana",
-      "Monitoring",
-      "Structured logs",
+      "Loki",
+      "Log analysis",
+      "Monitoring & alerting",
       "Health checks",
-      "Rollback workflows",
     ],
   },
   {
     title: "Software Engineering",
     icon: "code",
-    items: ["TypeScript", "JavaScript", "Node.js", "REST APIs", "Python", "API debugging"],
-  },
-  {
-    title: "Engineering Practices",
-    icon: "git",
-    items: ["Git", "Code review", "Tech docs", "Jira", "Agile workflows", "Collaboration"],
+    items: ["TypeScript", "JavaScript", "Node.js", "Python", "Angular", "React"],
   },
 ] satisfies SkillGroup[];
 

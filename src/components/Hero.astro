@@ -10,7 +10,6 @@ import TerminalTypewriter from "./TerminalTypewriter.astro";
   <div class="hero-content">
     <div class="hero-left">
       <p class="role">{profile.role}</p>
-      <p class="location">{profile.location}</p>
       <p class="summary">{profile.summary}</p>
       <ProfileLinks class="hero-profile-links" links={heroLinks} />
     </div>
@@ -63,12 +62,6 @@ import TerminalTypewriter from "./TerminalTypewriter.astro";
     display: flex;
     min-width: 0;
     flex-direction: column;
-  }
-
-  .hero-left .location {
-    margin: 0.15rem 0 0;
-    color: var(--muted);
-    font-size: 0.95rem;
   }
 
   .hero-right {

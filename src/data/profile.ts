@@ -48,22 +48,24 @@ export const profile = {
   role: "Infrastructure-Focused Software Engineer",
   location: "Berlin, Germany",
   summary:
-    "Software engineer with 4+ years across production web platforms, release workflows, staging environments, API-driven systems, and production-oriented troubleshooting.",
+    "Software engineer experienced in customer-facing applications, API-driven systems, release workflows, production troubleshooting, and infrastructure automation.",
+  metaDescription:
+    "Portfolio of Nikita Krivoshei, a Berlin-based software engineer focused on technical support, APIs, Linux, CI/CD, cloud infrastructure, observability, and reliable software delivery.",
   about: [
     {
-      prompt: "prod",
-      text: "Software engineer with 4+ years across media platforms, public-sector systems, release workflows, staging environments, and production-oriented troubleshooting.",
-      highlight: "release workflows",
+      prompt: "support",
+      text: "Experience reproducing and diagnosing API, data, authentication, configuration, build, and runtime issues across customer-facing applications and test environments.",
+      highlight: "API, data, authentication, configuration, build, and runtime issues",
     },
     {
       prompt: "infra",
-      text: "Focused on Linux, Docker, CI/CD, cloud infrastructure, observability, deployment automation, and reliability-focused engineering.",
+      text: "Focused on Linux, Docker, CI/CD, cloud infrastructure, observability, deployment automation, and reliable delivery workflows.",
       highlight: "Linux, Docker, CI/CD, cloud infrastructure",
     },
     {
       prompt: "ship",
-      text: "Clear checks, automated workflows, documented delivery, and stable releases.",
-      highlight: "automated workflows",
+      text: "Reproducible diagnostics, automated checks, clear documentation, and stable releases.",
+      highlight: "automated checks",
     },
   ],
   links: [
@@ -73,6 +75,8 @@ export const profile = {
     { label: "Telegram", href: "https://t.me/itkrivoshei", icon: "telegram" },
   ] satisfies SocialLink[],
 };
+
+export const heroLinks = profile.links.filter((link) => link.icon !== "telegram");
 
 export const skillGroups = [
   {

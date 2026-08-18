@@ -4,7 +4,7 @@
 
 Personal engineering website presenting work history, technical background, selected projects, and repositories. Built with Astro, TypeScript, Tailwind CSS, and GitHub Actions.
 
-[![Live site](https://img.shields.io/badge/live-site-2ea44f?style=for-the-badge&logo=githubpages&logoColor=white&labelColor=0f172a)](https://itkrivoshei.github.io)
+[![Live site](https://img.shields.io/badge/live-site-2ea44f?style=for-the-badge&logo=githubpages&logoColor=white&labelColor=0f172a)](https://krivoshei.dev)
 [![Check](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/check.yml?branch=main&style=for-the-badge&label=check&logo=githubactions&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/check.yml)
 [![Deploy](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/deploy.yml?branch=main&style=for-the-badge&label=deploy&logo=githubactions&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/deploy.yml)
 [![CodeQL](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/codeql.yml?branch=main&style=for-the-badge&label=codeql&logo=github&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/codeql.yml)
@@ -19,7 +19,7 @@ Personal engineering website presenting work history, technical background, sele
 
 <br />
 
-[![Nikita Krivoshei engineering website preview](public/og-image.png)](https://itkrivoshei.github.io)
+[![Nikita Krivoshei engineering website preview](public/og-image.png)](https://krivoshei.dev)
 
 </div>
 
@@ -113,7 +113,7 @@ The container uses [`nginx/default.conf`](nginx/default.conf) to serve the brand
 ## Automation
 
 - [`.github/workflows/check.yml`](.github/workflows/check.yml) runs the quality gate, browser/accessibility and container smoke tests, and a non-blocking external-link report.
-- [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs verification and browser smoke tests before publishing `dist` to [GitHub Pages](https://itkrivoshei.github.io) on pushes to [`main`](https://github.com/itkrivoshei/itkrivoshei.github.io/tree/main).
+- [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs verification and browser smoke tests before publishing `dist` to [GitHub Pages](https://krivoshei.dev) on pushes to [`main`](https://github.com/itkrivoshei/itkrivoshei.github.io/tree/main).
 - [`.github/workflows/codeql.yml`](.github/workflows/codeql.yml) runs GitHub [CodeQL](https://codeql.github.com/) analysis.
 - [`.github/dependabot.yml`](.github/dependabot.yml) tracks npm package and GitHub Actions updates.
 - [`.githooks/pre-commit`](.githooks/pre-commit) is intentionally non-mutating: it checks formatting and Astro diagnostics without rewriting or staging files.

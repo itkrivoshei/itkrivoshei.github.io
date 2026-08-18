@@ -292,6 +292,26 @@ export const projects = [
       },
     ],
   },
+  {
+    name: "React/TypeScript app gallery",
+    repo: "react-typescript-web-apps",
+    description:
+      "Routed React and TypeScript app gallery covering Redux state management, API integrations, form validation, and unit tests, shipped through GitHub Actions to GitHub Pages.",
+    highlight: "Redux state management, API integrations, form validation, and unit tests",
+    tags: ["React", "TypeScript", "Redux Toolkit", "Vitest", "GitHub Actions"],
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/itkrivoshei/react-typescript-web-apps",
+        kind: "repository",
+      },
+      {
+        label: "Live app",
+        href: "https://itkrivoshei.github.io/react-typescript-web-apps/",
+        kind: "site",
+      },
+    ],
+  },
 ] satisfies ProjectItem[];
 
 export const availability = {

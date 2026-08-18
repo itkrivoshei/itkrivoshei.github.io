@@ -204,7 +204,8 @@ export const projects = [
     name: "Production App Infrastructure",
     repo: "production-app-infrastructure",
     description:
-      "Production-style infrastructure project with Dockerized services, observability, CI/CD, security scans, load testing, rollback workflows, Terraform validation, and Kubernetes readiness checks.",
+      "Support-oriented infrastructure lab for reproducing and diagnosing REST API, readiness, performance, and logging failures using Docker Compose, Prometheus, Grafana, Loki, Bash/cURL runbooks, automated CI/CD, rollback workflows, Terraform validation, and Kubernetes readiness checks.",
+    highlight: "reproducing and diagnosing REST API, readiness, performance, and logging failures",
     featured: true,
     tags: ["Docker", "Prometheus", "Grafana", "CI/CD", "Terraform", "Kubernetes readiness"],
     links: [
@@ -216,6 +217,27 @@ export const projects = [
       {
         label: "Live UI preview",
         href: "https://itkrivoshei.github.io/production-app-infrastructure/",
+        kind: "site",
+      },
+    ],
+  },
+  {
+    name: "Engineering Portfolio Delivery Pipeline",
+    repo: "itkrivoshei.github.io",
+    description:
+      "Astro portfolio packaged with Docker/nginx and delivered through GitHub Actions with linting, type checks, HTML and link validation, Playwright accessibility tests, container smoke tests, bundle budgets, CodeQL, and GitHub Pages deployment.",
+    highlight:
+      "linting, type checks, HTML and link validation, Playwright accessibility tests, container smoke tests",
+    tags: ["Astro", "Docker", "nginx", "GitHub Actions", "Playwright", "CodeQL"],
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/itkrivoshei/itkrivoshei.github.io",
+        kind: "repository",
+      },
+      {
+        label: "Live site",
+        href: "https://krivoshei.dev/",
         kind: "site",
       },
     ],
@@ -269,27 +291,6 @@ export const projects = [
         kind: "repository",
       },
     ],
-  },
-  {
-    name: "Media publishing platforms",
-    repo: "Media platform delivery",
-    description:
-      "Production web delivery for publisher platforms, including MOPO and BikeRadar-related release support, staging validation, configuration checks, and troubleshooting.",
-    highlight: "release support, staging validation, configuration checks, and troubleshooting",
-    tags: ["TypeScript", "Jenkins", "staging", "release checks", "troubleshooting"],
-    links: [
-      { label: "MOPO", href: "https://www.mopo.de/", kind: "site" },
-      { label: "BikeRadar", href: "https://www.bikeradar.com/", kind: "site" },
-    ],
-  },
-  {
-    name: "Public services portal work",
-    repo: "gosuslugi.ru",
-    description:
-      "Large-scale public-service platform work covering citizen-facing flows, API-driven UI states, integration support, release validation, and production-oriented troubleshooting.",
-    highlight: "release validation and production-oriented troubleshooting",
-    tags: ["Angular", "TypeScript", "REST APIs", "GitLab", "release validation"],
-    links: [{ label: "Website", href: "https://www.gosuslugi.ru/", kind: "site" }],
   },
 ] satisfies ProjectItem[];
 

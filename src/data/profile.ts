@@ -143,17 +143,18 @@ export const experience = [
   {
     company: "SPRYLAB",
     href: "https://sprylab.com/en/",
-    note: "digital publishing software / Purple platform ecosystem",
-    role: "Frontend Software Engineer | Client Platform Delivery",
-    period: "09/2023 – 12/2024",
-    skills: ["TypeScript", "Jenkins", "release workflows", "staging", "troubleshooting"],
+    note: "digital publishing platform for media brands",
+    role: "Frontend Software Engineer | Client Platform Support",
+    period: "09/2023 – 01/2025",
+    skills: ["TypeScript", "REST APIs", "Jenkins", "Release validation", "Troubleshooting"],
     points: [
       {
-        text: "Delivered client-facing websites and apps for German media and publishing clients, including MOPO and BikeRadar-related platform delivery work.",
+        text: "Supported customer-facing websites and applications for German media clients, including MOPO and BikeRadar, within SPRYLAB's Purple platform.",
       },
       {
-        text: "Supported Jenkins-based workflows by triggering rebuilds, reviewing build logs, validating preview/test environments, and resolving configuration or frontend issues blocking stable client releases.",
-        highlight: "Jenkins-based workflows",
+        text: "Reproduced and diagnosed configuration, REST API, authentication/token, build, and frontend issues; reviewed Jenkins logs, validated preview/test environments, and coordinated fixes and releases with QA and engineering.",
+        highlight:
+          "Reproduced and diagnosed configuration, REST API, authentication/token, build, and frontend issues",
       },
     ],
     links: [
@@ -162,20 +163,18 @@ export const experience = [
     ],
   },
   {
-    company: "RT Labs / Gosuslugi.ru",
-    href: "https://www.gosuslugi.ru/",
-    note: "large-scale public-service platform / Gosuslugi ecosystem",
-    role: "Software Engineer | Frontend Integration & Release Delivery",
+    company: "RT Labs",
+    note: "e-government platform development",
+    role: "Frontend Software Engineer | Integration & Release Support",
     period: "10/2020 – 04/2022",
-    skills: ["Angular", "TypeScript", "REST APIs", "GitLab", "release validation", "debugging"],
+    skills: ["Angular", "TypeScript", "REST APIs", "GitLab CI/CD", "Release support", "Debugging"],
     points: [
       {
-        text: "Contributed to Gosuslugi.ru public-service systems, including citizen-facing flows and COVID-19 certificate / QR-code functionality.",
-        highlight: "certificate / QR-code functionality",
+        text: "Built and supported Angular/TypeScript modules for nationwide COVID-19 certificate and QR-code workflows, including API-driven states, localization, print/download behavior, and browser compatibility.",
+        highlight: "COVID-19 certificate and QR-code workflows",
       },
       {
-        text: "Worked with Angular, TypeScript, REST APIs, GitLab workflows, unit tests, test-environment validation, release preparation, analytics debugging, and production-oriented troubleshooting.",
-        highlight: "test-environment validation",
+        text: "Reproduced migration, build, runtime, REST API, and analytics/data issues; supported GitLab releases, unit tests, test-environment validation, QA handoffs, and hotfixes.",
       },
     ],
     links: [{ label: "Website", href: "https://www.gosuslugi.ru/" }],
@@ -183,16 +182,17 @@ export const experience = [
   {
     company: "First Bit",
     href: "https://en.1solution.ru/",
-    note: "business software and workflow systems",
-    role: "Database Developer Intern | SQL & Workflow Support",
-    period: "02/2019 – 01/2020",
-    skills: ["SQL", "Jira", "documentation", "workflow support"],
+    note: "business software and workflow systems · university placement",
+    role: "Application Support | Business Systems Configuration",
+    period: "01/2019 – 07/2019",
+    skills: ["Application support", "SQL", "Jira", "Troubleshooting", "Documentation"],
     points: [
       {
-        text: "Worked with SQL, data modeling, documentation, and database-driven workflows for business software systems.",
+        text: "Supported and configured business applications in customer environments, troubleshooting operational issues during on-site visits.",
       },
       {
-        text: "Supported client coordination, Jira task tracking, Agile/Scrum routines, documentation handling, and basic troubleshooting.",
+        text: "Used SQL and database checks to investigate data, configuration, and workflow issues; documented findings in Jira and coordinated with users to verify resolution.",
+        highlight: "SQL and database checks",
       },
     ],
     links: [],

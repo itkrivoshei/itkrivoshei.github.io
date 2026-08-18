@@ -295,12 +295,14 @@ export const projects = [
 ] satisfies ProjectItem[];
 
 export const availability = {
-  text: "Available for infrastructure-focused software engineering, cloud operations, DevOps, CI/CD, and build/release roles.",
+  text: "Open to Technical/Application Support, Production Support, Cloud Operations, CI/CD, Build/Release, DevOps, and infrastructure-focused software engineering roles.",
   highlights: [
-    "infrastructure-focused software engineering",
-    "cloud operations",
-    "DevOps",
+    "Technical/Application Support",
+    "Production Support",
+    "Cloud Operations",
     "CI/CD",
-    "build/release",
+    "Build/Release",
+    "DevOps",
+    "infrastructure-focused software engineering",
   ],
 };

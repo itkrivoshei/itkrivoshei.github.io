@@ -16,7 +16,7 @@
     "lint": "eslint .",
     "validate:html": "html-validate \"dist/**/*.html\"",
     "test:links:internal": "node scripts/check-internal-links.mjs",
-    "test:links:external": "linkinator dist --recurse --retry --retry-errors --retry-errors-count 2 --timeout 15000 --status-code \"999:warn\" --skip \"^https://itkrivoshei.github.io/(?:$|og-image.png)$\"",
+    "test:links:external": "linkinator dist --recurse --retry --retry-errors --retry-errors-count 2 --timeout 15000 --status-code \"999:warn\" --skip \"^https://krivoshei.dev/(?:$|og-image.png)$\"",
     "test:smoke": "playwright test",
     "test:container": "node scripts/test-container.mjs",
     "validate:bundle": "node scripts/check-bundle-size.mjs",

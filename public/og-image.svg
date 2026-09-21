@@ -89,7 +89,7 @@
     font-size="29"
     font-weight="500"
   >
-    Infrastructure-Focused Software Engineer
+    Software Engineer | DevOps · Cloud · Frontend
   </text>
   <text
     x="116"
@@ -98,7 +98,7 @@
     font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
     font-size="24"
   >
-    $ deploy engineering-site --target github-pages
+    $ deploy engineering-site --target aws-cloudfront
   </text>
   <text
     x="116"

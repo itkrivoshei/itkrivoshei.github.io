@@ -45,27 +45,29 @@ export interface SkillGroup {
 
 export const profile = {
   name: "Nikita Krivoshei",
-  role: "Infrastructure-Focused Software Engineer",
+  role: "Software Engineer",
+  specialties: "DevOps · Cloud · Frontend",
+  jobTitle: "Software Engineer",
   location: "Berlin, Germany",
   summary:
-    "Software engineer experienced in customer-facing applications, API-driven systems, release workflows, production troubleshooting, and infrastructure automation.",
+    "Software engineer experienced in CI/CD, cloud infrastructure, observability, production troubleshooting, and frontend development for customer-facing, API-driven applications.",
   metaDescription:
-    "Portfolio of Nikita Krivoshei, a Berlin-based software engineer focused on technical support, APIs, Linux, CI/CD, cloud infrastructure, observability, and reliable software delivery.",
+    "Portfolio of Nikita Krivoshei, a Berlin-based software engineer working across DevOps, cloud infrastructure, frontend development, APIs, observability, and reliable production delivery.",
   about: [
     {
-      prompt: "support",
-      text: "Experience reproducing and diagnosing API, data, authentication, configuration, build, and runtime issues across customer-facing applications and test environments.",
+      prompt: "ship",
+      text: "CI/CD, Docker, automated checks, observability, clear documentation, and reliable release workflows.",
+      highlight: "CI/CD, Docker, automated checks, observability",
+    },
+    {
+      prompt: "operate",
+      text: "Experience diagnosing API, data, authentication, configuration, build, and runtime issues across test and production environments.",
       highlight: "API, data, authentication, configuration, build, and runtime issues",
     },
     {
-      prompt: "infra",
-      text: "Focused on Linux, Docker, CI/CD, cloud infrastructure, observability, deployment automation, and reliable delivery workflows.",
-      highlight: "Linux, Docker, CI/CD, cloud infrastructure",
-    },
-    {
-      prompt: "ship",
-      text: "Reproducible diagnostics, automated checks, clear documentation, and stable releases.",
-      highlight: "automated checks",
+      prompt: "build",
+      text: "Commercial experience building and maintaining customer-facing applications with TypeScript, Angular, React, REST APIs, reusable components, and responsive interfaces.",
+      highlight: "TypeScript, Angular, React, REST APIs",
     },
   ],
   links: [
@@ -80,16 +82,26 @@ export const heroLinks = profile.links.filter((link) => link.icon !== "telegram"
 
 export const skillGroups = [
   {
-    title: "Support & Troubleshooting",
-    icon: "git",
+    title: "CI/CD & Delivery",
+    icon: "container",
     items: [
-      "Application support",
-      "Issue reproduction",
-      "Root cause analysis",
-      "Incident triage",
-      "Jira",
-      "Technical documentation",
+      "Docker",
+      "Docker Compose",
+      "GitHub Actions",
+      "GitLab CI/CD",
+      "Jenkins",
+      "Deployment automation",
     ],
+  },
+  {
+    title: "Infrastructure & Cloud",
+    icon: "cloud",
+    items: ["Linux", "Bash", "AWS", "Terraform", "Kubernetes readiness", "Nginx"],
+  },
+  {
+    title: "Frontend & Software Engineering",
+    icon: "code",
+    items: ["TypeScript", "JavaScript", "Angular", "React", "HTML/CSS", "Node.js"],
   },
   {
     title: "APIs & Data",
@@ -101,23 +113,6 @@ export const skillGroups = [
       "Postman/cURL",
       "SQL/PostgreSQL",
       "API debugging",
-    ],
-  },
-  {
-    title: "Infrastructure & Cloud",
-    icon: "cloud",
-    items: ["Linux", "Bash", "AWS", "Terraform", "Kubernetes", "Nginx"],
-  },
-  {
-    title: "CI/CD & Delivery",
-    icon: "container",
-    items: [
-      "Docker",
-      "Docker Compose",
-      "GitHub Actions",
-      "GitLab CI/CD",
-      "Jenkins",
-      "Deployment automation",
     ],
   },
   {
@@ -133,9 +128,16 @@ export const skillGroups = [
     ],
   },
   {
-    title: "Software Engineering",
-    icon: "code",
-    items: ["TypeScript", "JavaScript", "Node.js", "Python", "Angular", "React"],
+    title: "Support & Troubleshooting",
+    icon: "git",
+    items: [
+      "Application support",
+      "Issue reproduction",
+      "Root cause analysis",
+      "Incident triage",
+      "Jira",
+      "Technical documentation",
+    ],
   },
 ] satisfies SkillGroup[];
 
@@ -144,17 +146,24 @@ export const experience = [
     company: "SPRYLAB",
     href: "https://sprylab.com/en/",
     note: "digital publishing platform for media brands",
-    role: "Frontend Software Engineer | Client Platform Support",
+    role: "Frontend Software Engineer | SaaS Platform Delivery",
     period: "09/2023 – 01/2025",
-    skills: ["TypeScript", "REST APIs", "Jenkins", "Release validation", "Troubleshooting"],
+    skills: [
+      "Angular",
+      "TypeScript",
+      "REST APIs",
+      "Jenkins",
+      "Release Delivery",
+      "Troubleshooting",
+    ],
     points: [
       {
-        text: "Supported customer-facing websites and applications for German media clients, including MOPO and BikeRadar, within SPRYLAB's Purple platform.",
+        text: "Delivered and maintained frontend features across 10+ customer applications for media brands including MOPO and BikeRadar within SPRYLAB's SaaS publishing platform.",
+        highlight: "frontend features across 10+ customer applications",
       },
       {
-        text: "Reproduced and diagnosed configuration, REST API, authentication/token, build, and frontend issues; reviewed Jenkins logs, validated preview/test environments, and coordinated fixes and releases with QA and engineering.",
-        highlight:
-          "Reproduced and diagnosed configuration, REST API, authentication/token, build, and frontend issues",
+        text: "Built reusable Angular/TypeScript functionality and diagnosed REST API, authentication, configuration, build, and cross-browser issues; validated changes through Jenkins across preview, test, and release environments.",
+        highlight: "Built reusable Angular/TypeScript functionality",
       },
     ],
     links: [
@@ -165,7 +174,7 @@ export const experience = [
   {
     company: "RT Labs",
     note: "e-government platform development",
-    role: "Frontend Software Engineer | Integration & Release Support",
+    role: "Frontend Software Engineer | Angular & Platform Delivery",
     period: "10/2020 – 04/2022",
     skills: ["Angular", "TypeScript", "REST APIs", "GitLab CI/CD", "Release support", "Debugging"],
     points: [
@@ -204,8 +213,8 @@ export const projects = [
     name: "Production App Infrastructure",
     repo: "production-app-infrastructure",
     description:
-      "Support-oriented infrastructure lab for reproducing and diagnosing REST API, readiness, performance, and logging failures using Docker Compose, Prometheus, Grafana, Loki, Bash/cURL runbooks, automated CI/CD, rollback workflows, Terraform validation, and Kubernetes readiness checks.",
-    highlight: "reproducing and diagnosing REST API, readiness, performance, and logging failures",
+      "Production-style React/TypeScript and Fastify application for exploring containerized delivery, REST API reliability, observability, security checks, load testing, rollback workflows, Terraform validation, and Kubernetes readiness.",
+    highlight: "React/TypeScript and Fastify application",
     featured: true,
     tags: ["Docker", "Prometheus", "Grafana", "CI/CD", "Terraform", "Kubernetes readiness"],
     links: [
@@ -222,13 +231,53 @@ export const projects = [
     ],
   },
   {
+    name: "Serverless commerce dashboard",
+    repo: "angular-serverless-commerce-dashboard",
+    description:
+      "Angular and NgRx commerce dashboard using an AWS API Gateway/Lambda data proxy, tests, and GitHub Pages deployment.",
+    highlight: "AWS API Gateway/Lambda data proxy",
+    tags: ["Angular", "NgRx", "AWS Lambda", "API Gateway", "CI/CD"],
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/itkrivoshei/angular-serverless-commerce-dashboard",
+        kind: "repository",
+      },
+      {
+        label: "Live app",
+        href: "https://itkrivoshei.github.io/angular-serverless-commerce-dashboard/",
+        kind: "site",
+      },
+    ],
+  },
+  {
+    name: "React/TypeScript app gallery",
+    repo: "react-typescript-web-apps",
+    description:
+      "Routed React and TypeScript app gallery covering Redux state management, API integrations, form validation, and unit tests, shipped through GitHub Actions to GitHub Pages.",
+    highlight: "Redux state management, API integrations, form validation, and unit tests",
+    tags: ["React", "TypeScript", "Redux Toolkit", "Vitest", "GitHub Actions"],
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/itkrivoshei/react-typescript-web-apps",
+        kind: "repository",
+      },
+      {
+        label: "Live app",
+        href: "https://itkrivoshei.github.io/react-typescript-web-apps/",
+        kind: "site",
+      },
+    ],
+  },
+  {
     name: "Engineering Portfolio Delivery Pipeline",
     repo: "itkrivoshei.github.io",
     description:
-      "Astro portfolio packaged with Docker/nginx and delivered through GitHub Actions with linting, type checks, HTML and link validation, Playwright accessibility tests, container smoke tests, bundle budgets, CodeQL, and GitHub Pages deployment.",
+      "Astro portfolio packaged with Docker/nginx and delivered to private S3 and CloudFront through GitHub Actions OIDC, with linting, type checks, HTML and link validation, Playwright accessibility tests, container smoke tests, bundle budgets, and CodeQL.",
     highlight:
       "linting, type checks, HTML and link validation, Playwright accessibility tests, container smoke tests",
-    tags: ["Astro", "Docker", "nginx", "GitHub Actions", "Playwright", "CodeQL"],
+    tags: ["Astro", "AWS", "CloudFront", "GitHub OIDC", "Playwright", "CodeQL"],
     links: [
       {
         label: "GitHub",
@@ -258,26 +307,6 @@ export const projects = [
     ],
   },
   {
-    name: "Serverless commerce dashboard",
-    repo: "angular-serverless-commerce-dashboard",
-    description:
-      "Angular and NgRx commerce dashboard using an AWS API Gateway/Lambda data proxy, tests, and GitHub Pages deployment.",
-    highlight: "AWS API Gateway/Lambda data proxy",
-    tags: ["Angular", "NgRx", "AWS Lambda", "API Gateway", "CI/CD"],
-    links: [
-      {
-        label: "GitHub",
-        href: "https://github.com/itkrivoshei/angular-serverless-commerce-dashboard",
-        kind: "repository",
-      },
-      {
-        label: "Live app",
-        href: "https://itkrivoshei.github.io/angular-serverless-commerce-dashboard/",
-        kind: "site",
-      },
-    ],
-  },
-  {
     name: "Dockerized ML app pipeline",
     repo: "salary-prediction-linear-regression",
     description:
@@ -292,37 +321,17 @@ export const projects = [
       },
     ],
   },
-  {
-    name: "React/TypeScript app gallery",
-    repo: "react-typescript-web-apps",
-    description:
-      "Routed React and TypeScript app gallery covering Redux state management, API integrations, form validation, and unit tests, shipped through GitHub Actions to GitHub Pages.",
-    highlight: "Redux state management, API integrations, form validation, and unit tests",
-    tags: ["React", "TypeScript", "Redux Toolkit", "Vitest", "GitHub Actions"],
-    links: [
-      {
-        label: "GitHub",
-        href: "https://github.com/itkrivoshei/react-typescript-web-apps",
-        kind: "repository",
-      },
-      {
-        label: "Live app",
-        href: "https://itkrivoshei.github.io/react-typescript-web-apps/",
-        kind: "site",
-      },
-    ],
-  },
 ] satisfies ProjectItem[];
 
 export const availability = {
-  text: "Open to Technical/Application Support, Production Support, Cloud Operations, CI/CD, Build/Release, DevOps, and infrastructure-focused software engineering roles.",
+  text: "Open to DevOps, Cloud, and Frontend Software Engineering roles involving CI/CD, APIs, production delivery, and reliability.",
   highlights: [
-    "Technical/Application Support",
-    "Production Support",
-    "Cloud Operations",
-    "CI/CD",
-    "Build/Release",
     "DevOps",
-    "infrastructure-focused software engineering",
+    "Cloud",
+    "Frontend Software Engineering",
+    "CI/CD",
+    "APIs",
+    "production delivery",
+    "reliability",
   ],
 };

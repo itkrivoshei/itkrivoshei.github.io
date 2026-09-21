@@ -40,7 +40,7 @@ test("keeps all content visible without JavaScript", async ({ browser }) => {
     page.getByRole("heading", { level: 2, name: "Selected Engineering Work" }),
   ).toBeVisible();
   await expect(page.locator("[data-terminal-typewriter]")).toContainText(
-    "deploy engineering-site --target github-pages",
+    "deploy engineering-site --target aws-cloudfront",
   );
   await expect(page.locator("[data-terminal-typewriter]")).toContainText("ready");
   await expect(page.locator("[data-network-background]")).toHaveAttribute(

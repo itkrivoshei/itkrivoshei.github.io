@@ -17,7 +17,7 @@ const defaultCanonical = Astro.site
   : Astro.url.toString();
 const {
   title = "Nikita Krivoshei",
-  description = "Personal engineering website for DevOps-focused software engineering work.",
+  description = "Personal engineering website spanning DevOps, cloud, and frontend work.",
   image = Astro.site ? new URL("/og-image.png", Astro.site).toString() : "/og-image.png",
   includePersonSchema = true,
   noindex = false,
@@ -32,7 +32,7 @@ const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: profile.name,
-  jobTitle: profile.role,
+  jobTitle: profile.jobTitle,
   address: {
     "@type": "PostalAddress",
     addressLocality: profile.location,
@@ -57,7 +57,10 @@ const personSchema = {
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:site_name" content={profile.name} />
     <meta property="og:image" content={image} />
-    <meta property="og:image:alt" content={`${profile.name} — ${profile.role}`} />
+    <meta
+      property="og:image:alt"
+      content={`${profile.name} — ${profile.role}, ${profile.specialties}`}
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />

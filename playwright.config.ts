@@ -24,7 +24,7 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   webServer: {
-    command: `npm run build && npm run preview -- --host 127.0.0.1 --port ${testPort}`,
+    command: `npm run build && ASTRO_PREVIEW_BACKGROUND=0 npm run preview -- --ignore-lock --host 127.0.0.1 --port ${testPort}`,
     url: `${baseURL}/sitemap-index.xml`,
     reuseExistingServer: false,
   },

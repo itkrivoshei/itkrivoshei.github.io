@@ -39,7 +39,7 @@ Suitable desktop devices load the [custom canvas network](src/scripts/network-ba
 | Effects   | [Custom canvas network background](src/scripts/network-background.ts), [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/), [Lenis](https://lenis.darkroom.engineering/)           |
 | Runtime   | [Node.js 22](https://nodejs.org/), [npm](https://www.npmjs.com/)                                                                                                                                     |
 | Checks    | [Prettier](https://prettier.io/), [ESLint](https://eslint.org/), Astro check, HTML validation, link checks, [Playwright](https://playwright.dev/), [axe-core](https://github.com/dequelabs/axe-core) |
-| Hosting   | [GitHub Pages](https://pages.github.com/)                                                                                                                                                            |
+| Hosting   | [Amazon S3](https://aws.amazon.com/s3/) and [CloudFront](https://aws.amazon.com/cloudfront/)                                                                                                         |
 | Container | [Docker](https://www.docker.com/), [nginx](https://nginx.org/)                                                                                                                                       |
 | Updates   | [Dependabot](.github/dependabot.yml)                                                                                                                                                                 |
 
@@ -113,7 +113,8 @@ The container uses [`nginx/default.conf`](nginx/default.conf) to serve the brand
 ## Automation
 
 - [`.github/workflows/check.yml`](.github/workflows/check.yml) runs the quality gate, browser/accessibility and container smoke tests, and a non-blocking external-link report.
-- [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs verification and browser smoke tests before publishing `dist` to [GitHub Pages](https://krivoshei.dev) on pushes to [`main`](https://github.com/itkrivoshei/itkrivoshei.github.io/tree/main).
+- [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs verification and browser smoke tests before publishing `dist` to a private S3 bucket and invalidating CloudFront on pushes to [`main`](https://github.com/itkrivoshei/itkrivoshei.github.io/tree/main). Authentication uses short-lived GitHub OIDC credentials scoped to the `production` environment; no AWS access keys are stored in GitHub.
+- [`infra/github-deploy.yml`](infra/github-deploy.yml) manages the GitHub OIDC provider and least-privilege deployment role as a CloudFormation stack.
 - [`.github/workflows/codeql.yml`](.github/workflows/codeql.yml) runs GitHub [CodeQL](https://codeql.github.com/) analysis.
 - [`.github/dependabot.yml`](.github/dependabot.yml) tracks npm package and GitHub Actions updates.
 - [`.githooks/pre-commit`](.githooks/pre-commit) is intentionally non-mutating: it checks formatting and Astro diagnostics without rewriting or staging files.

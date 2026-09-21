@@ -1,16 +1,17 @@
 ---
-import { profile } from "../data/profile";
+import { profile, type SocialLink as SocialLinkData } from "../data/profile";
 import SocialLink from "./SocialLink.astro";
 
 interface Props {
   class?: string;
+  links?: SocialLinkData[];
 }
 
-const { class: className } = Astro.props;
+const { class: className, links = profile.links } = Astro.props;
 ---
 
 <div class:list={["link-row", "profile-link-row", className]}>
-  {profile.links.map((link) => <SocialLink label={link.label} href={link.href} icon={link.icon} />)}
+  {links.map((link) => <SocialLink label={link.label} href={link.href} icon={link.icon} />)}
 </div>
 
 <style>

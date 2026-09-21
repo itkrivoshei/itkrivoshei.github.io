@@ -10,7 +10,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { splitHighlightedText } from "../utils/text";
 ---
 
-<BaseLayout title={profile.name} description={profile.summary}>
+<BaseLayout title={`${profile.name} — ${profile.role}`} description={profile.metaDescription}>
   <main class="site-shell">
     <Hero />
     <Section title="About">

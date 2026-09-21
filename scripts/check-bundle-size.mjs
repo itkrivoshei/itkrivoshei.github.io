@@ -15,7 +15,7 @@ const budgets = [
   {
     label: "lazy GSAP runtime",
     limit: 75 * 1024,
-    pattern: /^index\..+\.js$/,
+    pattern: /^(?:index|gsap)\..+\.js$/,
   },
   {
     label: "lazy ScrollTrigger runtime",

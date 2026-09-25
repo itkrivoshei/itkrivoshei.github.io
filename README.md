@@ -2,9 +2,9 @@
 
 # Nikita Krivoshei — Personal Engineering Website
 
-Personal engineering website presenting work history, technical background, selected projects, and repositories. Built with Astro, TypeScript, Tailwind CSS, and GitHub Actions.
+Personal engineering website presenting work history, technical background, selected projects, and repositories. Built with Astro 7, TypeScript, Tailwind CSS, and GitHub Actions.
 
-[![Live site](https://img.shields.io/badge/live-site-2ea44f?style=for-the-badge&logo=githubpages&logoColor=white&labelColor=0f172a)](https://krivoshei.dev)
+[![Live site](https://img.shields.io/badge/live-site-2ea44f?style=for-the-badge&logo=amazonwebservices&logoColor=white&labelColor=0f172a)](https://krivoshei.dev)
 [![Check](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/check.yml?branch=main&style=for-the-badge&label=check&logo=githubactions&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/check.yml)
 [![Deploy](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/deploy.yml?branch=main&style=for-the-badge&label=deploy&logo=githubactions&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/deploy.yml)
 [![CodeQL](https://img.shields.io/github/actions/workflow/status/itkrivoshei/itkrivoshei.github.io/codeql.yml?branch=main&style=for-the-badge&label=codeql&logo=github&logoColor=white&labelColor=0f172a)](https://github.com/itkrivoshei/itkrivoshei.github.io/actions/workflows/codeql.yml)
@@ -33,11 +33,11 @@ Suitable desktop devices load the [custom canvas network](src/scripts/network-ba
 
 | Area      | Tools                                                                                                                                                                                                |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Framework | [Astro 6](https://astro.build/)                                                                                                                                                                      |
+| Framework | [Astro 7](https://astro.build/)                                                                                                                                                                      |
 | Language  | [TypeScript](https://www.typescriptlang.org/)                                                                                                                                                        |
 | Styling   | [Tailwind CSS 4](https://tailwindcss.com/), custom glass surfaces                                                                                                                                    |
 | Effects   | [Custom canvas network background](src/scripts/network-background.ts), [GSAP ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/), [Lenis](https://lenis.darkroom.engineering/)           |
-| Runtime   | [Node.js 22](https://nodejs.org/), [npm](https://www.npmjs.com/)                                                                                                                                     |
+| Runtime   | [Node.js 22](https://nodejs.org/), [npm 11](https://www.npmjs.com/)                                                                                                                                  |
 | Checks    | [Prettier](https://prettier.io/), [ESLint](https://eslint.org/), Astro check, HTML validation, link checks, [Playwright](https://playwright.dev/), [axe-core](https://github.com/dequelabs/axe-core) |
 | Hosting   | [Amazon S3](https://aws.amazon.com/s3/) and [CloudFront](https://aws.amazon.com/cloudfront/)                                                                                                         |
 | Container | [Docker](https://www.docker.com/), [nginx](https://nginx.org/)                                                                                                                                       |
@@ -52,6 +52,8 @@ cd itkrivoshei.github.io
 # If you use nvm, this reads .node-version and selects Node.js 22.
 nvm use
 
+# The project requires npm 11; CI uses the version pinned in package.json.
+npm install --global npm@11.16.0
 npm ci
 
 # Required once for browser smoke tests.
@@ -73,6 +75,9 @@ Full local validation:
 npm run verify
 npm run test:smoke
 npm run test:container
+
+# Optional network-dependent report; unavailable external links do not block CI.
+npm run test:links:external
 ```
 
 ## Scripts

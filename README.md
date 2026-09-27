@@ -119,6 +119,7 @@ The container uses [`nginx/default.conf`](nginx/default.conf) to serve the brand
 
 - [`.github/workflows/check.yml`](.github/workflows/check.yml) runs the quality gate, browser/accessibility and container smoke tests, and a non-blocking external-link report.
 - [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) runs verification and browser smoke tests before publishing `dist` to a private S3 bucket and invalidating CloudFront on pushes to [`main`](https://github.com/itkrivoshei/itkrivoshei.github.io/tree/main). Authentication uses short-lived GitHub OIDC credentials scoped to the `production` environment; no AWS access keys are stored in GitHub.
+- [`.github/workflows/pages-redirect.yml`](.github/workflows/pages-redirect.yml) publishes a small redirect page for the old `itkrivoshei.github.io` homepage, pointing visitors to `krivoshei.dev`. Other GitHub Pages project sites keep their own URLs.
 - [`infra/github-deploy.yml`](infra/github-deploy.yml) manages the GitHub OIDC provider and least-privilege deployment role as a CloudFormation stack.
 - [`.github/workflows/codeql.yml`](.github/workflows/codeql.yml) runs GitHub [CodeQL](https://codeql.github.com/) analysis.
 - [`.github/dependabot.yml`](.github/dependabot.yml) tracks npm package and GitHub Actions updates.

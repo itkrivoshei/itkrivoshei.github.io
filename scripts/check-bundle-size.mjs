@@ -9,7 +9,8 @@ const budgets = [
   },
   {
     label: "motion bootstrap",
-    limit: 4 * 1024,
+    // Includes Vite's dynamic-import preload helper, which grew ~400 bytes in Vite 8.3.x.
+    limit: 5 * 1024,
     pattern: /^BaseLayout\..+\.js$/,
   },
   {
